@@ -16,8 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(Body());
 app.use(respond());
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+require('./routes')(router);
+app.use(router.routes()).use(router.allowedMethods());
 
 module.exports = app;
