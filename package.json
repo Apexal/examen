@@ -1,0 +1,23 @@
+{
+  "name": "examen",
+  "version": "0.1.0",
+  "description": "Simple examen app.",
+  "main": "index.js",
+  "dependencies": {
+    "koa": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apexal/examen.git"
+  },
+  "author": "Frank Matranga",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Apexal/examen/issues"
+  },
+  "homepage": "https://github.com/Apexal/examen#readme"
+}
