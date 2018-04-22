@@ -1,8 +1,9 @@
 const Router = require('koa-router');
 const router = new Router();
 
-router.get('/', async ctx => {
-  ctx.body = 'made it!';
-});
+const Ctrl = require('../controllers/home');
+
+router.get('/', Ctrl.index);
+router.get('reply', Ctrl.reply);
 
 module.exports = router.routes();
