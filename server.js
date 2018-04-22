@@ -7,6 +7,7 @@ const serve = require('koa-better-serve');
 const respond = require('koa-respond');
 const compress = require('kompression');
 const views = require('koa-views');
+const session = require('koa-session');
 
 const app = new Koa();
 const router = new Router();
@@ -19,6 +20,9 @@ app.use(
     threshold: 2048
   })
 );
+
+/* Session setup */
+app.use(session(app));
 
 /* Sets basic security measures */
 app.use(Helmet());
