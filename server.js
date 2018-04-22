@@ -15,6 +15,8 @@ const config = require('config');
 const app = new Koa();
 const router = new Router();
 
+app.keys = config.get('keys');
+
 app.use(
   compress({
     filter: function(content_type) {
@@ -25,10 +27,10 @@ app.use(
 );
 
 /* MongoDB setup */
-app.use(mongo());
+app.use(mongo(config.get('mongo')));
 
 /* Session setup */
-app.use(session(config.get('db'), app));
+app.use(session(app));
 
 /* Sets basic security measures */
 app.use(Helmet());
