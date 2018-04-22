@@ -4,8 +4,9 @@ async function index(ctx) {
 }
 
 async function reply(ctx) {
-  let user = ctx.request.query.user;
-  ctx.body = `Hello ${user}`;
+  let n = ctx.session.views || 0;
+  ctx.session.views = ++n;
+  ctx.body = n + ' views';
 }
 
 module.exports = { index, reply };
