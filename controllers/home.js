@@ -1,8 +1,9 @@
-function index(ctx) {
-  ctx.body = 'hello world';
+async function index(ctx) {
+  ctx.state.title = 'Home';
+  await ctx.render('index');
 }
 
-function reply(ctx) {
+async function reply(ctx) {
   let user = ctx.request.query.user;
   ctx.body = `Hello ${user}`;
 }

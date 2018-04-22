@@ -6,6 +6,7 @@ const Helmet = require('koa-helmet');
 const serve = require('koa-better-serve');
 const respond = require('koa-respond');
 const compress = require('kompression');
+const views = require('koa-views');
 
 const app = new Koa();
 const router = new Router();
@@ -31,6 +32,13 @@ app.use(Body());
 
 /* Adds helpful response methods */
 app.use(respond());
+
+/* Views setup using Pug */
+app.use(
+  views(__dirname + '/views', {
+    extension: 'pug'
+  })
+);
 
 /* Router setup */
 require('./routes')(router);
