@@ -10,6 +10,8 @@ const views = require('koa-views');
 const session = require('koa-session');
 const mongo = require('koa-mongo');
 
+const config = require('config');
+
 const app = new Koa();
 const router = new Router();
 
@@ -26,7 +28,7 @@ app.use(
 app.use(mongo());
 
 /* Session setup */
-app.use(session(app));
+app.use(session(config.get('db'), app));
 
 /* Sets basic security measures */
 app.use(Helmet());
