@@ -8,6 +8,7 @@ const respond = require('koa-respond');
 const compress = require('kompression');
 const views = require('koa-views');
 const session = require('koa-session');
+const mongo = require('koa-mongo');
 
 const app = new Koa();
 const router = new Router();
@@ -20,6 +21,9 @@ app.use(
     threshold: 2048
   })
 );
+
+/* MongoDB setup */
+app.use(mongo());
 
 /* Session setup */
 app.use(session(app));
