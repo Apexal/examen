@@ -15,7 +15,8 @@
     "koa-views": "^6.1.4",
     "kompression": "^1.0.0",
     "pug": "^2.0.3",
-    "koa-session": "latest"
+    "koa-session": "latest",
+    "koa-mongo": "latest"
   },
   "devDependencies": {},
   "scripts": {
