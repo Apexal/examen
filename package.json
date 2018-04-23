@@ -4,22 +4,26 @@
   "description": "Simple examen app.",
   "main": "index.js",
   "dependencies": {
+    "config": "latest",
     "koa": "^2.5.0",
     "koa-better-serve": "^2.0.7",
     "koa-body": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
+    "koa-mongo": "latest",
     "koa-respond": "^1.0.1",
     "koa-router": "^7.4.0",
+    "koa-session": "latest",
+    "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
     "kompression": "^1.0.0",
-    "pug": "^2.0.3",
-    "koa-session": "latest",
-    "koa-mongo": "latest",
-    "config": "latest"
+    "npm": "^5.8.0",
+    "pug": "^2.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^4.6.0"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "NODE_ENV=development npm start",

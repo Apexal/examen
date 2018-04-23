@@ -9,6 +9,7 @@ const compress = require('kompression');
 const views = require('koa-views');
 const session = require('koa-session');
 const mongo = require('koa-mongo');
+const static = require('koa-static');
 
 const config = require('config');
 
@@ -25,6 +26,8 @@ app.use(
     threshold: 2048
   })
 );
+
+app.use(static('client/public'));
 
 /* MongoDB setup */
 app.use(mongo(config.get('mongo')));
