@@ -1,0 +1,12 @@
+{
+  "name": "Examen",
+  "description": "A barebones Node.js app using Koa",
+  "repository": "https://github.com/Apexal/examen",
+  "logo": "",
+  "keywords": [
+    "node",
+    "express",
+    "heroku"
+  ],
+  "image": "heroku/nodejs"
+}
