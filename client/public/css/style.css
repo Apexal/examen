@@ -9,4 +9,8 @@ figure .loyola {
 
 audio.examen-audio {
   width: 100%;
-} 
+}
+
+.prompts .content:not(.is-active) {
+  display: none;
+}
