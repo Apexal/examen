@@ -6,3 +6,7 @@ figure .loyola {
   width: 30%;
   border: 5px solid #222;
 }
+
+audio.examen-audio {
+  width: 100%;
+} 

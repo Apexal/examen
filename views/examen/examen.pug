@@ -4,7 +4,12 @@ block content
   section.section
     .container
       h1.title= examen.title
-
+        small.is-size-6.has-text-grey-light.is-pulled-right Posted #{examen.dateAdded}
+      
+      hr
+      audio.examen-audio.is-marginless(controls)
+      hr
+      
       nav.breadcrumb.is-centered(aria-label="breadcrumbs")
         ul
           li.is-active
