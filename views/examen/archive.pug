@@ -8,20 +8,22 @@ block content
       
       .examen-archive
         if examens.length > 0
-          for ex in examens
-            .box
-              .links
-                a.is-pulled-right.is-size-3.has-text-grey-dark(href="/examen/" + ex.id)
-                  i.fab.fa-readme(title="Text available.")
-                a.is-pulled-right.is-size-3.has-text-grey-dark(href="/examen/" + ex.id)
-                  i.fas.fa-headphones(title="Audio recording available.")
-              h3.is-size-4= ex.title
-              .content
-                if ex.introduction
-                  p= ex.introduction
-                else
-                  i.has-text-grey-light No introduction given...
-              
-              span.is-size-7.has-text-grey-light Posted #{ex.dateAdded}
+          .columns.is-multiline
+            for ex in examens
+              .column.is-half
+                .box
+                  .links
+                    a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
+                      i.fab.fa-readme(title="Text available.")
+                    a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
+                      i.fas.fa-headphones(title="Audio recording available.")
+                  h3.is-size-4= ex.title
+                  .content
+                    if ex.introduction
+                      p= ex.introduction
+                    else
+                      i.has-text-grey-light No introduction given...
+                  
+                  span.is-size-7.has-text-grey-light Posted #{ex.dateAdded}
         else
           p.has-text-centered.has-text-grey-light No examens have been posted yet...
