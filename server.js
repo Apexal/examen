@@ -43,8 +43,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 /* MongoDB setup */
+app.context.db = db;
+
+/* Locals */
 app.use(async (ctx, next) => {
-  ctx.db = db;
   ctx.state.loggedIn = ctx.isAuthenticated();
   await next();
 });
