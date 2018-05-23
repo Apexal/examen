@@ -32,12 +32,6 @@ app.use(
 
 app.use(static('client/public'));
 
-/* MongoDB setup */
-app.use(async (ctx, next) => {
-  ctx.db = db;
-  await next();
-});
-
 /* Session setup */
 app.use(session(app));
 
@@ -47,6 +41,13 @@ app.use(session(app));
 /* Passport auth setup */
 app.use(passport.initialize())
 app.use(passport.session())
+
+/* MongoDB setup */
+app.use(async (ctx, next) => {
+  ctx.db = db;
+  ctx.state.loggedIn = ctx.isAuthenticated();
+  await next();
+});
 
 /* Sets basic security measures */
 app.use(Helmet());

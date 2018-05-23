@@ -1,0 +1,28 @@
+section.hero.is-dark.is-small
+  .hero-head
+    nav.navbar
+      .container
+        .navbar-end
+          if loggedIn
+            span.navbar-item Logged in as #{user.isStudent ? 'Student' : ''} &nbsp;
+              b= user.name.first + " " + user.name.last
+            a.navbar-item(href="/logout") Logout
+          else
+            span.navbar-item
+              a.button.is-dark.is-inverted(href="/auth/google") Login with Regis Account
+
+  .hero-body
+    .container
+      h1.title Ignation Examen
+      h2.subtitle Regis High School
+
+  .hero-foot
+    nav.tabs
+      .container
+        ul
+          li.is-active
+            a Home
+          li
+            a Today's Examen
+          li
+            a Examen Archive
