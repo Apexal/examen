@@ -8,7 +8,7 @@ const respond = require('koa-respond');
 const compress = require('kompression');
 const views = require('koa-views');
 const session = require('koa-session');
-const mongo = require('koa-mongo');
+const db = require('./db');
 const static = require('koa-static');
 
 const config = require('config');
@@ -30,7 +30,10 @@ app.use(
 app.use(static('client/public'));
 
 /* MongoDB setup */
-app.use(mongo(config.get('mongo')));
+app.use(async (ctx, next) => {
+  ctx.db = db;
+  await next();
+});
 
 /* Session setup */
 app.use(session(app));

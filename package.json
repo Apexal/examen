@@ -1,6 +1,6 @@
 {
   "name": "examen",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Simple examen app.",
   "private": true,
   "engines": {
@@ -8,21 +8,20 @@
     "npm": "6.0.1"
   },
   "dependencies": {
-    "config": "latest",
+    "config": "^1.30.0",
     "koa": "^2.5.0",
     "koa-better-serve": "^2.0.7",
     "koa-body": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
-    "koa-mongo": "latest",
     "koa-respond": "^1.0.1",
     "koa-router": "^7.4.0",
-    "koa-session": "latest",
+    "koa-session": "^5.8.1",
     "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
     "kompression": "^1.0.0",
-    "npm": "^5.8.0",
+    "mongoose": "^5.1.2",
     "pug": "^2.0.3"
   },
   "devDependencies": {
