@@ -1,0 +1,22 @@
+extends ../template
+
+block content
+  section.section
+    .container
+      h1.title Examen Archive
+        small.subtitle  #{examens.length} total
+      
+      .examen-archive
+        if examens.length > 0
+          for ex in examens
+            .box
+              h3.is-size-4= ex.title
+              .content
+                if ex.introduction
+                  p= ex.introduction
+                else
+                  i.has-text-grey-light No introduction given...
+              
+              span.is-size-7.has-text-grey-light Posted #{ex.dateAdded}
+        else
+          p.has-text-centered.has-text-grey-light No examens have been posted yet...
