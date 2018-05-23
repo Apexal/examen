@@ -10,6 +10,7 @@ const views = require('koa-views');
 const session = require('koa-session');
 const db = require('./db');
 const static = require('koa-static');
+const passport = require('./auth');
 
 const config = require('config');
 
@@ -38,6 +39,10 @@ app.use(async (ctx, next) => {
 /* Session setup */
 app.use(session(app));
 
+/* Passport auth setup */
+app.use(passport.initialize())
+app.use(passport.session())
+
 /* Sets basic security measures */
 app.use(Helmet());
 
@@ -61,6 +66,17 @@ app.use(
 /* Router setup */
 require('./routes')(router);
 app.use(router.routes()).use(router.allowedMethods());
+
+app.use(router.get('/auth/google',
+  passport.authenticate('google')
+));
+
+app.use(route.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  })
+));
 
 /* Static file serving */
 app.use(serve('./public/images', '/images'));
