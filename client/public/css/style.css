@@ -1,3 +1,8 @@
 .examen-archive .links i {
   padding: 5px;
 }
+
+figure .loyola {
+  width: 30%;
+  border: 5px solid #222;
+}
