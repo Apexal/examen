@@ -12,6 +12,8 @@ const db = require('./db');
 const static = require('koa-static');
 const passport = require('./auth');
 
+// TODO: find proper flash
+
 const config = require('config');
 
 const app = new Koa();
@@ -39,6 +41,9 @@ app.use(async (ctx, next) => {
 /* Session setup */
 app.use(session(app));
 
+/* Flash message setup */
+//app.use(flash());
+
 /* Passport auth setup */
 app.use(passport.initialize())
 app.use(passport.session())
@@ -55,6 +60,20 @@ app.use(Body());
 
 /* Adds helpful response methods */
 app.use(respond());
+
+/* Error handling */
+app.use(async (ctx, next) => {
+  try {
+    await next();
+    if (ctx.status == 404) ctx.throw(404, 'Page Not Found');
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.state.error = err;
+    ctx.app.emit('error', err, ctx);
+
+    await ctx.render('error');
+  }
+});
 
 /* Views setup using Pug */
 app.use(
