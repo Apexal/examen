@@ -1,22 +1,14 @@
 const config = require('config');
 const passport = require('koa-passport');
 
-// TODO: remove
-const User = {
-    _id: 1,
-    id: "1",
-    name: 'Frank'
-}
-
-// TODO: const User = require('./db').User;
+const User = require('./db').User;
 
 passport.serializeUser((user, done) => {
-    done(null, user._id)
+  done(null, user._id)
 });
-  
+
 passport.deserializeUser((id, done) => {
-    done(null, User);
-    //User.findById(id, done);
+  User.findById(id, done);
 });
 
 const GoogleStrategy = require('passport-google-auth').Strategy
@@ -24,11 +16,33 @@ passport.use(new GoogleStrategy(config.get('auth.google'),
   (token, tokenSecret, profile, done) => {
     if (profile.domain !== 'regis.org') return done(new Error('Must use a Regis email.'));
     
+    // First email
+    const email = profile.emails[0].value;
+
     // Find user
-    done(null, User);
-    
-    console.log(profile);
-    //User.findOne({ google_id: profile.id }, done);
+    User.findOne({ _google_id: profile.id })
+      .then(user => {
+        if (!user) {
+          // New user
+          user = new User({
+            _google_id: profile.id,
+            isStudent: true /* TODO: check based on email */,
+            name: {
+              first: profile.name.givenName,
+              last: profile.name.familyName
+            },
+            email,
+            dateJoined: new Date()
+          });
+
+          user.save();
+          console.log('Created new student.');
+        }
+
+        console.log('Found student.');
+        done(null, user);
+      })
+      .catch(done);
   }
 ));
 

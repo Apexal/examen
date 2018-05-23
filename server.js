@@ -87,7 +87,7 @@ require('./routes')(router);
 app.use(router.routes()).use(router.allowedMethods());
 
 router.get('/auth/google',
-  passport.authenticate('google')
+  passport.authenticate('google', { scope: ['profile', 'email']/*, session: true */ })
 );
 
 router.get('/auth/google/callback',
