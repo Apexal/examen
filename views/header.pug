@@ -16,13 +16,14 @@ section.hero.is-dark.is-small
       h1.title Ignation Examen
       h2.subtitle Regis High School
 
-  .hero-foot
-    nav.tabs
-      .container
-        ul
-          li.is-active
-            a Home
-          li
-            a Today's Examen
-          li
-            a Examen Archive
+  if loggedIn
+    .hero-foot
+      nav.tabs
+        .container
+          ul
+            li.is-active
+              a Home
+            li
+              a Today's Examen
+            li
+              a Examen Archive
