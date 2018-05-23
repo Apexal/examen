@@ -3,10 +3,4 @@ async function index(ctx) {
   await ctx.render('index');
 }
 
-async function reply(ctx) {
-  let n = ctx.session.views || 0;
-  ctx.session.views = ++n;
-  ctx.body = n + ' views';
-}
-
-module.exports = { index, reply };
+module.exports = { index };

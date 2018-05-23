@@ -67,16 +67,16 @@ app.use(
 require('./routes')(router);
 app.use(router.routes()).use(router.allowedMethods());
 
-app.use(router.get('/auth/google',
+router.get('/auth/google',
   passport.authenticate('google')
-));
+);
 
-app.use(route.get('/auth/google/callback',
+router.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/'
   })
-));
+);
 
 /* Static file serving */
 app.use(serve('./public/images', '/images'));
