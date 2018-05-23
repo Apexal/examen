@@ -22,8 +22,11 @@ passport.deserializeUser((id, done) => {
 const GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy(config.get('auth.google'),
   (token, tokenSecret, profile, done) => {
+    if (profile.domain !== 'regis.org') return done(new Error('Must use a Regis email.'));
+    
     // Find user
     done(null, User);
+    
     console.log(profile);
     //User.findOne({ google_id: profile.id }, done);
   }
