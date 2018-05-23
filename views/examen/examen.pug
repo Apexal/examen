@@ -1,0 +1,20 @@
+extends ../template
+
+block content
+  section.section
+    .container
+      h1.title= examen.title
+
+      nav.breadcrumb.is-centered(aria-label="breadcrumbs")
+        ul
+          li.is-active
+            a(href="#introduction") Introduction
+          li
+            a(href="#question-1") Question 1
+          li
+            a(href="#question-2") Question 2
+          li
+            a(href="#question-3") Question 3
+          li
+            a(href="#question-4") Question 4
+            
