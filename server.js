@@ -78,6 +78,11 @@ router.get('/auth/google/callback',
   })
 );
 
+router.get('/logout', ctx => {
+  ctx.logout();
+  ctx.redirect('/');
+});
+
 /* Static file serving */
 app.use(serve('./public/images', '/images'));
 
