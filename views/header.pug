@@ -2,6 +2,7 @@ section.hero.is-regis.is-small
   .hero-head
     nav.navbar
       .container
+        img.image(src="/images/wordmark.png")
         .navbar-end
           if loggedIn
             span.navbar-item Logged in as #{user.isStudent ? 'Student' : ''} &nbsp;
@@ -14,7 +15,8 @@ section.hero.is-regis.is-small
   .hero-body
     .container
       h1.title Ignatian Examen
-      h2.subtitle Regis High School
+      
+      //h2.subtitle Regis High School
 
   if loggedIn
     .hero-foot
