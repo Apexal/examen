@@ -15,7 +15,7 @@ audio.examen-audio {
   display: none;
 }
 
-#introduction,
-.prompt {
+.new-examen #introduction,
+.new-examen .prompt {
   display: none;
 }

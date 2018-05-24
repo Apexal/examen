@@ -1,6 +1,7 @@
 extends ../template
 
 block content
+  script(src='/scripts/examen.js', defer)
   section.section
     .container
       h1.title= examen.title
@@ -10,26 +11,17 @@ block content
       audio.examen-audio.is-marginless(controls)
       hr
       
-      nav.breadcrumb.is-centered(aria-label="breadcrumbs")
+      nav#examen-breadcrumb.breadcrumb.is-centered(aria-label="breadcrumbs")
         ul
-          li.is-active
-            a(href="#introduction") Introduction
           li
-            a(href="#prompt-1") Prompt 1
-          li
-            a(href="#prompt-2") Prompt 2
-          li
-            a(href="#prompt-3") Prompt 3
-          li
-            a(href="#prompt-4") Prompt 4
+            a(href="#introduction", data-target="introduction") Introduction
+          for p, index in examen.prompts
+            li
+              a(href="#prompt-" + index, data-target="prompt-" + index) Prompt #{index + 1}
+          
       .prompts
         #introduction.content.is-active
-          p= examen.introduction
-        #prompt-1.content
-          p 1
-        #prompt-2.content
-          p 2
-        #prompt-3.content
-          p 3
-        #prompt-4.content
-          p 4
+          | !{examen.introduction}
+        for p, index in examen.prompts
+          .content(id="prompt-" + index)
+            | !{p}
