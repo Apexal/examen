@@ -2,6 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+const moment = require('moment');
+
+/* GET */
+async function redirect_today(ctx) {
+  const start = moment().startOf('day').toDate();
+  const end = moment().endOf('day').toDate();
+
+  let today;
+  try {
+    today = await ctx.db.Examen.findOne({
+      dateAdded: {
+        "$gte": start,
+        "$lt": end
+      }
+    });
+
+    if (today === null) throw new Error('No today\'s examen.');
+  } catch (e) {
+    return await ctx.redirect('/examen/archive');
+  }
+  ctx.redirect('/examen/' + today.id);
+}
+
 /* GET the form to post a new examen */
 async function view_new_examen(ctx) {
   await ctx.render('examen/new');
@@ -64,6 +87,7 @@ async function view_archive(ctx) {
 }
 
 module.exports = {
+  redirect_today,
   view_new_examen,
   save_new_examen,
   view_examen,
