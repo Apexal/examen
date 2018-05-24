@@ -28,6 +28,7 @@ block content
           button.button.is-success.is-pulled-right(type="button", @click="addPrompt") Add Prompt
           h1.subtitle.is-size-4
             b Prompts
+            small.has-text-grey-light  {{ prompts.length }} total
 
           .box(v-for="(text, index) in prompts")
             h1.subtitle Prompt {{ index + 1}}
