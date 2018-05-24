@@ -23,7 +23,7 @@ app.keys = config.get('keys');
 
 app.use(
   compress({
-    filter: function(content_type) {
+    filter: function (content_type) {
       return /text/i.test(content_type);
     },
     threshold: 2048
@@ -90,7 +90,9 @@ require('./routes')(router);
 app.use(router.routes()).use(router.allowedMethods());
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email']/*, session: true */ })
+  passport.authenticate('google', {
+    scope: ['profile', 'email'] /*, session: true */
+  })
 );
 
 router.get('/auth/google/callback',

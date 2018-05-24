@@ -1,3 +1,8 @@
+/* GET the form to post a new examen */
+async function view_new_examen(ctx) {
+  await ctx.render('examen/new');
+}
+
 /* GET one particular examen by ID [maybe date??] */
 async function view_examen(ctx) {
   // Find examen
@@ -5,7 +10,6 @@ async function view_examen(ctx) {
   try {
     // HOW COOL IS THIS
     examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id);
-    
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }
@@ -22,4 +26,8 @@ async function view_archive(ctx) {
   await ctx.render('examen/archive');
 }
 
-module.exports = { view_examen, view_archive };
+module.exports = {
+  view_new_examen,
+  view_examen,
+  view_archive
+};

@@ -1,0 +1,21 @@
+extends ../template
+
+block content
+  section.section
+    .container
+      h1.title New Examen
+      
+      form.new-examen.columns
+        .field.column
+          label.label(for="title") Title
+          .control
+            input#title.input(type="text", name="title", required)
+
+        .field.column
+          label.label Introduction
+          .control
+            div#editor(onload="new Quill(this)")
+        hr
+        .prompts
+            
+      
