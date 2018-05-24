@@ -107,7 +107,4 @@ router.get('/logout', ctx => {
   ctx.redirect('/');
 });
 
-/* Static file serving */
-app.use(serve('./public/images', '/images'));
-
 module.exports = app;

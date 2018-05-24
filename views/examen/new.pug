@@ -1,21 +1,38 @@
 extends ../template
 
 block content
-  section.section
+  script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
+  script(src="/scripts/new.js", defer)
+  section#new-examen.section
     .container
       h1.title New Examen
-      
-      form.new-examen.columns
-        .field.column
-          label.label(for="title") Title
-          .control
-            input#title.input(type="text", name="title", required)
-
-        .field.column
+      form.new-examen(method="POST", @submit="onSubmit")
+        .columns
+          .field.column
+            label.label(for="title") Title
+            .control
+              input#title.input(type="text", name="title", required)
+          .field.column
+            label.label(for="recording") Recording
+            .control
+              input#recording.input(type="file", name="recording", accept="audio/*")
+        
+        .field
           label.label Introduction
           .control
-            div#editor(onload="new Quill(this)")
+            input#introduction(name="introduction", v-model="introduction")
+            div.editor.introduction-editor(data-editing="introduction")
         hr
         .prompts
-            
-      
+          h1.subtitle Prompts
+          button.button.is-success(type="button", @click="addPrompt") Add Prompt
+
+          .box(v-for="(text, index) in prompts")
+            h1.subtitle Prompt {{ index + 1}}
+            .field
+              .control
+                textarea.prompt(type="text", :id="'prompt-' + index", :data-prompt="index", name="prompt", v-model="prompts[index]", required)
+                .editor.prompt-editor(:id="'prompt-' + index + '-editor'", :data-editing="'prompt-' + index", :data-prompt="index")
+        hr
+
+        button.button.is-info.is-large Post Examen

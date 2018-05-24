@@ -3,6 +3,11 @@ async function view_new_examen(ctx) {
   await ctx.render('examen/new');
 }
 
+/* POST */
+async function save_new_examen(ctx) {
+  console.log(ctx.request.body);
+}
+
 /* GET one particular examen by ID [maybe date??] */
 async function view_examen(ctx) {
   // Find examen
@@ -28,6 +33,7 @@ async function view_archive(ctx) {
 
 module.exports = {
   view_new_examen,
+  save_new_examen,
   view_examen,
   view_archive
 };
