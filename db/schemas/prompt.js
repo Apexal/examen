@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+  _examen: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Examen'
+  },
   title: {
     type: String,
     required: true,
     maxlength: 200
   },
-  introduction: {
+  text: {
     type: String,
     required: true,
-    maxlength: 10000
+    maxlength: 2000
   },
-  prompts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Prompt'
-  }],
   dateAdded: {
     type: Date,
     required: true
@@ -23,6 +23,6 @@ const schema = new Schema({
 });
 
 module.exports = {
-  name: 'Examen',
+  name: 'Prompt',
   schema
 };
