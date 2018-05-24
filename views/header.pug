@@ -3,14 +3,15 @@ section.hero.is-regis.is-small
     nav.navbar
       .container
         img.image(src="/images/wordmark.png")
-        .navbar-end
-          if loggedIn
-            span.navbar-item Logged in as #{user.isStudent ? 'Student' : ''} &nbsp;
-              b= user.name.first + " " + user.name.last
-            a.navbar-item(href="/logout") Logout
-          else
-            span.navbar-item
-              a.button.is-dark.is-inverted(href="/auth/google") Login with Regis Account
+        #navbarMenu.navbar-menu
+          .navbar-end
+            if loggedIn
+              span.navbar-item Logged in as #{user.isStudent ? 'Student' : ''} &nbsp;
+                b= user.name.first + " " + user.name.last
+              a.navbar-item(href="/logout") Logout
+            else
+              span.navbar-item
+                a.button.is-dark.is-inverted(href="/auth/google") Login with Regis Account
 
   .hero-body
     .container
