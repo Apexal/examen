@@ -21,14 +21,14 @@ section.hero.is-regis.is-small
     nav.tabs
       .container
         ul
-          li.is-active
+          li(class=helpers.isActive(path, '/'))
             a(href="/") Home
           li
             a(href="/examen/today") Today's Examen
-          li
+          li(class=helpers.isActive(path, '/examen/archive'))
             a(href="/examen/archive") Examen Archive
           if loggedIn
             // TODO: switch
             if user.isStudent
-              li
+              li(class=helpers.isActive(path, '/examen/new'))
                 a(href="/examen/new") Post New Examen
