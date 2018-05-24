@@ -48,6 +48,7 @@ app.context.db = db;
 /* Locals */
 app.use(async (ctx, next) => {
   ctx.state.loggedIn = ctx.isAuthenticated();
+  ctx.state.moment = require('moment');
   await next();
 });
 

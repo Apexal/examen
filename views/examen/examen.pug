@@ -5,13 +5,13 @@ block content
   section.section
     .container
       h1.title.has-text-centered-mobile= examen.title
-        small.is-size-6.has-text-grey-light.is-pulled-right.date Posted #{examen.dateAdded}
-      
+        small.is-size-6.has-text-grey-light.is-pulled-right.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()}
+
       hr
       audio.examen-audio.is-marginless(controls, autoplay=autoplay)
         source(src="/audio/" + examen.recording, type="audio/mpeg")
-      hr
-      
+      hr(style="margin-top: 0px;")
+
       nav#examen-breadcrumb.breadcrumb.is-centered(aria-label="breadcrumbs")
         ul
           li.is-active

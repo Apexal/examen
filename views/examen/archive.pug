@@ -4,7 +4,7 @@ block content
   section.section
     .container
       h1.title.has-text-centered-mobile Examen Archive
-        small.subtitle  #{examens.length} total
+        small.has-text-grey-light.subtitle  #{examens.length} total
       
       .examen-archive
         if examens.length > 0
@@ -21,10 +21,10 @@ block content
                   h3.is-size-4= ex.title
                   .content
                     if ex.introduction
-                      | !{ex.introduction}
+                      .has-text-grey !{ex.introduction}
                     else
                       i.has-text-grey-light No introduction given...
                   
-                  span.is-size-7.has-text-grey-light Posted #{ex.dateAdded}
+                  span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} | #{moment(ex.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")}
         else
           p.has-text-centered.has-text-grey-light No examens have been posted yet...
