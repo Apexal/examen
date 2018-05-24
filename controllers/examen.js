@@ -49,6 +49,9 @@ async function view_examen(ctx) {
     return ctx.throw(404, 'Examen Not Found');
   }
 
+  console.log(ctx.query);
+  ctx.state.autoplay = ctx.query.autoplay === '1';
+
   ctx.state.title = examen.title;
   await ctx.render('examen/examen');
 }
