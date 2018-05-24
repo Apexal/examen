@@ -52,3 +52,7 @@ audio.examen-audio {
 .date {
   font-weight: normal;
 }
+
+.is-fullwidth {
+  width: 100%;
+}
