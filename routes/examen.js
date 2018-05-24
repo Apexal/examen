@@ -3,6 +3,14 @@ const router = new Router();
 
 const Ctrl = require('../controllers/examen');
 
+router.all('/new', async (ctx, next) => {
+  if (ctx.isAuthenticated() && ctx.state.user.isStudent) {
+    await next();
+  } else {
+    await ctx.redirect('/examen/archive');
+  }
+});
+
 router.get('/new', Ctrl.view_new_examen);
 router.post('/new', Ctrl.save_new_examen);
 
