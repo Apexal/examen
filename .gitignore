@@ -59,5 +59,7 @@ typings/
 
 .DS_STORE
 
+client/public/audio
+
 config/*.json
 !config/default.json

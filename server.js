@@ -59,7 +59,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 /* Allows request body parsing */
-app.use(Body());
+app.use(Body({
+  multipart: true
+}));
 
 /* Adds helpful response methods */
 app.use(respond());

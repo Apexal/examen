@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+
 /* GET the form to post a new examen */
 async function view_new_examen(ctx) {
   await ctx.render('examen/new');
@@ -6,14 +10,29 @@ async function view_new_examen(ctx) {
 /* POST */
 async function save_new_examen(ctx) {
   console.log(ctx.request.body);
-  const bdy = ctx.request.body;
+  const bdy = ctx.request.body.fields;
 
   const new_examen = new ctx.db.Examen({
     title: bdy.title,
     introduction: bdy.introduction,
     prompts: bdy.prompt,
     dateAdded: new Date()
-  })
+  });
+
+  // Check for audio file
+  const file = ctx.request.body.files.recording;
+
+  if (file) {
+    const ext = file.name.split('.')[file.name.split('.').length - 1]; // last part
+    const file_name = new_examen.id + '.' + ext;
+
+    const reader = fs.createReadStream(file.path);
+    const stream = fs.createWriteStream(path.join(__dirname, '..', '/client/public/audio/', file_name));
+    reader.pipe(stream);
+    console.log('uploading %s -> %s', file.name, stream.path);
+
+    new_examen.recording = file_name;
+  }
 
   await new_examen.save();
   await ctx.redirect('/examen/archive');

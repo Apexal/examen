@@ -17,6 +17,9 @@ const schema = new Schema({
     trim: true,
     maxlength: 5000
   }],
+  recording: {
+    type: String
+  },
   dateAdded: {
     type: Date,
     required: true
