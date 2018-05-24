@@ -3,6 +3,7 @@ extends ../template
 block content
   script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
   script(src="/scripts/new.js", defer)
+
   section#new-examen.section
     .container
       h1.title New Examen
@@ -16,7 +17,7 @@ block content
             label.label(for="recording") Recording
             .control
               input#recording.input(type="file", name="recording", accept="audio/*")
-        
+
         .field
           label.label Introduction
           .control
@@ -24,8 +25,9 @@ block content
             div.editor.introduction-editor(data-editing="introduction")
         hr
         .prompts
-          h1.subtitle Prompts
-          button.button.is-success(type="button", @click="addPrompt") Add Prompt
+          button.button.is-success.is-pulled-right(type="button", @click="addPrompt") Add Prompt
+          h1.subtitle.is-size-4
+            b Prompts
 
           .box(v-for="(text, index) in prompts")
             h1.subtitle Prompt {{ index + 1}}
