@@ -6,6 +6,17 @@ async function view_new_examen(ctx) {
 /* POST */
 async function save_new_examen(ctx) {
   console.log(ctx.request.body);
+  const bdy = ctx.request.body;
+
+  const new_examen = new ctx.db.Examen({
+    title: bdy.title,
+    introduction: bdy.introduction,
+    prompts: bdy.prompt,
+    dateAdded: new Date()
+  })
+
+  await new_examen.save();
+  await ctx.redirect('/examen/archive');
 }
 
 /* GET one particular examen by ID [maybe date??] */

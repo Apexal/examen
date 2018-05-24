@@ -13,8 +13,9 @@ const schema = new Schema({
     maxlength: 10000
   },
   prompts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Prompt'
+    type: String,
+    trim: true,
+    maxlength: 5000
   }],
   dateAdded: {
     type: Date,
