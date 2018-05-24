@@ -48,3 +48,7 @@ audio.examen-audio {
 .new-examen .prompt {
   display: none;
 }
+
+.date {
+  font-weight: normal;
+}

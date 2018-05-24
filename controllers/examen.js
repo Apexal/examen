@@ -7,7 +7,7 @@ async function view_new_examen(ctx) {
   await ctx.render('examen/new');
 }
 
-/* POST */
+/* POST new examen */
 async function save_new_examen(ctx) {
   console.log(ctx.request.body);
   const bdy = ctx.request.body.fields;
@@ -22,7 +22,7 @@ async function save_new_examen(ctx) {
   // Check for audio file
   const file = ctx.request.body.files.recording;
 
-  if (file) {
+  if (file.size > 0) {
     const ext = file.name.split('.')[file.name.split('.').length - 1]; // last part
     const file_name = new_examen.id + '.' + ext;
 
@@ -49,7 +49,6 @@ async function view_examen(ctx) {
     return ctx.throw(404, 'Examen Not Found');
   }
 
-  console.log(ctx.query);
   ctx.state.autoplay = ctx.query.autoplay === '1';
 
   ctx.state.title = examen.title;

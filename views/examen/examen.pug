@@ -4,8 +4,8 @@ block content
   script(src='/scripts/examen.js', defer)
   section.section
     .container
-      h1.title= examen.title
-        small.is-size-6.has-text-grey-light.is-pulled-right Posted #{examen.dateAdded}
+      h1.title.has-text-centered-mobile= examen.title
+        small.is-size-6.has-text-grey-light.is-pulled-right.date Posted #{examen.dateAdded}
       
       hr
       audio.examen-audio.is-marginless(controls, autoplay=autoplay)

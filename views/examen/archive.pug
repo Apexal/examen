@@ -3,7 +3,7 @@ extends ../template
 block content
   section.section
     .container
-      h1.title Examen Archive
+      h1.title.has-text-centered-mobile Examen Archive
         small.subtitle  #{examens.length} total
       
       .examen-archive
@@ -15,8 +15,9 @@ block content
                   .links
                     a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
                       i.fab.fa-readme(title="Text available.")
-                    a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
-                      i.fas.fa-headphones(title="Audio recording available.")
+                    if ex.recording
+                      a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
+                        i.fas.fa-headphones(title="Audio recording available.")
                   h3.is-size-4= ex.title
                   .content
                     if ex.introduction

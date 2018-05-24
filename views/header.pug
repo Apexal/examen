@@ -14,18 +14,20 @@ section.hero.is-regis.is-small
 
   .hero-body
     .container
-      h1.title Ignatian Examen
-      
-      //h2.subtitle Regis High School
+      h1.title.has-text-centered-mobile Ignatian Examen
 
-  if loggedIn
-    .hero-foot
-      nav.tabs
-        .container
-          ul
-            li.is-active
-              a(href="/") Home
-            li
-              a Today's Examen
-            li
-              a(href="/examen/archive") Examen Archive
+  .hero-foot
+    nav.tabs
+      .container
+        ul
+          li.is-active
+            a(href="/") Home
+          li
+            a Today's Examen
+          li
+            a(href="/examen/archive") Examen Archive
+          if loggedIn
+            // TODO: switch
+            if user.isStudent
+              li
+                a(href="/examen/new") Post New Examen
