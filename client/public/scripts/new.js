@@ -21,6 +21,8 @@ const new_examen_app = new Vue({
       const request = new XMLHttpRequest();
       request.open('POST', '/examen/new');
       request.send(this.getFormData());
+
+      request.onload = () => window.location.href = "/examen/archive";
     },
     addPrompt: function (event) {
       const prompt = {
