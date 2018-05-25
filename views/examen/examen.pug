@@ -20,7 +20,7 @@ block content
             i.fas.fa-arrow-left
           button.button(@click="nextPrompt", :disabled="!hasNextPrompt")
             i.fas.fa-arrow-right
-        .column
+        .column(v-if="!playing && status !== 'introduction'")
           progress.progress(:max="currentDelay", :value="timer") 15%
       hr(style="margin-top: 0px;")
  
@@ -36,4 +36,4 @@ block content
               i.fas.fa-volume-up
             | !{p.text}
             hr
-            b.is-size-4.has-text-centered (Pause for #{p.delay} seconds...)
+            b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
