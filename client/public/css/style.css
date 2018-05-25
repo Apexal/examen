@@ -61,3 +61,7 @@ audio.examen-audio {
   width: 60px !important;
   margin-left: 10px;
 }
+
+.examen-audio:first-child {
+  display: none;
+}

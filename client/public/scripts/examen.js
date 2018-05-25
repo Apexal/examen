@@ -7,3 +7,9 @@ document.querySelectorAll('#examen-breadcrumb li a').forEach(link => {
     link.parentElement.classList.add('is-active');
   }
 });
+
+document.querySelectorAll('a.play-prompt').forEach(link => {
+  const target = document.getElementById('prompt-' + link.dataset.prompt + '-audio');
+
+  link.onclick = () => target.play();
+});

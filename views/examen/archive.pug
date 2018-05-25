@@ -15,7 +15,7 @@ block content
                   .links
                     a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
                       i.fab.fa-readme(title="Text available.")
-                    if ex.recording
+                    if ex.backingTrack || true
                       a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
                         i.fas.fa-headphones(title="Audio recording available.")
                   h3.is-size-4= ex.title

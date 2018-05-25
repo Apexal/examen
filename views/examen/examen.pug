@@ -9,7 +9,7 @@ block content
 
       hr
       audio.examen-audio.is-marginless(controls, autoplay=autoplay)
-        source(src="/audio/" + examen.recording, type="audio/mpeg")
+        source(src="/audio/examens/" + examen.id + "/backing_track.mp3", type="audio/mpeg")
       hr(style="margin-top: 0px;")
 
       nav#examen-breadcrumb.breadcrumb.is-centered(aria-label="breadcrumbs")
@@ -25,4 +25,7 @@ block content
           | !{examen.introduction}
         for p, index in examen.prompts
           .content(id="prompt-" + index)
-            | !{p}
+            audio.examen-audio.is-marginless(controls, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
+            a.play-prompt(data-prompt=index) Listen
+              i.fas.fa-volume-up
+            | !{p.text}
