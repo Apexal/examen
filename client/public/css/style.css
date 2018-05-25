@@ -56,3 +56,8 @@ audio.examen-audio {
 .is-fullwidth {
   width: 100%;
 }
+
+.delay-input {
+  width: 60px !important;
+  margin-left: 10px;
+}

@@ -33,7 +33,6 @@ const new_examen_app = new Vue({
         const audioBlob = new Blob(prompt.chunks);
         const audioUrl = URL.createObjectURL(audioBlob);
         prompt.src = audioUrl;
-        alert('done!');
       }
 
       this.prompts.push(prompt);

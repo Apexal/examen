@@ -31,6 +31,10 @@ block content
             small.has-text-grey-light  {{ prompts.length }} total
 
           .box(v-for="(text, index) in prompts")
+            .field.is-pulled-right
+              .control
+                label.label.is-inline Pause
+                input.is-inline.input.delay-input(type="number", v-model="prompts[index].delay", min=0, max=600, required)
             h1.subtitle Prompt {{ index + 1}}
             .field
               .control
