@@ -8,8 +8,8 @@ block content
       h1.title.has-text-centered-mobile= examen.title
         small.is-size-6.has-text-grey-light.is-pulled-right.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()}
 
-      hr
-      .examen-controls.columns
+      hr.is-marginless-mobile
+      .examen-controls.columns.is-marginless-mobile
         audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track.mp3", volume="0.1", type="audio/mpeg")
         .column.is-one-quarter.has-text-centered-mobile
           button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
@@ -22,7 +22,7 @@ block content
             i.fas.fa-arrow-right
         .column(v-if="!playing && status !== 'introduction'")
           progress.progress(:max="currentDelay", :value="timer") 15%
-      hr(style="margin-top: 0px;")
+        hr.is-marginless-mobile(style="margin-top: 0px;")
  
       .prompts
         #introduction.content(v-if="status == 'introduction'")

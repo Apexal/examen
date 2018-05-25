@@ -61,3 +61,15 @@ audio.examen-audio {
 #new-examen #introduction {
   display: none;
 }
+
+@media only screen and (max-width: 768px) {
+  .is-marginless-mobile {
+    margin: 0;
+  }
+  .examen-controls .column {
+    padding: 0;
+  }
+  .examen-controls {
+    margin-bottom: 10px;
+  }
+}
