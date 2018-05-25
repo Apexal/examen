@@ -12,11 +12,11 @@ block content
           .field.column
             label.label(for="title") Title
             .control
-              input#title.input(type="text", name="title", required)
+              input#title.input(type="text", name="title", v-model="title", required)
           .field.column
-            label.label(for="recording") Recording
+            label.label(for="backing-track") Backing Track
             .control
-              input#recording.input(type="file", name="recording", accept="audio/*")
+              input#backing-track.input(type="file", name="recording", accept="audio/*")
 
         .field
           label.label Introduction
@@ -34,8 +34,13 @@ block content
             h1.subtitle Prompt {{ index + 1}}
             .field
               .control
-                textarea.prompt(type="text", :id="'prompt-' + index", :data-prompt="index", name="prompt", v-model="prompts[index]", required)
+                textarea.prompt(type="text", :id="'prompt-' + index", :data-prompt="index", name="prompt", v-model="prompts[index].text", required)
                 .editor.prompt-editor(:id="'prompt-' + index + '-editor'", :data-editing="'prompt-' + index", :data-prompt="index")
+            
+            hr
+
+            button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-success'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
+            audio(controls, :src="prompts[index].src")
         hr
 
         button.button.is-info.is-large Post Examen
