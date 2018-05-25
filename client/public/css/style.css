@@ -40,15 +40,6 @@ audio.examen-audio {
   width: 100%;
 }
 
-.prompts .content:not(.is-active) {
-  display: none;
-}
-
-.new-examen #introduction,
-.new-examen .prompt {
-  display: none;
-}
-
 .date {
   font-weight: normal;
 }

@@ -1,31 +1,37 @@
 extends ../template
 
 block content
+  script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
   script(src='/scripts/examen.js', defer)
-  section.section
+  section.section#examen
     .container
       h1.title.has-text-centered-mobile= examen.title
         small.is-size-6.has-text-grey-light.is-pulled-right.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()}
 
       hr
-      audio.examen-audio.is-marginless(controls, autoplay=autoplay)
-        source(src="/audio/examens/" + examen.id + "/backing_track.mp3", type="audio/mpeg")
+      .examen-controls.columns
+        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track.mp3", volume="0.1", type="audio/mpeg", autoplay=autoplay)
+        .column.is-one-third
+          button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
+            i.fas.fa-volume-up &nbsp;
+            |  {{ playing ? 'Stop' : 'From Start' }}
+          span.tag.is-info.is-medium {{ statusText }}
+          button.button(@click="prevPrompt", :disabled="!hasPrevPrompt") Prev
+          button.button(@click="nextPrompt", :disabled="!hasNextPrompt") Next
+        .column
+          progress.progress(:value="status === 'introduction' ? 0 : status + 1", :max="promptCount") 15%
       hr(style="margin-top: 0px;")
-
-      nav#examen-breadcrumb.breadcrumb.is-centered(aria-label="breadcrumbs")
-        ul
-          li.is-active
-            a(href="#introduction", data-target="introduction") Introduction
-          for p, index in examen.prompts
-            li
-              a(href="#prompt-" + index, data-target="prompt-" + index) Prompt #{index + 1}
-          
+ 
       .prompts
-        #introduction.content.is-active
+        #introduction.content(v-if="status == 'introduction'")
           | !{examen.introduction}
+          hr
+          b.is-size-4.has-text-centered (Pause for 10 seconds...)
         for p, index in examen.prompts
-          .content(id="prompt-" + index)
-            audio.examen-audio.is-marginless(controls, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
-            a.play-prompt(data-prompt=index) Listen
+          .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
+            audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
+            a.play-prompt(data-prompt=index, @click="playPrompt(" + index + ")") Listen
               i.fas.fa-volume-up
             | !{p.text}
+            hr
+            b.is-size-4.has-text-centered (Pause for {{ timer }} seconds...)
