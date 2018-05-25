@@ -7,7 +7,7 @@ block content
   section#new-examen.section
     .container
       h1.title New Examen
-      form.new-examen(method="POST", enctype="multipart/form-data")
+      form.new-examen(@submit.prevent="handleSubmit", method="POST", enctype="multipart/form-data")
         .columns
           .field.column
             label.label(for="title") Title

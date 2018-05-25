@@ -15,6 +15,13 @@ const new_examen_app = new Vue({
     });
   },
   methods: {
+    handleSubmit: function (event) {
+      alert('not today!');
+
+      const request = new XMLHttpRequest();
+      request.open('POST', '/examen/new');
+      request.send(this.getFormData());
+    },
     addPrompt: function (event) {
       const prompt = {
         text: '',
@@ -22,7 +29,8 @@ const new_examen_app = new Vue({
         recording: false,
         delay: 30,
         chunks: [],
-        src: null
+        src: null,
+        blob: null
       };
 
       prompt.recorder.addEventListener("dataavailable", event => {
@@ -30,8 +38,11 @@ const new_examen_app = new Vue({
       });
 
       prompt.recorder.onstop = () => {
-        const audioBlob = new Blob(prompt.chunks);
+        const audioBlob = new Blob(prompt.chunks, {
+          type: 'audio/mp3'
+        });
         const audioUrl = URL.createObjectURL(audioBlob);
+        prompt.blob = audioBlob;
         prompt.src = audioUrl;
       }
 
@@ -54,6 +65,18 @@ const new_examen_app = new Vue({
     },
     stopRecording: function (index) {
       this.prompts[index].recorder.stop();
+    },
+    getFormData: function () {
+
+      const fd = new FormData();
+      fd.append('title', this.title);
+      fd.append('introduction', this.introduction);
+      fd.append('backingTrack', document.getElementById('backing-track').files[0]);
+      fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
+      fd.append('delays', JSON.stringify(this.prompts.map(p => p.delay)));
+      this.prompts.forEach(p => fd.append('recordings', p.blob));
+      //fd.append('recordings', this.prompts[0].blob);
+      return fd;
     }
   }
 });

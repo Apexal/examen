@@ -35,30 +35,58 @@ async function save_new_examen(ctx) {
   console.log(ctx.request.body);
   const bdy = ctx.request.body.fields;
 
+  // Parse JSON
+  const prompt_texts = JSON.parse(bdy.prompts);
+  const prompt_delays = JSON.parse(bdy.delays);
+  let prompt_recordings = ctx.request.body.files.recordings;
+
+  const prompts = [];
+  for (let i = 0; i < prompt_texts.length; i++) {
+    prompts.push({
+      text: prompt_texts[i],
+      delay: prompt_delays[i]
+    });
+  }
+
   const new_examen = new ctx.db.Examen({
     title: bdy.title,
     introduction: bdy.introduction,
-    prompts: bdy.prompt,
+    prompts,
     dateAdded: new Date()
   });
 
-  // Check for audio file
-  const file = ctx.request.body.files.recording;
-
-  if (file.size > 0) {
-    const ext = file.name.split('.')[file.name.split('.').length - 1]; // last part
-    const file_name = new_examen.id + '.' + ext;
-
+  try {
+    fs.mkdirSync(path.join(__dirname, '..', '/client/public/audio/examens/', new_examen.id));
+  } catch (e) {
+    console.log('what');
+    console.error(e);
+  }
+  const save_audio = (file, name) => {
     const reader = fs.createReadStream(file.path);
-    const stream = fs.createWriteStream(path.join(__dirname, '..', '/client/public/audio/', file_name));
+    const stream = fs.createWriteStream(path.join(__dirname, '..', '/client/public/audio/examens/', new_examen.id, name));
     reader.pipe(stream);
     console.log('uploading %s -> %s', file.name, stream.path);
-
-    new_examen.recording = file_name;
   }
 
+
+  // Check for audio file
+  const backingTrack = ctx.request.body.files.backingTrack;
+
+  if (backingTrack.size > 0) {
+    const ext = backingTrack.name.split('.')[backingTrack.name.split('.').length - 1]; // last part
+    const file_name = 'backing_track.' + ext;
+
+    save_audio(backingTrack, file_name);
+  }
+
+  if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
+  console.log(prompt_recordings);
+
+  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
+
   await new_examen.save();
-  await ctx.redirect('/examen/archive');
+  ctx.ok('nice');
+  //await ctx.redirect('/examen/archive');
 }
 
 /* GET one particular examen by ID [maybe date??] */

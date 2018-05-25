@@ -13,13 +13,17 @@ const schema = new Schema({
     maxlength: 10000
   },
   prompts: [{
-    type: String,
-    trim: true,
-    maxlength: 5000
+    text: {
+      type: String,
+      required: true
+    },
+    delay: {
+      type: Number,
+      min: 0,
+      max: 600,
+      required: true
+    }
   }],
-  recording: {
-    type: String
-  },
   dateAdded: {
     type: Date,
     required: true
