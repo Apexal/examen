@@ -10,16 +10,18 @@ block content
 
       hr
       .examen-controls.columns
-        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track.mp3", volume="0.1", type="audio/mpeg", autoplay=autoplay)
-        .column.is-one-third
+        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track.mp3", volume="0.1", type="audio/mpeg")
+        .column.is-one-quarter.has-text-centered-mobile
           button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
             i.fas.fa-volume-up &nbsp;
             |  {{ playing ? 'Stop' : 'From Start' }}
           span.tag.is-info.is-medium {{ statusText }}
-          button.button(@click="prevPrompt", :disabled="!hasPrevPrompt") Prev
-          button.button(@click="nextPrompt", :disabled="!hasNextPrompt") Next
+          button.button(@click="prevPrompt", :disabled="!hasPrevPrompt")
+            i.fas.fa-arrow-left
+          button.button(@click="nextPrompt", :disabled="!hasNextPrompt")
+            i.fas.fa-arrow-right
         .column
-          progress.progress(:value="status === 'introduction' ? 0 : status + 1", :max="promptCount") 15%
+          progress.progress(:max="currentDelay", :value="timer") 15%
       hr(style="margin-top: 0px;")
  
       .prompts
@@ -34,4 +36,4 @@ block content
               i.fas.fa-volume-up
             | !{p.text}
             hr
-            b.is-size-4.has-text-centered (Pause for {{ timer }} seconds...)
+            b.is-size-4.has-text-centered (Pause for #{p.delay} seconds...)

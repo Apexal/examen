@@ -14,16 +14,19 @@ const examen_app = new Vue({
     status: 'introduction',
     playing: false,
     autocontinue: false,
+    currentDelay: 10,
     timer: 10,
     timerInterval: null,
     promptCount: 0
   },
-  created() {
+  mounted() {
     this.promptCount = document.querySelectorAll('.prompt-content').length;
+    if (window.location.href.includes("autoplay=1")) this.playFromStart();
   },
   methods: {
     playFromStart: function () {
       if (this.playing) return this.stopPlaying();
+      location.href = '#examen';
 
       this.status = 'introduction';
 
@@ -66,6 +69,8 @@ const examen_app = new Vue({
 
       const delay = parseInt(audio.dataset.delay);
       this.timer = delay;
+      this.currentDelay = delay;
+
       if (this.autocontinue) {
         audio.onended = () => {
           this.timerInterval = setInterval(() => {
