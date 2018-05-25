@@ -56,3 +56,8 @@ audio.examen-audio {
 .examen-audio:first-child {
   display: none;
 }
+
+#new-examen texarea,
+#new-examen #introduction {
+  display: none;
+}
