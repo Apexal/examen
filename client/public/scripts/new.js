@@ -16,7 +16,8 @@ const new_examen_app = new Vue({
   },
   methods: {
     handleSubmit: function (event) {
-      alert('not today!');
+      if (!confirm('Are you sure you want to post this new examen?')) return false;
+      if (this.prompts.length === 0) return alert('You must add at least one prompt!');
 
       const request = new XMLHttpRequest();
       request.open('POST', '/examen/new');

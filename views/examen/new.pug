@@ -25,7 +25,7 @@ block content
             div.editor.introduction-editor(data-editing="introduction")
         hr
         .prompts
-          button.button.is-success.is-pulled-right(type="button", @click="addPrompt") Add Prompt
+          
           h1.subtitle.is-size-4
             b Prompts
             small.has-text-grey-light  {{ prompts.length }} total
@@ -43,8 +43,8 @@ block content
             
             hr
 
-            button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-success'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
+            button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
             audio(controls, :src="prompts[index].src")
         hr
-
-        button.button.is-info.is-large Post Examen
+        button.button.is-info.is-large.is-pulled-right Post Examen
+        button.button.is-success(type="button", @click="addPrompt") Add Prompt
