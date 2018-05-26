@@ -74,3 +74,17 @@ audio.examen-audio {
     margin-bottom: 10px;
   }
 }
+
+.prompts {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#introduction.content,
+.content.prompt-content {
+  margin-bottom: 0;
+}
+
+.status-tag {
+  text-transform: capitalize;
+}
