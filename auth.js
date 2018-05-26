@@ -3,6 +3,8 @@ const passport = require('koa-passport');
 
 const User = require('./db').User;
 
+const studentEmailRegex = /[a-zA-Z]+\d{2}@regis.org$/g;
+
 passport.serializeUser((user, done) => {
   done(null, user._id)
 });
@@ -28,7 +30,7 @@ passport.use(new GoogleStrategy(config.get('auth.google'),
           // New user
           user = new User({
             _google_id: profile.id,
-            isStudent: true /* TODO: check based on email */ ,
+            isStudent: studentEmailRegex.test(email),
             name: {
               first: profile.name.givenName,
               last: profile.name.familyName
