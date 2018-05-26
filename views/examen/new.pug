@@ -28,8 +28,11 @@ block content
             .control
               textarea#introduction(type="text", name="introduction", v-model="introduction.text", required)
               .editor.introduction-editor(id="introduction-editor", data-editing="introduction")
-          button.button(type="button", @click="toggleRecording('introduction')", :class="introduction.recording ? 'is-danger' : 'is-warning'") {{ introduction.recording ? 'Stop Recording' : 'Start Recording' }}
-          audio(controls, :src="introduction.src")
+          .columns
+            .column.is-narrow
+              button.button(type="button", @click="toggleRecording('introduction')", :class="introduction.recording ? 'is-danger' : 'is-warning'") {{ introduction.recording ? 'Stop Recording' : 'Start Recording' }}
+            .column
+              audio(controls, :src="introduction.src")
         hr
         .prompts
           
@@ -49,9 +52,11 @@ block content
                 .editor.prompt-editor(:id="'prompt-' + index + '-editor'", :data-editing="'prompt-' + index", :data-prompt="index")
             
             hr
-
-            button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
-            audio(controls, :src="prompts[index].src")
+            .columns
+              .column.is-narrow
+                button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
+              .column
+                audio(controls, :src="prompts[index].src")
           button.button.is-success(type="button", @click="addPrompt") Add Prompt
           
           hr
@@ -65,7 +70,10 @@ block content
             .control
               input#closing(name="closing", v-model="closing.text", required)
               div.editor.closing-editor(data-editing="closing")
-            button.button(type="button", @click="toggleRecording('closing')", :class="closing.recording ? 'is-danger' : 'is-warning'") {{ closing.recording ? 'Stop Recording' : 'Start Recording' }}
-            audio(controls, :src="closing.src")
+          .columns
+            .column.is-narrow
+              button.button(type="button", @click="toggleRecording('closing')", :class="closing.recording ? 'is-danger' : 'is-warning'") {{ closing.recording ? 'Stop Recording' : 'Start Recording' }}
+            .column
+              audio(controls, :src="closing.src")
         hr
         button.button.is-info.is-large.is-pulled-right Post Examen

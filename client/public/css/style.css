@@ -57,6 +57,11 @@ audio.examen-audio {
   display: none;
 }
 
+#new-examen audio {
+  vertical-align: bottom;
+  width: 100%;
+}
+
 #new-examen textarea,
 #new-examen #introduction,
 #new-examen #closing {
