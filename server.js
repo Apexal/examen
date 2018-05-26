@@ -11,8 +11,8 @@ const session = require('koa-session');
 const db = require('./db');
 const static = require('koa-static');
 const passport = require('./auth');
-
 // TODO: find proper flash
+
 
 const config = require('config');
 
@@ -35,12 +35,9 @@ app.use(static('client/public'));
 /* Session setup */
 app.use(session(app));
 
-/* Flash message setup */
-//app.use(flash());
-
 /* Passport auth setup */
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* MongoDB setup */
 app.context.db = db;
@@ -49,11 +46,25 @@ app.context.helpers = require('./helpers');
 
 /* Locals */
 app.use(async (ctx, next) => {
+  if (ctx.session.flash === undefined) {
+    ctx.session.flash = {};
+  }
+  ctx.request.flash = (type, msg) => { // Inject flash function into request
+    ctx.session.flash[type] = msg;
+  };
+
+  ctx.state.flash = ctx.session.flash;
+  ctx.session.flash = {};
+
   ctx.state.path = ctx.request.url;
   ctx.state.helpers = ctx.helpers;
   ctx.state.loggedIn = ctx.isAuthenticated();
   ctx.state.moment = require('moment');
   await next();
+
+  if (ctx.status === 302 && ctx.session && !(ctx.session.flash)) {
+    ctx.session.flash = ctx.sate.flash;
+  }
 });
 
 /* Sets basic security measures */
