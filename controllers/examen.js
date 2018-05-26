@@ -31,6 +31,7 @@ async function redirect_today(ctx) {
 
 /* GET the form to post a new examen */
 async function view_new_examen(ctx) {
+  ctx.state.title = 'New Examen';
   await ctx.render('examen/new');
 }
 
@@ -144,6 +145,7 @@ async function view_archive(ctx) {
   ctx.state.title = 'Archive';
   let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
 
+  // Prevent
   ctx.state.prevPage = Math.max(1, page - 1);
   ctx.state.nextPage = page + 1;
 
