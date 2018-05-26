@@ -52,6 +52,7 @@ async function save_new_examen(ctx) {
     title: bdy.title,
     introduction: bdy.introduction,
     prompts,
+    closing: bdy.closing,
     dateAdded: new Date()
   });
 

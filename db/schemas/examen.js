@@ -24,6 +24,11 @@ const schema = new Schema({
       required: true
     }
   }],
+  closing: {
+    type: String,
+    required: true,
+    maxlength: 10000
+  },
   dateAdded: {
     type: Date,
     required: true

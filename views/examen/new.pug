@@ -45,6 +45,13 @@ block content
 
             button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
             audio(controls, :src="prompts[index].src")
+
+          hr
+          .field
+            label.label Closing
+            .control
+              input#closing(name="closing", v-model="closing")
+              div.editor.closing-editor(data-editing="closing")
         hr
         button.button.is-info.is-large.is-pulled-right Post Examen
         button.button.is-success(type="button", @click="addPrompt") Add Prompt

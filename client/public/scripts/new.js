@@ -6,6 +6,7 @@ const new_examen_app = new Vue({
     title: '',
     backingTrack: null,
     introduction: '',
+    closing: '',
     prompts: []
   },
   created: async function () {
@@ -76,9 +77,9 @@ const new_examen_app = new Vue({
       fd.append('introduction', this.introduction);
       fd.append('backingTrack', document.getElementById('backing-track').files[0]);
       fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
-      fd.append('delays', JSON.stringify(this.prompts.map(p => p.delay)));
+      fd.append('delays', JSON.stringify(this.prompts.map(p => parseInt(p.delay))));
       this.prompts.forEach(p => fd.append('recordings', p.blob));
-      //fd.append('recordings', this.prompts[0].blob);
+      fd.append('closing', this.closing);
       return fd;
     }
   }
@@ -95,9 +96,9 @@ function setupEditor(editor) {
   let target = document.getElementById(editing);
   let quill = new Quill(editor, options);
 
-  if (editing == 'introduction') {
+  if (editing == 'introduction' || editing == 'closing') {
     quill.on('text-change', function (delta, oldDelta, source) {
-      new_examen_app.introduction = editor.firstChild.innerHTML;
+      new_examen_app[editing] = editor.firstChild.innerHTML;
     });
 
     return;
@@ -113,3 +114,4 @@ function setupEditor(editor) {
 
 document.querySelectorAll('.editor.prompt-editor').forEach(setupEditor);
 setupEditor(document.querySelector('.editor.introduction-editor'));
+setupEditor(document.querySelector('.editor.closing-editor'));
