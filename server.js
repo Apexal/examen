@@ -123,6 +123,7 @@ router.get('/auth/google/callback',
 
 router.get('/logout', ctx => {
   ctx.logout();
+  ctx.request.flash('success', 'Successfully logged out.');
   ctx.redirect('/');
 });
 

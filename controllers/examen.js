@@ -20,6 +20,7 @@ async function redirect_today(ctx) {
     });
 
     if (today === null) {
+      ctx.request.flash('warning', 'No examen was posted today.');
       throw new Error('No today\'s examen.');
     }
   } catch (e) {
@@ -102,6 +103,7 @@ async function save_new_examen(ctx, next) {
     id: new_examen.id
   };
 
+  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
   await next();
 }
 
@@ -116,7 +118,8 @@ async function remove_examen(ctx) {
   }
 
   await examen.remove();
-  ctx.redirect('/examen/archive');
+  ctx.request.flash('success', `Successfully removed examen '${examen.title}'.`);
+  ctx.redirect(ctx.router.url('archive'));
 }
 
 /* GET one particular examen by ID [maybe date??] */
