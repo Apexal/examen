@@ -64,6 +64,12 @@ audio.examen-audio {
 }
 
 @media only screen and (max-width: 768px) {
+  .regis-image {
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 0;
+    text-align: center;
+  }
   .is-marginless-mobile {
     margin: 0;
   }
@@ -87,4 +93,8 @@ audio.examen-audio {
 
 .status-tag {
   text-transform: capitalize;
+}
+
+section.section {
+  padding-top: 1.7rem;
 }
