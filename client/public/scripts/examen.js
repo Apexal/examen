@@ -56,15 +56,31 @@ const examen_app = new Vue({
       clearInterval(this.timerInterval);
     },
     hearPrompt: function (index) {
-      const audio = document.getElementById('prompt-' + index + '-audio');
+      const audio = isNaN(index) ? document.getElementById(index + '-audio') : document.getElementById('prompt-' + index + '-audio');
       audio.play();
       backingTrack.volume = 0.2;
       this.playing = true;
+
+      audio.onended = () => {
+        if (this.autocontinue) {
+          this.timerInterval = setInterval(() => {
+            this.timer -= 1;
+            if (this.timer <= 0) {
+              this.resetTimer();
+              this.nextPrompt();
+
+              if (!this.hasNextPrompt) this.autocontinue = false;
+            }
+          }, 1000);
+        }
+        this.playing = false;
+        backingTrack.volume = 1;
+      }
     },
     playPrompt: function (index) {
       this.status = index;
 
-      const audio = document.getElementById('prompt-' + index + '-audio');
+      const audio = isNaN(index) ? document.getElementById(index + '-audio') : document.getElementById('prompt-' + index + '-audio');
       const duration = Math.round(audio.duration);
 
       this.stopPlaying();
@@ -75,20 +91,6 @@ const examen_app = new Vue({
 
       if (this.autocontinue) {
         this.hearPrompt(index);
-
-        audio.onended = () => {
-          this.timerInterval = setInterval(() => {
-            this.timer -= 1;
-            if (this.timer <= 0) {
-              this.resetTimer();
-              this.nextPrompt();
-
-              if (!this.hasNextPrompt) this.autocontinue = false;
-            }
-          }, 1000);
-          this.playing = false;
-          backingTrack.volume = 1;
-        }
       }
     }
   },
@@ -105,7 +107,7 @@ const examen_app = new Vue({
       return this.status !== 'closing';
     },
     getPrevPrompt: function () {
-      if (this.status === 'closing') return this.prompts.length;
+      if (this.status === 'closing') return this.promptCount - 1;
       if (this.status === 0) return 'introduction';
       return this.status - 1;
     },

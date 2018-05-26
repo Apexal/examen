@@ -20,15 +20,15 @@ block content
             i.fas.fa-arrow-left
           button.button(@click="nextPrompt", :disabled="!hasNextPrompt")
             i.fas.fa-arrow-right
-        .column(v-if="!playing && status !== 'introduction'")
+        .column(v-if="autocontinue && (!playing && status !== 'introduction')")
           progress.progress(:max="currentDelay", :value="timer") 15%
         hr.is-marginless-mobile(style="margin-top: 0px;")
  
       .prompts
         #introduction.content(v-if="status == 'introduction'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
-            a.play-prompt(data-prompt="introduction", @click="hearPrompt('introduction')") Listen
-              i.fas.fa-volume-up
+          a.play-prompt(data-prompt="introduction", @click="hearPrompt('introduction')") Listen
+            i.fas.fa-volume-up
           | !{examen.introduction.text}
           hr
           b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.introduction.delay} seconds...)
@@ -42,8 +42,8 @@ block content
             b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
         #closing.content(v-if="status == 'closing'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
-            a.play-prompt(data-prompt="closing", @click="hearPrompt('closing')") Listen
-              i.fas.fa-volume-up
+          a.play-prompt(data-prompt="closing", @click="hearPrompt('closing')") Listen
+            i.fas.fa-volume-up
           | !{examen.closing.text}
           hr
           b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.closing.delay} seconds...)
