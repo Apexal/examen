@@ -58,7 +58,8 @@ audio.examen-audio {
 }
 
 #new-examen textarea,
-#new-examen #introduction {
+#new-examen #introduction,
+#new-examen #closing {
   display: none;
 }
 

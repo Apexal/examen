@@ -5,8 +5,24 @@ const new_examen_app = new Vue({
     stream: null,
     title: '',
     backingTrack: null,
-    introduction: '',
-    closing: '',
+    introduction: {
+      text: '',
+      recorder: null,
+      recording: false,
+      delay: 30,
+      chunks: [],
+      src: null,
+      blob: null
+    },
+    closing: {
+      text: '',
+      recorder: null,
+      recording: false,
+      delay: 30,
+      chunks: [],
+      src: null,
+      blob: null
+    },
     prompts: []
   },
   created: async function () {
@@ -14,8 +30,28 @@ const new_examen_app = new Vue({
       audio: true,
       video: false
     });
+
+    this.introduction.recorder = new MediaRecorder(this.stream);
+    this.setupEvents(this.introduction);
+    this.closing.recorder = new MediaRecorder(this.stream);
+    this.setupEvents(this.closing);
   },
   methods: {
+    setupEvents: target => {
+      target.recorder.addEventListener("dataavailable", event => {
+        target.chunks.push(event.data);
+      });
+
+      target.recorder.onstop = () => {
+        const audioBlob = new Blob(target.chunks, {
+          type: 'audio/mp3'
+        });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        target.blob = audioBlob;
+        target.src = audioUrl;
+        target.load();
+      }
+    },
     handleSubmit: function (event) {
       if (!confirm('Are you sure you want to post this new examen?')) return false;
       if (this.prompts.length === 0) return alert('You must add at least one prompt!');
@@ -37,49 +73,47 @@ const new_examen_app = new Vue({
         blob: null
       };
 
-      prompt.recorder.addEventListener("dataavailable", event => {
-        prompt.chunks.push(event.data);
-      });
-
-      prompt.recorder.onstop = () => {
-        const audioBlob = new Blob(prompt.chunks, {
-          type: 'audio/mp3'
-        });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        prompt.blob = audioBlob;
-        prompt.src = audioUrl;
-      }
+      this.setupEvents(prompt);
 
       this.prompts.push(prompt);
       setTimeout(() => setupEditor(document.getElementById('prompt-' + (this.prompts.length - 1) + '-editor')), 100);
     },
     toggleRecording: function (index) {
-      if (this.prompts[index].recording) {
+      const target = typeof index === 'number' ? this.prompts[index] : this[index];
+      console.log(target);
+      if (target.recording) {
         this.stopRecording(index);
       } else {
         this.startRecording(index);
       }
 
-      this.prompts[index].recording = !this.prompts[index].recording;
+      target.recording = !target.recording;
     },
     startRecording: function (index) {
-      this.prompts[index].chunks = [];
-      this.prompts[index].src = null;
-      this.prompts[index].recorder.start();
+      const target = typeof index === 'number' ? this.prompts[index] : this[index];
+      target.chunks = [];
+      target.src = null;
+      target.recorder.start();
     },
     stopRecording: function (index) {
-      this.prompts[index].recorder.stop();
+      const target = typeof index === 'number' ? this.prompts[index] : this[index];
+      target.recorder.stop();
     },
     getFormData: function () {
 
       const fd = new FormData();
       fd.append('title', this.title);
-      fd.append('introduction', this.introduction);
+
+      fd.append('introduction', this.introduction.text);
+      fd.append('introductionRecording', this.introduction.blob);
+
       fd.append('backingTrack', document.getElementById('backing-track').files[0]);
       fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
-      fd.append('delays', JSON.stringify(this.prompts.map(p => parseInt(p.delay))));
+      fd.append('delays', JSON.stringify(this.prompts.map(p => p.delay)));
       this.prompts.forEach(p => fd.append('recordings', p.blob));
-      fd.append('closing', this.closing);
+
+      fd.append('closing', this.closing.text);
+      fd.append('closingRecording', this.closing.blob);
       return fd;
     }
   }
@@ -93,21 +127,13 @@ const options = {
 
 function setupEditor(editor) {
   let editing = editor.dataset.editing;
-  let target = document.getElementById(editing);
   let quill = new Quill(editor, options);
 
-  if (editing == 'introduction' || editing == 'closing') {
-    quill.on('text-change', function (delta, oldDelta, source) {
-      new_examen_app[editing] = editor.firstChild.innerHTML;
-    });
-
-    return;
-  }
-
-  let prompt = target.dataset.prompt;
+  let prompt = parseInt(editor.dataset.prompt);
+  let thing = isNaN(prompt) ? new_examen_app[editing] : new_examen_app.prompts[parseInt(prompt)];
 
   quill.on('text-change', function (delta, oldDelta, source) {
-    new_examen_app.prompts[prompt].text = editor.firstChild.innerHTML;
+    thing.text = editor.firstChild.innerHTML;
     //Vue.set(new_examen_app.prompts, prompt, 'text', editor.firstChild.innerHTML);
   });
 }

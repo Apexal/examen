@@ -18,11 +18,18 @@ block content
             .control
               input#backing-track.input(type="file", name="recording", accept="audio/*")
 
-        .field
-          label.label Introduction
-          .control
-            input#introduction(name="introduction", v-model="introduction")
-            div.editor.introduction-editor(data-editing="introduction")
+        .column
+          .field.is-pulled-right
+            .control
+              label.label.is-inline Pause
+              input.is-inline.input.delay-input(type="number", v-model.number="introduction.delay", min=0, max=600, required)
+          h1.subtitle Introduction
+          .field
+            .control
+              textarea#introduction(type="text", name="introduction", v-model="introduction.text", required)
+              .editor.introduction-editor(id="introduction-editor", data-editing="introduction")
+          button.button(type="button", @click="toggleRecording('introduction')", :class="introduction.recording ? 'is-danger' : 'is-warning'") {{ introduction.recording ? 'Stop Recording' : 'Start Recording' }}
+          audio(controls, :src="introduction.src")
         hr
         .prompts
           
@@ -34,7 +41,7 @@ block content
             .field.is-pulled-right
               .control
                 label.label.is-inline Pause
-                input.is-inline.input.delay-input(type="number", v-model="prompts[index].delay", min=0, max=600, required)
+                input.is-inline.input.delay-input(type="number", v-model.number="prompts[index].delay", min=0, max=600, required)
             h1.subtitle Prompt {{ index + 1}}
             .field
               .control
@@ -45,13 +52,20 @@ block content
 
             button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
             audio(controls, :src="prompts[index].src")
-
+          button.button.is-success(type="button", @click="addPrompt") Add Prompt
+          
           hr
+
+          .field.is-pulled-right
+            .control
+              label.label.is-inline Pause
+              input.is-inline.input.delay-input(type="number", v-model.number="closing.delay", min=0, max=600, required)
           .field
             label.label Closing
             .control
-              input#closing(name="closing", v-model="closing")
+              input#closing(name="closing", v-model="closing.text")
               div.editor.closing-editor(data-editing="closing")
+            button.button(type="button", @click="toggleRecording('closing')", :class="closing.recording ? 'is-danger' : 'is-warning'") {{ closing.recording ? 'Stop Recording' : 'Start Recording' }}
+            audio(controls, :src="closing.src")
         hr
         button.button.is-info.is-large.is-pulled-right Post Examen
-        button.button.is-success(type="button", @click="addPrompt") Add Prompt
