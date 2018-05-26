@@ -99,13 +99,12 @@ async function save_new_examen(ctx, next) {
   prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
 
   await new_examen.save();
+  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
+
   ctx.ok({
     success: true,
     id: new_examen.id
   });
-
-  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
-  await next();
 }
 
 /* POST remove examen */
