@@ -8,9 +8,17 @@ const schema = new Schema({
     maxlength: 200
   },
   introduction: {
-    type: String,
-    required: true,
-    maxlength: 10000
+    text: {
+      type: String,
+      required: true,
+      maxlength: 10000
+    },
+    delay: {
+      type: Number,
+      min: 0,
+      max: 600,
+      required: true
+    }
   },
   prompts: [{
     text: {
@@ -25,9 +33,17 @@ const schema = new Schema({
     }
   }],
   closing: {
-    type: String,
-    required: true,
-    maxlength: 10000
+    text: {
+      type: String,
+      required: true,
+      maxlength: 10000
+    },
+    delay: {
+      type: Number,
+      min: 0,
+      max: 600,
+      required: true
+    }
   },
   dateAdded: {
     type: Date,

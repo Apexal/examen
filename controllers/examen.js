@@ -50,9 +50,15 @@ async function save_new_examen(ctx) {
 
   const new_examen = new ctx.db.Examen({
     title: bdy.title,
-    introduction: bdy.introduction,
+    introduction: {
+      text: bdy.introduction,
+      delay: bdy.introductionDelay
+    },
     prompts,
-    closing: bdy.closing,
+    closing: {
+      text: bdy.closing,
+      delay: bdy.closingDelay
+    },
     dateAdded: new Date()
   });
 

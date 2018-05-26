@@ -106,6 +106,7 @@ const new_examen_app = new Vue({
 
       fd.append('introduction', this.introduction.text);
       fd.append('introductionRecording', this.introduction.blob);
+      fd.append('introductionDelay', this.introduction.delay);
 
       fd.append('backingTrack', document.getElementById('backing-track').files[0]);
       fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
@@ -114,6 +115,7 @@ const new_examen_app = new Vue({
 
       fd.append('closing', this.closing.text);
       fd.append('closingRecording', this.closing.blob);
+      fd.append('closingDelay', this.closing.delay);
       return fd;
     }
   }
