@@ -21,7 +21,7 @@ async function redirect_today(ctx) {
   } catch (e) {
     return await ctx.redirect('/examen/archive');
   }
-  ctx.redirect('/examen/' + today.id);
+  ctx.redirect(ctx.router.url('examen', today.id));
 }
 
 /* GET the form to post a new examen */
@@ -31,7 +31,6 @@ async function view_new_examen(ctx) {
 
 /* POST new examen */
 async function save_new_examen(ctx, next) {
-  console.log(ctx.request.body);
   const bdy = ctx.request.body.fields;
 
   // Parse JSON
@@ -86,7 +85,7 @@ async function save_new_examen(ctx, next) {
   const introRecording = ctx.request.body.files.introRecording;
   ['introduction', 'closing'].forEach(t => {
     const f = ctx.request.body.files[t + 'Recording'];
-    if (f.size > 0) save_audio(f, t + '.mp3');
+    if (f) save_audio(f, t + '.mp3');
   });
 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
