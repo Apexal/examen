@@ -72,6 +72,11 @@ audio.examen-audio {
   display: none;
 }
 
+.regis-image {
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
 @media only screen and (max-width: 768px) {
   .regis-image {
     width: 100%;
