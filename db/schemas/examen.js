@@ -1,3 +1,6 @@
+const path = require('path');
+const rimraf = require('rimraf');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -49,6 +52,13 @@ const schema = new Schema({
     type: Date,
     required: true
   }
+});
+
+/* When an examen is deleted, its recording folder should also be deleted. */
+schema.pre('remove', function (next) {
+  const dir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', this.id);
+  logger(`Removing examen and dir: ${dir}`);
+  rimraf(dir, next);
 });
 
 module.exports = {

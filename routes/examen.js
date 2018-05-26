@@ -20,5 +20,6 @@ router.get('/archive', Ctrl.view_archive);
 
 router.get('/:id', Ctrl.view_examen);
 
+router.get('/:id/remove', Ctrl.remove_examen);
 
 module.exports = router.routes();

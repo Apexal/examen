@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-
 const moment = require('moment');
 
 /* GET */
@@ -31,7 +30,7 @@ async function view_new_examen(ctx) {
 }
 
 /* POST new examen */
-async function save_new_examen(ctx) {
+async function save_new_examen(ctx, next) {
   console.log(ctx.request.body);
   const bdy = ctx.request.body.fields;
 
@@ -65,7 +64,6 @@ async function save_new_examen(ctx) {
   try {
     fs.mkdirSync(path.join(__dirname, '..', '/client/public/audio/examens/', new_examen.id));
   } catch (e) {
-    console.log('what');
     console.error(e);
   }
   const save_audio = (file, name) => {
@@ -74,7 +72,6 @@ async function save_new_examen(ctx) {
     reader.pipe(stream);
     console.log('uploading %s -> %s', file.name, stream.path);
   }
-
 
   // Check for audio file
   const backingTrack = ctx.request.body.files.backingTrack;
@@ -93,13 +90,30 @@ async function save_new_examen(ctx) {
   });
 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
-  console.log(prompt_recordings);
 
   prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
 
   await new_examen.save();
-  ctx.ok('nice');
-  //await ctx.redirect('/examen/archive');
+  ctx.body = {
+    success: true,
+    id: new_examen.id
+  };
+
+  await next();
+}
+
+/* POST remove examen */
+async function remove_examen(ctx) {
+  const id = ctx.params.id;
+  let examen;
+  try {
+    examen = await ctx.db.Examen.findById(id);
+  } catch (e) {
+    return ctx.throw(404, 'Examen Not Found');
+  }
+
+  await examen.remove();
+  ctx.redirect('/examen/archive');
 }
 
 /* GET one particular examen by ID [maybe date??] */
@@ -131,6 +145,7 @@ module.exports = {
   redirect_today,
   view_new_examen,
   save_new_examen,
+  remove_examen,
   view_examen,
   view_archive
 };
