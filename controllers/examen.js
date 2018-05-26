@@ -135,7 +135,9 @@ async function view_examen(ctx) {
 /* GET a list of all posted examens */
 async function view_archive(ctx) {
   ctx.state.title = 'Archive';
-  ctx.state.examens = await ctx.db.Examen.find();
+  ctx.state.examens = await ctx.db.Examen.find().sort({
+    dateAdded: -1
+  });
 
   await ctx.render('examen/archive');
 }
