@@ -15,7 +15,9 @@ async function redirect_today(ctx) {
         "$gte": start,
         "$lt": end
       }
-    });
+    }).sort({
+      dateAdded: -1
+    });;
 
     if (today === null) throw new Error('No today\'s examen.');
   } catch (e) {

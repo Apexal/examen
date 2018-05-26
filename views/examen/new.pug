@@ -63,7 +63,7 @@ block content
           .field
             label.label Closing
             .control
-              input#closing(name="closing", v-model="closing.text")
+              input#closing(name="closing", v-model="closing.text", required)
               div.editor.closing-editor(data-editing="closing")
             button.button(type="button", @click="toggleRecording('closing')", :class="closing.recording ? 'is-danger' : 'is-warning'") {{ closing.recording ? 'Stop Recording' : 'Start Recording' }}
             audio(controls, :src="closing.src")
