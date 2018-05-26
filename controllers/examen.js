@@ -142,8 +142,16 @@ async function view_examen(ctx) {
 /* GET a list of all posted examens */
 async function view_archive(ctx) {
   ctx.state.title = 'Archive';
-  ctx.state.examens = await ctx.db.Examen.find().sort({
-    dateAdded: -1
+  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
+
+  ctx.state.prevPage = Math.max(1, page - 1);
+  ctx.state.nextPage = page + 1;
+
+  ctx.state.data = await ctx.db.Examen.paginate({}, {
+    sort: {
+      dateAdded: -1
+    },
+    page
   });
 
   await ctx.render('examen/archive');

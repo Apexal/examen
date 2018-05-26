@@ -4,6 +4,8 @@ const rimraf = require('rimraf');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const paginate = require('mongoose-paginate');
+
 const schema = new Schema({
   title: {
     type: String,
@@ -53,6 +55,8 @@ const schema = new Schema({
     required: true
   }
 });
+
+schema.plugin(paginate);
 
 /* When an examen is deleted, its recording folder should also be deleted. */
 schema.pre('remove', function (next) {

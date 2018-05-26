@@ -1,11 +1,25 @@
 nav.pagination(role="navigation", aria-lable="pagination")
-  a.pagination-previous Prev
-  a.pagination-next Next
+  a.pagination-previous(href="?page=" + prevPage) Prev
+  a.pagination-next(href="?page=" + nextPage) Next
   
   ul.pagination-list
     li
-      a.pagination-link.is-current 1
-    li
-      a.pagination-link 2
-    li
-      a.pagination-link 3
+      a.pagination-link(class=(data.page === 1 ? 'is-current' : ''), href="?page=1") 1
+    if data.page > 2
+      li
+        span.pagination-ellipsis &hellip;
+      li
+        a.pagination-link(href="?page=" + prevPage)= prevPage
+      li
+        a.pagination-link.is-current= data.page
+      li
+        a.pagination-link(href="?page=" + nextPage)= nextPage
+      li
+        span.pagination-ellipsis &hellip;
+    else
+      for i in data.pages
+        li
+          a.pagination-link(href="?page=" + i)= i
+    if data.pages > 1
+      li
+        a.pagination-link(href="?page=" + data.pages, class=(data.page === data.pages ? 'is-current' : ''))= data.pages

@@ -4,12 +4,12 @@ block content
   section.section
     .container
       h1.title.has-text-centered-mobile Examen Archive
-        small.has-text-grey-light.subtitle  #{examens.length} total
+        small.has-text-grey-light.subtitle  #{data.total} total
       include _pagination
       .examen-archive
-        if examens.length > 0
+        if data.docs.length > 0
           .columns.is-multiline
-            for ex in examens
+            for ex in data.docs
               .column.is-half
                 .box
                   .links
