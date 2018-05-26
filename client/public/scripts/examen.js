@@ -25,18 +25,15 @@ const examen_app = new Vue({
   },
   methods: {
     playFromStart: function () {
-      if (this.playing) return this.stopPlaying();
+      this.stopPlaying();
+      if (this.playing) return;
       location.href = '#examen';
-
-      this.status = 'introduction';
 
       backingTrack.load();
       backingTrack.play();
 
-      this.playing = true;
       this.autocontinue = true;
-
-      this.playPrompt(status);
+      this.playPrompt('introduction');
     },
     stopPlaying: function () {
       document.querySelectorAll('audio.prompt-recording').forEach(a => a.load());
@@ -56,12 +53,12 @@ const examen_app = new Vue({
       clearInterval(this.timerInterval);
     },
     hearPrompt: function (index) {
-      const audio = isNaN(index) ? document.getElementById(index + '-audio') : document.getElementById('prompt-' + index + '-audio');
-      audio.play();
+      this.stopPlaying();
+      this.currentAudio.play();
       backingTrack.volume = 0.2;
       this.playing = true;
 
-      audio.onended = () => {
+      this.currentAudio.onended = () => {
         if (this.autocontinue) {
           this.timerInterval = setInterval(() => {
             this.timer -= 1;
@@ -80,12 +77,9 @@ const examen_app = new Vue({
     playPrompt: function (index) {
       this.status = index;
 
-      const audio = isNaN(index) ? document.getElementById(index + '-audio') : document.getElementById('prompt-' + index + '-audio');
-      const duration = Math.round(audio.duration);
-
       this.stopPlaying();
 
-      const delay = parseInt(audio.dataset.delay);
+      const delay = parseInt(this.currentAudio.dataset.delay);
       this.timer = delay;
       this.currentDelay = delay;
 
@@ -96,6 +90,9 @@ const examen_app = new Vue({
   },
   computed: {
     totalDuration: () => Array.from(document.querySelectorAll('audio.examen-audio')).reduce((acc, a) => acc + parseInt(a.duration), 0),
+    currentAudio: function () {
+      return isNaN(this.status) ? document.getElementById(this.status + '-audio') : document.getElementById('prompt-' + this.status + '-audio');
+    },
     statusText: function () {
       if (this.status === 'introduction' || this.status === 'closing') return this.status;
       return `Prompt ${this.status + 1}`;

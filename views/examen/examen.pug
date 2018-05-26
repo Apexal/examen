@@ -16,18 +16,18 @@ block content
             i.fas.fa-volume-up &nbsp;
             |  {{ playing ? 'Stop' : 'From Start' }}
           span.tag.is-info.is-medium {{ statusText }}
-          button.button(@click="prevPrompt", :disabled="!hasPrevPrompt")
+          button.button(@click="autocontinue = false; prevPrompt();", :disabled="!hasPrevPrompt")
             i.fas.fa-arrow-left
-          button.button(@click="nextPrompt", :disabled="!hasNextPrompt")
+          button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")
             i.fas.fa-arrow-right
-        .column(v-if="autocontinue && (!playing && status !== 'introduction')")
+        .column(v-if="autocontinue && !playing")
           progress.progress(:max="currentDelay", :value="timer") 15%
         hr.is-marginless-mobile(style="margin-top: 0px;")
  
       .prompts
-        #introduction.content(v-if="status == 'introduction'")
+        #introduction.content(v-show="status == 'introduction'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
-          a.play-prompt(data-prompt="introduction", @click="hearPrompt('introduction')") Listen
+          a.play-prompt(v-if="!autocontinue", data-prompt="introduction", @click="hearPrompt('introduction')") Listen
             i.fas.fa-volume-up
           | !{examen.introduction.text}
           hr
@@ -35,14 +35,14 @@ block content
         for p, index in examen.prompts
           .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
-            a.play-prompt(data-prompt=index, @click="hearPrompt(" + index + ")") Listen
+            a.play-prompt(v-if="!autocontinue", data-prompt=index, @click="hearPrompt(" + index + ")") Listen
               i.fas.fa-volume-up
             | !{p.text}
             hr
             b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
-        #closing.content(v-if="status == 'closing'")
+        #closing.content(v-show="status == 'closing'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
-          a.play-prompt(data-prompt="closing", @click="hearPrompt('closing')") Listen
+          a.play-prompt(v-if="!autocontinue", data-prompt="closing", @click="hearPrompt('closing')") Listen
             i.fas.fa-volume-up
           | !{examen.closing.text}
           hr
