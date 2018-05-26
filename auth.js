@@ -3,50 +3,63 @@ const passport = require('koa-passport');
 
 const User = require('./db').User;
 
-const studentEmailRegex = /[a-zA-Z]+\d{2}@regis.org$/g;
+// This regex matches emails in the student format
+// username + 2 digit graduation year + '@regis.org'
+const studentEmailRegex = /^[a-zA-Z]+\d{2}@regis.org$/g;
 
+/* Saves the user id to the session */
 passport.serializeUser((user, done) => {
   done(null, user._id)
 });
 
+/* Gets the user from the saved id serialized above */
 passport.deserializeUser((id, done) => {
   User.findById(id, done);
 });
 
-const GoogleStrategy = require('passport-google-auth').Strategy
+const GoogleStrategy = require('passport-google-auth').Strategy;
 passport.use(new GoogleStrategy(config.get('auth.google'),
-  (token, tokenSecret, profile, done) => {
+  async (token, tokenSecret, profile, done) => {
+    // Ensure only Regis google accounts can be used
     if (profile.domain !== 'regis.org') return done(new Error('Must use a Regis email.'));
 
     // First email
     const email = profile.emails[0].value;
 
     // Find user
-    User.findOne({
+    let user;
+
+    try {
+      user = await User.findOne({
         _google_id: profile.id
-      })
-      .then(user => {
-        if (!user) {
-          // New user
-          user = new User({
-            _google_id: profile.id,
-            isStudent: studentEmailRegex.test(email),
-            name: {
-              first: profile.name.givenName,
-              last: profile.name.familyName
-            },
-            email,
-            dateJoined: new Date()
-          });
+      });
+    } catch (e) {
+      return done(e);
+    }
 
-          user.save();
-          console.log('Created new student.');
-        }
+    if (!user) {
+      // New user
+      user = new User({
+        _google_id: profile.id, // Users have an _id and a separate _google_id
+        isStudent: studentEmailRegex.test(email),
+        name: {
+          first: profile.name.givenName,
+          last: profile.name.familyName
+        },
+        email,
+        dateJoined: new Date()
+      });
 
-        console.log('Found student.');
-        done(null, user);
-      })
-      .catch(done);
+      try {
+        await user.save();
+      } catch (e) {
+        return done(e);
+      }
+      console.log('Created new user.');
+    }
+
+    console.log('Found user.');
+    done(null, user);
   }
 ));
 
