@@ -25,8 +25,12 @@ const examen_app = new Vue({
   },
   methods: {
     playFromStart: function () {
+      if (this.playing) {
+        backingTrack.load();
+        return this.stopPlaying();
+      }
+
       this.stopPlaying();
-      if (this.playing) return;
       location.href = '#examen';
 
       backingTrack.load();
