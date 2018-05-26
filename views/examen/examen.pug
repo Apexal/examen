@@ -44,6 +44,8 @@ block content
             i.fas.fa-volume-up
           | !{examen.closing.text}
           b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.closing.delay} seconds...)
-      hr
-      form(action="/examen/" + examen.id + "/remove", method="POST")
-        button.button.is-danger Delete Examen
+      // TODO: switch to staff check
+      if loggedIn && user.isStudent
+        hr
+        form(action="/examen/" + examen.id + "/remove", method="POST")
+          button.button.is-danger Delete Examen

@@ -5,7 +5,7 @@ const Ctrl = require('../controllers/examen');
 
 router.get('/today', Ctrl.redirect_today);
 
-router.all('/new', async (ctx, next) => {
+router.all(['/new', '/:id/remove'], async (ctx, next) => {
   if (ctx.isAuthenticated() && ctx.state.user.isStudent) {
     await next();
   } else {
