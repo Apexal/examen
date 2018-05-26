@@ -1,3 +1,17 @@
+const default_introduction = `<p>Let us continue together the practice of the Examen. Please sit comfortably. Put everything out of your hands. Try to be silent and still. Close your eyes if you wish. If you are in hallway find place to pause and relax.</p>
+<p>There will be moments of silence, stay with it.</p>
+In the name of the Father, and of the Son, and of the Holy Spirit.
+<h3>Amen</h3>`;
+
+const default_closing = `<p>Please join in closing with the <b>Glory Be</b>.</p>
+<p>Glory be to the Father, and to the Son, and to the Holy Spirit,
+As it was in the begininning, is now, and ever shall be,
+World without end, Amen.</p>
+<p>Saint Ignatius and Saint John Francis Regis,
+Pray for us.</p>
+<p>In the name of the Father, and of the Son, and of the Holy Spirit.
+<h3>Amen</h3></p>`;
+
 const new_examen_app = new Vue({
   name: 'new-examen',
   el: '#new-examen',
@@ -6,19 +20,19 @@ const new_examen_app = new Vue({
     title: '',
     backingTrack: null,
     introduction: {
-      text: '',
+      text: default_introduction,
       recorder: null,
       recording: false,
-      delay: 30,
+      delay: 5,
       chunks: [],
       src: null,
       blob: null
     },
     closing: {
-      text: '',
+      text: default_closing,
       recorder: null,
       recording: false,
-      delay: 30,
+      delay: 5,
       chunks: [],
       src: null,
       blob: null
@@ -133,6 +147,8 @@ function setupEditor(editor) {
 
   let prompt = parseInt(editor.dataset.prompt);
   let thing = isNaN(prompt) ? new_examen_app[editing] : new_examen_app.prompts[parseInt(prompt)];
+  if (editing === 'introduction') editor.firstChild.innerHTML = default_introduction;
+  if (editing === 'closing') editor.firstChild.innerHTML = default_closing;
 
   quill.on('text-change', function (delta, oldDelta, source) {
     thing.text = editor.firstChild.innerHTML;
