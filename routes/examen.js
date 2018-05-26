@@ -3,15 +3,17 @@ const router = new Router();
 
 const Ctrl = require('../controllers/examen');
 
-router.get('/today', Ctrl.redirect_today);
-
+/* Allows only teachers to use theses routes */
 router.all(['/new', '/:id/remove'], async (ctx, next) => {
-  if (ctx.isAuthenticated() && ctx.state.user.isStudent) {
+  if (ctx.isAuthenticated() && ctx.state.user.isStudent) { // TODO: switch to staff
     await next();
   } else {
-    await ctx.redirect('/examen/archive');
+    ctx.request.flash('danger', 'You must be logged in as a teacher to view that page.');
+    await ctx.redirect(ctx.router.url('archive'));
   }
 });
+
+router.get('/today', Ctrl.redirect_today);
 
 router.get('/new', Ctrl.view_new_examen);
 router.post('/new', Ctrl.save_new_examen);
