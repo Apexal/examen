@@ -63,7 +63,7 @@ app.use(async (ctx, next) => {
   await next();
 
   if (ctx.status === 302 && ctx.session && !(ctx.session.flash)) {
-    ctx.session.flash = ctx.sate.flash;
+    ctx.session.flash = ctx.state.flash;
   }
 });
 
