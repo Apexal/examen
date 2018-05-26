@@ -80,6 +80,12 @@ async function save_new_examen(ctx) {
     save_audio(backingTrack, file_name);
   }
 
+  const introRecording = ctx.request.body.files.introRecording;
+  ['introduction', 'closing'].forEach(t => {
+    const f = ctx.request.body.files[t + 'Recording'];
+    if (f.size > 0) save_audio(f, t + '.mp3');
+  });
+
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
   console.log(prompt_recordings);
 
