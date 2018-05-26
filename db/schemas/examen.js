@@ -50,6 +50,10 @@ const schema = new Schema({
       required: true
     }
   },
+  backingTrackExt: {
+    type: String,
+    maxlength: 10
+  },
   dateAdded: {
     type: Date,
     required: true

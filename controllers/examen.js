@@ -85,6 +85,8 @@ async function save_new_examen(ctx, next) {
     const ext = backingTrack.name.split('.')[backingTrack.name.split('.').length - 1]; // last part
     const file_name = 'backing_track.' + ext;
 
+    new_examen.backingTrackExt = ext;
+
     save_audio(backingTrack, file_name);
   }
 

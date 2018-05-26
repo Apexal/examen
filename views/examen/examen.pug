@@ -10,7 +10,7 @@ block content
 
       hr.is-marginless-mobile
       .examen-controls.columns.is-marginless-mobile
-        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track.mp3", volume="0.1", type="audio/mpeg")
+        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/mpeg")
         .column.is-narrow.has-text-centered-mobile
           button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
             i.fas.fa-volume-up &nbsp;
