@@ -57,7 +57,7 @@ const schema = new Schema({
 /* When an examen is deleted, its recording folder should also be deleted. */
 schema.pre('remove', function (next) {
   const dir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', this.id);
-  logger(`Removing examen and dir: ${dir}`);
+  console.log(`Removing examen and dir: ${dir}`);
   rimraf(dir, next);
 });
 

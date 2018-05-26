@@ -94,7 +94,8 @@ app.use(
 
 /* Router setup */
 require('./routes')(router);
-app.use(router.routes()).use(router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 router.get('/auth/google',
   passport.authenticate('google', {

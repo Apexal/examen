@@ -16,10 +16,9 @@ router.all('/new', async (ctx, next) => {
 router.get('/new', Ctrl.view_new_examen);
 router.post('/new', Ctrl.save_new_examen);
 
-router.get('/archive', Ctrl.view_archive);
+router.get('archive', '/archive', Ctrl.view_archive);
 
-router.get('/:id', Ctrl.view_examen);
-
-router.get('/:id/remove', Ctrl.remove_examen);
+router.get('examen', '/:id', Ctrl.view_examen);
+router.post('/:id/remove', Ctrl.remove_examen);
 
 module.exports = router.routes();
