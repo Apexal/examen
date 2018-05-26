@@ -26,9 +26,12 @@ block content
  
       .prompts
         #introduction.content(v-if="status == 'introduction'")
-          | !{examen.introduction}
+          audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
+            a.play-prompt(data-prompt="introduction", @click="hearPrompt('introduction')") Listen
+              i.fas.fa-volume-up
+          | !{examen.introduction.text}
           hr
-          b.is-size-4.has-text-centered (Pause for 10 seconds...)
+          b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.introduction.delay} seconds...)
         for p, index in examen.prompts
           .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
@@ -37,3 +40,10 @@ block content
             | !{p.text}
             hr
             b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
+        #closing.content(v-if="status == 'closing'")
+          audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
+            a.play-prompt(data-prompt="closing", @click="hearPrompt('closing')") Listen
+              i.fas.fa-volume-up
+          | !{examen.closing.text}
+          hr
+          b.is-size-4.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.closing.delay} seconds...)

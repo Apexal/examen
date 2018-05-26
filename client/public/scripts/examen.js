@@ -36,7 +36,7 @@ const examen_app = new Vue({
       this.playing = true;
       this.autocontinue = true;
 
-      setTimeout(this.nextPrompt, 10 * 1000);
+      this.playPrompt(status);
     },
     stopPlaying: function () {
       document.querySelectorAll('audio.prompt-recording').forEach(a => a.load());
@@ -45,11 +45,11 @@ const examen_app = new Vue({
     },
     prevPrompt: function () {
       if (!this.hasPrevPrompt) return;
-      this.playPrompt(this.status === 0 ? 'introduction' : this.status - 1);
+      this.playPrompt(this.getPrevPrompt);
     },
     nextPrompt: function () {
       if (!this.hasNextPrompt) return;
-      this.playPrompt(this.status === 'introduction' ? 0 : this.status + 1);
+      this.playPrompt(this.getNextPrompt);
     },
     resetTimer: function () {
       this.timer = 0;
@@ -95,14 +95,24 @@ const examen_app = new Vue({
   computed: {
     totalDuration: () => Array.from(document.querySelectorAll('audio.examen-audio')).reduce((acc, a) => acc + parseInt(a.duration), 0),
     statusText: function () {
-      if (this.status === 'introduction') return 'Introduction';
+      if (this.status === 'introduction' || this.status === 'closing') return this.status;
       return `Prompt ${this.status + 1}`;
     },
     hasPrevPrompt: function () {
       return this.status !== 'introduction';
     },
     hasNextPrompt: function () {
-      return this.status === 'introduction' || this.status < this.promptCount - 1;
+      return this.status !== 'closing';
+    },
+    getPrevPrompt: function () {
+      if (this.status === 'closing') return this.prompts.length;
+      if (this.status === 0) return 'introduction';
+      return this.status - 1;
+    },
+    getNextPrompt: function () {
+      if (this.status === 'introduction') return 0;
+      if ((this.status + 1) === this.promptCount) return 'closing';
+      return this.status + 1;
     }
   }
 });
