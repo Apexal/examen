@@ -55,6 +55,12 @@ const examen_app = new Vue({
       this.timer = 0;
       clearInterval(this.timerInterval);
     },
+    hearPrompt: function (index) {
+      const audio = document.getElementById('prompt-' + index + '-audio');
+      audio.play();
+      backingTrack.volume = 0.2;
+      this.playing = true;
+    },
     playPrompt: function (index) {
       this.status = index;
 
@@ -63,15 +69,13 @@ const examen_app = new Vue({
 
       this.stopPlaying();
 
-      audio.play();
-      backingTrack.volume = 0.2;
-      this.playing = true;
-
       const delay = parseInt(audio.dataset.delay);
       this.timer = delay;
       this.currentDelay = delay;
 
       if (this.autocontinue) {
+        this.hearPrompt(index);
+
         audio.onended = () => {
           this.timerInterval = setInterval(() => {
             this.timer -= 1;

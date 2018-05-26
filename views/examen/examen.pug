@@ -32,7 +32,7 @@ block content
         for p, index in examen.prompts
           .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
-            a.play-prompt(data-prompt=index, @click="playPrompt(" + index + ")") Listen
+            a.play-prompt(data-prompt=index, @click="hearPrompt(" + index + ")") Listen
               i.fas.fa-volume-up
             | !{p.text}
             hr
