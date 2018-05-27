@@ -113,7 +113,14 @@ audio.examen-audio {
 
 .prompts {
   border-radius: 5px;
+}
+
+.prompts .padded {
   padding: 30px;
+}
+
+.delay-progress {
+  border-radius: 0;
 }
 
 #introduction.content,

@@ -101,7 +101,7 @@ const examen_app = new Vue({
     },
     statusText: function () {
       if (this.status === 'introduction' || this.status === 'closing') return this.status;
-      return `Prompt ${this.status + 1}`;
+      return `Prompt ${this.status + 1} of ${this.promptCount}`;
     },
     hasPrevPrompt: function () {
       return this.status !== 'introduction';
