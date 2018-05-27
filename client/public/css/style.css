@@ -27,6 +27,10 @@
   background-color: #d31145;
 }
 
+.hero.is-regis .navbar-menu {
+  background-color: #d31145;
+}
+
 .examen-archive .links i {
   padding: 5px;
 }

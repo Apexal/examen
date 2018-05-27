@@ -2,17 +2,30 @@ section.hero.is-regis.is-small
   .hero-head
     nav.navbar
       .container
+        .navbar-brand
+          #navbar-burger.burger.navbar-burger(data-target="navbarMenu")
+            span
+            span
+            span
         img.regis-image.image(src="/images/wordmark.png")
         #navbarMenu.navbar-menu
           .navbar-end
             if loggedIn
               span.navbar-item Logged in as #{user.isStudent ? 'Student' : ''} &nbsp;
                 b= user.name.first + " " + user.name.last
-              a.navbar-item(href="/logout") Logout
+              a.navbar-item(href="/logout")
+                b Logout
             else
               span.navbar-item
-                a.button.is-dark.is-inverted(href="/auth/google") Login with Regis Account
-
+                a.button.is-danger.is-inverted(href="/auth/google") Login with Regis Account
+        script.
+          const burger = document.getElementById('navbar-burger'); 
+          const target = document.getElementById(burger.dataset.target); 
+  
+          burger.addEventListener('click', () => {
+            burger.classList.toggle('is-active');
+            target.classList.toggle('is-active'); 
+          }); 
   .hero-body
     .container
       h1.title.has-text-centered-mobile Ignatian Examen
