@@ -3,6 +3,8 @@ const path = require('path');
 const os = require('os');
 const moment = require('moment');
 
+const exportExamen = require('../exportExamen');
+
 /* GET */
 async function redirect_today(ctx) {
   const start = moment().startOf('day').toDate();
@@ -66,14 +68,15 @@ async function save_new_examen(ctx, next) {
     dateAdded: new Date()
   });
 
+  const examenDir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', new_examen.id);
   try {
-    fs.mkdirSync(path.join(__dirname, '..', '/client/public/audio/examens/', new_examen.id));
+    fs.mkdirSync(examenDir);
   } catch (e) {
     console.error(e);
   }
   const save_audio = (file, name) => {
     const reader = fs.createReadStream(file.path);
-    const stream = fs.createWriteStream(path.join(__dirname, '..', '/client/public/audio/examens/', new_examen.id, name));
+    const stream = fs.createWriteStream(path.join(examenDir, name));
     reader.pipe(stream);
     console.log('uploading %s -> %s', file.name, stream.path);
   }
@@ -102,6 +105,8 @@ async function save_new_examen(ctx, next) {
 
   await new_examen.save();
   ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
+
+  //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
 
   ctx.ok({
     success: true,

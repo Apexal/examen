@@ -8,9 +8,10 @@ const respond = require('koa-respond');
 const compress = require('kompression');
 const views = require('koa-views');
 const session = require('koa-session');
-const db = require('./db');
+const db = require('../db');
 const static = require('koa-static');
 const passport = require('./auth');
+const path = require('path');
 
 const config = require('config');
 
@@ -45,6 +46,9 @@ app.context.helpers = require('./helpers');
 
 /* Locals */
 app.use(async (ctx, next) => {
+  // Base folder for Pug to allow absolute paths
+  ctx.state.basedir = path.join(__dirname, '..', 'views');
+
   // Create flash session object if does not exist yet (first request)
   if (ctx.session.flash === undefined) {
     ctx.session.flash = {};
@@ -105,7 +109,7 @@ app.use(async (ctx, next) => {
 
 /* Views setup using Pug */
 app.use(
-  views(__dirname + '/views', {
+  views(path.join(__dirname, '..', 'views'), {
     extension: 'pug'
   })
 );

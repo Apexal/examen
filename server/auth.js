@@ -1,7 +1,7 @@
 const config = require('config');
 const passport = require('koa-passport');
 
-const User = require('./db').User;
+const User = require('../db').User;
 
 // This regex matches emails in the student format
 // username + 2 digit graduation year + '@regis.org'
