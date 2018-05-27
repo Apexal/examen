@@ -27,25 +27,26 @@ block content
       .prompts.has-background-light
         #introduction.content(v-show="status == 'introduction'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
-          a.play-prompt(v-if="!autocontinue", data-prompt="introduction", @click="hearPrompt('introduction')") Listen
+          a.play-prompt(v-if="!autocontinue", data-prompt="introduction", @click="hearPrompt('introduction')") Listen 
             i.fas.fa-volume-up
           | !{examen.introduction.text}
           b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.introduction.delay} seconds...)
         for p, index in examen.prompts
           .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
-            a.play-prompt(v-if="!autocontinue", data-prompt=index, @click="hearPrompt(" + index + ")") Listen
+            a.play-prompt(v-if="!autocontinue", data-prompt=index, @click="hearPrompt(" + index + ")") Listen 
               i.fas.fa-volume-up
             | !{p.text}
             b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
         #closing.content(v-show="status == 'closing'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
-          a.play-prompt(v-if="!autocontinue", data-prompt="closing", @click="hearPrompt('closing')") Listen
+          a.play-prompt(v-if="!autocontinue", data-prompt="closing", @click="hearPrompt('closing')") Listen 
             i.fas.fa-volume-up
           | !{examen.closing.text}
           b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.closing.delay} seconds...)
       // TODO: switch to staff check
       if loggedIn && user.isStudent
         hr
-        form.is-pulled-right(action="/examen/" + examen.id + "/remove", method="POST")
+        form.is-pulled-right(action="/examen/" + examen.id + "/remove", method="POST", onsubmit="return confirm('Are you sure you want to remove " + examen.title + "?')")
           button.button.is-danger Delete Examen
+        a.button.is-link(href="/examen/" + examen.id + "/export", onclick="alert('Coming soon...'", disabled) Export Audio
