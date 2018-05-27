@@ -82,6 +82,10 @@ audio.examen-audio {
   float: right;
 }
 
+.is-visible-mobile {
+  display: none;
+}
+
 @media only screen and (max-width: 768px) {
   .regis-image {
     width: 100%;
@@ -101,6 +105,9 @@ audio.examen-audio {
   .export-audio,
   .delete-examen {
     float: none;
+  }
+  .is-visible-mobile {
+    display: initial;
   }
 }
 
