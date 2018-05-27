@@ -47,5 +47,5 @@ block content
       // TODO: switch to staff check
       if loggedIn && user.isStudent
         hr
-        form(action="/examen/" + examen.id + "/remove", method="POST")
+        form.is-pulled-right(action="/examen/" + examen.id + "/remove", method="POST")
           button.button.is-danger Delete Examen
