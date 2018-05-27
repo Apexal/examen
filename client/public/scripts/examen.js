@@ -100,8 +100,17 @@ const examen_app = new Vue({
       return isNaN(this.status) ? document.getElementById(this.status + '-audio') : document.getElementById('prompt-' + this.status + '-audio');
     },
     statusText: function () {
-      if (this.status === 'introduction' || this.status === 'closing') return this.status;
-      return `Prompt ${this.status + 1} of ${this.promptCount}`;
+      switch (this.status) {
+        case 'introduction':
+          return 'Introduction';
+          break;
+        case 'closing':
+          return 'Closing';
+          break;
+        default:
+          return `Prompt ${this.status + 1} of ${this.promptCount}`;
+          break;
+      }
     },
     hasPrevPrompt: function () {
       return this.status !== 'introduction';
