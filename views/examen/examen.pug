@@ -8,6 +8,7 @@ block content
       include _header
 
       .prompts.has-background-light
+        progress.progress.delay-progress(:max="currentDelay", :value="timer", :title="timer + ' out of ' + currentDelay + ' seconds left'") {{ timer }}%
         .padded
           #introduction.content(v-show="status == 'introduction'")
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
@@ -19,11 +20,10 @@ block content
           #closing.content(v-show="status == 'closing'")
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
             | !{examen.closing.text}
-        progress.progress.delay-progress(:max="currentDelay", :value="timer") 15%
 
       // TODO: switch to staff check
+      hr
       if loggedIn && user.isStudent
-        hr.is-marginless-mobile
         form.delete-examen.has-text-centered-mobile(action="/examen/" + examen.id + "/remove", method="POST", onsubmit="return confirm('Are you sure you want to remove " + examen.title + "?')")
           button.button.is-danger Delete Examen
           a.button.is-link.export-audio(href="/examen/" + examen.id + "/export", onclick="alert('Coming soon...'", disabled) Export Audio

@@ -121,6 +121,7 @@ audio.examen-audio {
 
 .delay-progress {
   border-radius: 0;
+  margin-bottom: 0 !important;
 }
 
 #introduction.content,
