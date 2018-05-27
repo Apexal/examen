@@ -77,6 +77,11 @@ audio.examen-audio {
   padding-bottom: 0;
 }
 
+.export-audio,
+.delete-examen {
+  float: right;
+}
+
 @media only screen and (max-width: 768px) {
   .regis-image {
     width: 100%;
@@ -93,11 +98,15 @@ audio.examen-audio {
   .examen-controls {
     margin-bottom: 10px;
   }
+  .export-audio,
+  .delete-examen {
+    float: none;
+  }
 }
 
 .prompts {
   border-radius: 5px;
-  padding: 10px;
+  padding: 30px;
 }
 
 #introduction.content,

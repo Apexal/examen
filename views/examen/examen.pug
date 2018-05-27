@@ -7,46 +7,26 @@ block content
     .container
       h1.title.has-text-centered-mobile= examen.title
         small.is-size-6.has-text-grey-light.is-pulled-right.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()}
-
-      hr.is-marginless-mobile
-      .examen-controls.columns.is-marginless-mobile
-        audio.examen-audio.is-marginless#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/mpeg")
-        .column.is-narrow.has-text-centered-mobile
-          button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
-            i.fas.fa-volume-up &nbsp;
-            |  {{ playing ? 'Stop' : 'From Start' }}
-          button.button(@click="autocontinue = false; prevPrompt();", :disabled="!hasPrevPrompt")
-            i.fas.fa-arrow-left
-          button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")
-            i.fas.fa-arrow-right
-          span.status-tag.tag.is-info.is-medium {{ statusText }}
-        .column(v-if="autocontinue && !playing")
-          progress.progress(:max="currentDelay", :value="timer") 15%
-        hr.is-marginless-mobile(style="margin-top: 0px;")
- 
+  
       .prompts.has-background-light
         #introduction.content(v-show="status == 'introduction'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.mp3", type="audio/mpeg")
-          a.play-prompt(v-if="!autocontinue", data-prompt="introduction", @click="hearPrompt('introduction')") Listen 
-            i.fas.fa-volume-up
           | !{examen.introduction.text}
-          b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.introduction.delay} seconds...)
         for p, index in examen.prompts
           .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".mp3", type="audio/mpeg")
-            a.play-prompt(v-if="!autocontinue", data-prompt=index, @click="hearPrompt(" + index + ")") Listen 
-              i.fas.fa-volume-up
             | !{p.text}
-            b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{p.delay} seconds...)
         #closing.content(v-show="status == 'closing'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
-          a.play-prompt(v-if="!autocontinue", data-prompt="closing", @click="hearPrompt('closing')") Listen 
-            i.fas.fa-volume-up
           | !{examen.closing.text}
-          b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") (Pause for #{examen.closing.delay} seconds...)
-      // TODO: switch to staff check
-      if loggedIn && user.isStudent
-        hr
-        form.is-pulled-right(action="/examen/" + examen.id + "/remove", method="POST", onsubmit="return confirm('Are you sure you want to remove " + examen.title + "?')")
-          button.button.is-danger Delete Examen
-        a.button.is-link(href="/examen/" + examen.id + "/export", onclick="alert('Coming soon...'", disabled) Export Audio
+          
+      
+      .columns
+        .column.is-narrow
+          b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") Pause for #{examen.closing.delay} seconds...
+        .column
+          progress.progress(v-if="autocontinue && !playing", :max="currentDelay", :value="timer", style="margin-top: 6px;") 15%
+
+      hr
+      include _controls
+      
