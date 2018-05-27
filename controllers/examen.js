@@ -154,6 +154,7 @@ async function view_archive(ctx) {
     sort: {
       dateAdded: -1
     },
+    limit: 4,
     page
   });
 
