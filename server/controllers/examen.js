@@ -149,19 +149,23 @@ async function view_examen(ctx) {
 /* GET a list of all posted examens */
 async function view_archive(ctx) {
   ctx.state.title = 'Archive';
-  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
 
-  // Prevent
+  // Prevent going to negative pages
+  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
   ctx.state.prevPage = Math.max(1, page - 1);
   ctx.state.nextPage = page + 1;
 
-  ctx.state.data = await ctx.db.Examen.paginate({}, {
+  // Limit to only 4 per page
+  const data = ctx.state.data = await ctx.db.Examen.paginate({}, {
     sort: {
       dateAdded: -1
     },
     limit: 4,
     page
   });
+
+  // If too high, go to last page
+  if (page > data.pages) return ctx.redirect('/examen/archive?page=' + data.pages);
 
   await ctx.render('examen/archive');
 }
