@@ -2,7 +2,7 @@
   audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/mpeg")
   button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
     i.fas.fa-volume-up &nbsp;
-    |  {{ playing ? 'Stop' : 'From Start' }}
+    |  {{ playing ? 'Stop' : 'Start' }}
   button.button(@click="autocontinue = false; prevPrompt();", :disabled="!hasPrevPrompt")
     i.fas.fa-arrow-left
   button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")

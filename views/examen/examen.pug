@@ -18,13 +18,12 @@ block content
         #closing.content(v-show="status == 'closing'")
           audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
           | !{examen.closing.text}
-          
-      
+
       .columns
         .column.is-narrow
-          b.is-size-5.has-text-centered(v-if="(autocontinue && !playing) || !autocontinue") Pause for #{examen.closing.delay} seconds...
+            span.tag.is-dark.is-medium Pause for {{ timer }} seconds...
         .column
-          progress.progress(v-if="autocontinue && !playing", :max="currentDelay", :value="timer", style="margin-top: 6px;") 15%
+          progress.progress(:max="currentDelay", :value="timer", style="margin-top: 6px;") 15%
 
       // TODO: switch to staff check
       if loggedIn && user.isStudent

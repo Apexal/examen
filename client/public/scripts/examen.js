@@ -22,6 +22,8 @@ const examen_app = new Vue({
   mounted() {
     this.promptCount = document.querySelectorAll('.prompt-content').length;
     if (window.location.href.includes("autoplay=1")) this.playFromStart();
+
+    this.currentDelay = this.timer = this.currentAudio.dataset.delay;
   },
   methods: {
     playFromStart: function () {
