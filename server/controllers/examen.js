@@ -5,7 +5,8 @@ const moment = require('moment');
 
 const exportExamen = require('../exportExamen');
 
-/* GET */
+/* GET the latest examen posted today or redirect to archive if none */
+// "/examens/today"
 async function redirect_today(ctx) {
   const start = moment().startOf('day').toDate();
   const end = moment().endOf('day').toDate();
@@ -13,6 +14,7 @@ async function redirect_today(ctx) {
   let today;
   try {
     today = await ctx.db.Examen.findOne({
+      // Check if datetime of examen posting is between start and end of day
       dateAdded: {
         "$gte": start,
         "$lt": end
@@ -32,12 +34,14 @@ async function redirect_today(ctx) {
 }
 
 /* GET the form to post a new examen */
+// "/examens/new"
 async function view_new_examen(ctx) {
   ctx.state.title = 'New Examen';
   await ctx.render('examen/new');
 }
 
 /* POST new examen */
+// "/examens/new"
 async function save_new_examen(ctx, next) {
   const bdy = ctx.request.body.fields;
 
@@ -46,6 +50,7 @@ async function save_new_examen(ctx, next) {
   const prompt_delays = JSON.parse(bdy.delays);
   let prompt_recordings = ctx.request.body.files.recordings;
 
+  // Reconstruct prompt array by matching up text and delays
   const prompts = [];
   for (let i = 0; i < prompt_texts.length; i++) {
     prompts.push({
@@ -88,6 +93,7 @@ async function save_new_examen(ctx, next) {
     const ext = backingTrack.name.split('.')[backingTrack.name.split('.').length - 1]; // last part
     const file_name = 'backing_track.' + ext;
 
+    // Allows any audio file to be uploaded
     new_examen.backingTrackExt = ext;
 
     save_audio(backingTrack, file_name);
@@ -99,8 +105,10 @@ async function save_new_examen(ctx, next) {
     if (f) save_audio(f, t + '.mp3');
   });
 
+  // When only one prompt is sent, its not sent as an array 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
 
+  // Save each prompt recording
   prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
 
   await new_examen.save();
@@ -115,6 +123,7 @@ async function save_new_examen(ctx, next) {
 }
 
 /* POST remove examen */
+// "/examens/:id/remove"
 async function remove_examen(ctx) {
   const id = ctx.params.id;
   let examen;
@@ -124,12 +133,14 @@ async function remove_examen(ctx) {
     return ctx.throw(404, 'Examen Not Found');
   }
 
+  // This also deletes the audio folder
   await examen.remove();
   ctx.request.flash('success', `Successfully removed examen '${examen.title}'.`);
   ctx.redirect(ctx.router.url('archive'));
 }
 
-/* GET one particular examen by ID [maybe date??] */
+/* GET one particular examen by ID */
+// "/examens/:id"
 async function view_examen(ctx) {
   // Find examen
   let examen;
@@ -147,6 +158,7 @@ async function view_examen(ctx) {
 }
 
 /* GET a list of all posted examens */
+// "/examens/archive"
 async function view_archive(ctx) {
   ctx.state.title = 'Archive';
 
