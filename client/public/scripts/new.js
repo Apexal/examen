@@ -94,7 +94,7 @@ const new_examen_app = new Vue({
       request.open('POST', '/examen/new');
       request.send(this.getFormData());
 
-      //request.onload = () => window.location.href = "/examen/archive";
+      request.onload = data => window.location.href = "/examen/archive";
     },
     addPrompt: function (event) {
       const prompt = {
@@ -153,6 +153,22 @@ const new_examen_app = new Vue({
       fd.append('closingDelay', this.closing.delay);
       console.log(fd);
       return fd;
+    }
+  },
+  computed: {
+    totalDuration: function () {
+      let total = 0;
+      /*['introduction', 'closing'].forEach(thing => {
+        total += document.getElementById(this.status + '-audio').duration;
+        total += this[thing].delay;
+      });
+
+      for (let i = 0; i < this.prompts.length; i++) {
+        total += document.getElementById('prompt-' + i + '-audio').duration;
+        total += this.prompts[i].delay;
+      }
+      */
+      return total;
     }
   }
 });

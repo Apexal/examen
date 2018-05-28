@@ -54,6 +54,11 @@ const schema = new Schema({
     type: String,
     maxlength: 10
   },
+  /*audioDuration: {
+    type: Number,
+    min: 0,
+    required: true,
+  },*/
   dateAdded: {
     type: Date,
     required: true
