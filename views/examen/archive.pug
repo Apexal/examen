@@ -18,13 +18,16 @@ block content
                     if ex.backingTrack || true
                       a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
                         i.fas.fa-headphones(title="Audio recording available.")
-                  h3.is-size-4= ex.title
+                  h3.is-size-4= ex.title + ' '
+                    //span.tag.is-danger New
                   .content
                     if ex.introduction
                       .has-text-grey !{ex.introduction.text}
                     else
                       i.has-text-grey-light No introduction given...
-                  
+                    hr
+                    
+                  span.tag.is-dark.is-pulled-right #{ex.prompts.length} prompts
                   span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} | #{moment(ex.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")}
         else
           p.has-text-centered.has-text-grey-light No examens have been posted yet...
