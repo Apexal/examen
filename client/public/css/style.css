@@ -76,9 +76,9 @@ audio.examen-audio {
   display: none;
 }
 
-.regis-image {
+.navbar .regis-image {
   padding-top: 10px;
-  padding-bottom: 0;
+  padding-left: 10px;
 }
 
 .export-audio,
@@ -92,10 +92,7 @@ audio.examen-audio {
 
 @media only screen and (max-width: 768px) {
   .regis-image {
-    width: 100%;
-    padding: 10px;
-    padding-bottom: 0;
-    text-align: center;
+    width: 90%;
   }
   .is-marginless-mobile {
     margin: 0;
@@ -135,4 +132,9 @@ audio.examen-audio {
 
 section.section {
   padding-top: 1.7rem;
+}
+
+.amdg-image {
+  margin-top: 10px;
+  max-height: 20px;
 }
