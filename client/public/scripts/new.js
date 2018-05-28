@@ -18,7 +18,6 @@ const new_examen_app = new Vue({
   data: {
     stream: null,
     title: '',
-    backingTrack: null,
     introduction: {
       text: default_introduction,
       recorder: null,
@@ -67,8 +66,29 @@ const new_examen_app = new Vue({
       }
     },
     handleSubmit: function (event) {
-      if (!confirm('Are you sure you want to post this new examen?')) return false;
       if (this.prompts.length === 0) return alert('You must add at least one prompt!');
+
+      // Check valid
+      let invalid = false;
+      if (document.getElementById('backing-track').files.length === 0) return alert('Please select a backing track.');
+
+      ['introduction', 'closing'].forEach(thing => {
+        if (!this.checkComplete(this[thing])) {
+          invalid = false;
+          alert('Make sure the ' + thing + ' has text, audio, and a delay.');
+        }
+      });
+
+      this.prompts.forEach((p, index) => {
+        if (!this.checkComplete(p)) {
+          invalid = true;
+          alert(`Make sure prompt ${index + 1} has text, audio, and a delay.`);
+        }
+      });
+
+      if (invalid) return false;
+
+      if (!confirm('Are you sure you want to post this new examen?')) return false;
 
       const request = new XMLHttpRequest();
       request.open('POST', '/examen/new');
@@ -103,6 +123,7 @@ const new_examen_app = new Vue({
 
       target.recording = !target.recording;
     },
+    checkComplete: thing => thing.text.length > 0 && thing.chunks.length > 0 && !isNaN(thing.delay),
     startRecording: function (index) {
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
       target.chunks = [];
