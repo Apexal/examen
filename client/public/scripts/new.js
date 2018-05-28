@@ -1,7 +1,7 @@
 const default_introduction = `<p>Let us continue together the practice of the Examen. Please sit comfortably. Put everything out of your hands. Try to be silent and still. Close your eyes if you wish. If you are in hallway find place to pause and relax.</p>
 <p>There will be moments of silence, stay with it.</p>
 In the name of the Father, and of the Son, and of the Holy Spirit.
-<h3>Amen</h3>`;
+<h4>Amen</h4>`;
 
 const default_closing = `<p>Please join in closing with the <b>Glory Be</b>.</p>
 <p>Glory be to the Father, and to the Son, and to the Holy Spirit,
@@ -10,7 +10,7 @@ World without end, Amen.</p>
 <p>Saint Ignatius and Saint John Francis Regis,
 Pray for us.</p>
 <p>In the name of the Father, and of the Son, and of the Holy Spirit.
-<h3>Amen</h3></p>`;
+<h4>Amen</h4></p>`;
 
 const new_examen_app = new Vue({
   name: 'new-examen',
@@ -94,7 +94,7 @@ const new_examen_app = new Vue({
       request.open('POST', '/examen/new');
       request.send(this.getFormData());
 
-      request.onload = () => window.location.href = "/examen/archive";
+      //request.onload = () => window.location.href = "/examen/archive";
     },
     addPrompt: function (event) {
       const prompt = {
@@ -110,7 +110,7 @@ const new_examen_app = new Vue({
       this.setupEvents(prompt);
 
       this.prompts.push(prompt);
-      setTimeout(() => setupEditor(document.getElementById('prompt-' + (this.prompts.length - 1) + '-editor')), 100);
+      setTimeout(() => setupEditor(document.getElementById('prompt-' + (this.prompts.length - 1) + '-editor')), 50);
     },
     toggleRecording: function (index) {
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
@@ -151,6 +151,7 @@ const new_examen_app = new Vue({
       fd.append('closing', this.closing.text);
       fd.append('closingRecording', this.closing.blob);
       fd.append('closingDelay', this.closing.delay);
+      console.log(fd);
       return fd;
     }
   }
