@@ -62,7 +62,6 @@ const new_examen_app = new Vue({
         const audioUrl = URL.createObjectURL(audioBlob);
         target.blob = audioBlob;
         target.src = audioUrl;
-        target.load();
       }
     },
     handleSubmit: function (event) {
@@ -151,24 +150,13 @@ const new_examen_app = new Vue({
       fd.append('closing', this.closing.text);
       fd.append('closingRecording', this.closing.blob);
       fd.append('closingDelay', this.closing.delay);
-      console.log(fd);
-      return fd;
-    }
-  },
-  computed: {
-    totalDuration: function () {
-      let total = 0;
-      /*['introduction', 'closing'].forEach(thing => {
-        total += document.getElementById(this.status + '-audio').duration;
-        total += this[thing].delay;
-      });
 
-      for (let i = 0; i < this.prompts.length; i++) {
-        total += document.getElementById('prompt-' + i + '-audio').duration;
-        total += this.prompts[i].delay;
-      }
-      */
-      return total;
+      // TODO: this does not work...
+      fd.append('totalDuration', Array.from(document.querySelectorAll('audio')).reduce((acc, a) => {
+        a.load();
+        return acc + a.duration;
+      }, 0));
+      return fd;
     }
   }
 });

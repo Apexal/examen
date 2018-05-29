@@ -32,10 +32,9 @@ block content
             .column.is-narrow
               button.button(type="button", @click="toggleRecording('introduction')", :class="introduction.recording ? 'is-danger' : 'is-warning'") {{ introduction.recording ? 'Stop Recording' : 'Start Recording' }}
             .column
-              audio(controls, :src="introduction.src")
+              audio(controls, id="introduction-audio", :src="introduction.src")
         hr
         .prompts
-          
           h1.subtitle.is-size-4
             b Prompts
             small.has-text-grey-light  {{ prompts.length }} total
@@ -74,6 +73,6 @@ block content
             .column.is-narrow
               button.button(type="button", @click="toggleRecording('closing')", :class="closing.recording ? 'is-danger' : 'is-warning'") {{ closing.recording ? 'Stop Recording' : 'Start Recording' }}
             .column
-              audio(controls, :src="closing.src")
+              audio(controls, id="closing-audio", :src="closing.src")
         hr
         button.button.is-info.is-large.is-pulled-right Post Examen
