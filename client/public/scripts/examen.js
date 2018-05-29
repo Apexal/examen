@@ -64,7 +64,7 @@ const examen_app = new Vue({
       this.currentAudio.play();
       $(this.currentAudio).animate({
         volume: 1
-      }, 3000);
+      }, 1000);
 
       $(backingTrack).animate({
         volume: 0.2
@@ -86,9 +86,18 @@ const examen_app = new Vue({
           }, 1000);
         }
         this.playing = false;
+
         $(backingTrack).animate({
           volume: 1
         }, 1000);
+
+        if (this.status === 'closing') {
+          setTimeout(() => {
+            $(backingTrack).animate({
+              volume: 0
+            }, 10000);
+          }, 5000);
+        }
       }
     },
     playPrompt: function (index) {
