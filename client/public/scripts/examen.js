@@ -60,9 +60,18 @@ const examen_app = new Vue({
     },
     hearPrompt: function (index) {
       this.stopPlaying();
+      this.currentAudio.volume = 0;
       this.currentAudio.play();
-      backingTrack.volume = 0.2;
+      $(this.currentAudio).animate({
+        volume: 1
+      }, 3000);
+
+      $(backingTrack).animate({
+        volume: 0.2
+      }, 1000);
       this.playing = true;
+
+
 
       this.currentAudio.onended = () => {
         if (this.autocontinue) {
@@ -77,7 +86,9 @@ const examen_app = new Vue({
           }, 1000);
         }
         this.playing = false;
-        backingTrack.volume = 1;
+        $(backingTrack).animate({
+          volume: 1
+        }, 1000);
       }
     },
     playPrompt: function (index) {
