@@ -71,8 +71,6 @@ const examen_app = new Vue({
       }, 1000);
       this.playing = true;
 
-
-
       this.currentAudio.onended = () => {
         if (this.autocontinue) {
           this.timerInterval = setInterval(() => {
@@ -96,7 +94,7 @@ const examen_app = new Vue({
             $(backingTrack).animate({
               volume: 0
             }, 10000);
-          }, 5000);
+          }, this.currentDelay);
         }
       }
     },
