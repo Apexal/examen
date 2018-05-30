@@ -113,24 +113,36 @@ const new_examen_app = new Vue({
     },
     toggleRecording: function (index) {
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
-      console.log(target);
-      if (target.recording) {
+
+      if (target.recorder.state !== 'inactive') {
         this.stopRecording(index);
       } else {
         this.startRecording(index);
       }
-
-      target.recording = !target.recording;
     },
     checkComplete: thing => thing.text.length > 0 && thing.chunks.length > 0 && !isNaN(thing.delay),
+    stopAllRecordings: function () {
+      if (this.introduction.recorder.state !== 'inactive')
+        this.stopRecording('introduction');
+
+      if (this.closing.recorder.state !== 'inactive')
+        this.stopRecording('closing');
+
+      this.prompts.forEach((p, index) => {
+        if (p.recorder.state !== 'inactive') this.stopRecording(index);
+      });
+    },
     startRecording: function (index) {
+      this.stopAllRecordings();
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
+      target.recording = true;
       target.chunks = [];
       target.src = null;
       target.recorder.start();
     },
     stopRecording: function (index) {
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
+      target.recording = false;
       target.recorder.stop();
     },
     getFormData: function () {
