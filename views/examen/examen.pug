@@ -20,6 +20,8 @@ block content
           #closing.content(v-show="status == 'closing'")
             audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.mp3", type="audio/mpeg")
             | !{examen.closing.text}
+          
+          p.has-text-centered.has-text-grey.delay-p(v-if="autocontinue") Pause for {{ timer }} seconds...
 
       // TODO: switch to staff check
       hr
