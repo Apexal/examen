@@ -70,6 +70,7 @@ async function save_new_examen(ctx, next) {
       text: bdy.closing,
       delay: bdy.closingDelay
     },
+    _poster: ctx.state.user._id,
     dateAdded: new Date()
   });
 

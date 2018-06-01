@@ -54,6 +54,11 @@ const schema = new Schema({
     type: String,
     maxlength: 10
   },
+  _poster: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   /*audioDuration: {
     type: Number,
     min: 0,
