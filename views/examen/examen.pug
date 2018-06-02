@@ -30,6 +30,6 @@ block content
           button.button.is-danger Delete Examen
           a.button.is-link.export-audio(href="/examen/" + examen.id + "/export", onclick="alert('Coming soon...'", disabled) Export Audio
 
-      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()}
+      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
 
       

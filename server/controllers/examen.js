@@ -147,7 +147,7 @@ async function view_examen(ctx) {
   let examen;
   try {
     // HOW COOL IS THIS
-    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id);
+    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster');
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }

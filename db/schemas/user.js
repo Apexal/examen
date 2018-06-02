@@ -31,6 +31,14 @@ const schema = new Schema({
   }
 });
 
+schema.virtual('title').get(function () {
+  return this.isStudent ? 'Student' : 'Staff';
+});
+
+schema.virtual('fullName').get(function () {
+  return this.name.first + ' ' + this.name.last;
+});
+
 module.exports = {
   name: 'User',
   schema
