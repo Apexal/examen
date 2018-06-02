@@ -107,9 +107,7 @@ const examen_app = new Vue({
       this.timer = delay;
       this.currentDelay = delay;
 
-      if (this.autocontinue) {
-        this.hearPrompt(index);
-      }
+      if (this.autocontinue) this.hearPrompt(index);
     }
   },
   computed: {

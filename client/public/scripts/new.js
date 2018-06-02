@@ -111,6 +111,9 @@ const new_examen_app = new Vue({
       this.prompts.push(prompt);
       setTimeout(() => setupEditor(document.getElementById('prompt-' + (this.prompts.length - 1) + '-editor')), 50);
     },
+    removePrompt: function () {
+      this.prompts.splice(this.prompts.length - 1);
+    },
     toggleRecording: function (index) {
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
 

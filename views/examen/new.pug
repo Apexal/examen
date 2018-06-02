@@ -58,9 +58,9 @@ block content
               .column.is-narrow
                 button.button(type="button", @click="toggleRecording(index)", :class="prompts[index].recording ? 'is-danger' : 'is-warning'") {{ prompts[index].recording ? 'Stop Recording' : 'Start Recording' }}
               .column
-                audio(controls, :src="prompts[index].src")
+                audio(controls, :src="prompts[index].src")  
           button.button.is-success(type="button", @click="addPrompt") Add Prompt
-          
+          button.button.is-dark(type="button", @click="removePrompt", :disabled="prompts.length === 0") Remove Prompt
           hr
 
           .field.is-pulled-right
