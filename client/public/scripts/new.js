@@ -12,6 +12,11 @@ Pray for us.</p>
 <p>In the name of the Father, and of the Son, and of the Holy Spirit.
 <h4>Amen</h4></p>`;
 
+
+const mROptions = {
+  mimeType: 'audio/webm;codecs=opus'
+};
+
 const new_examen_app = new Vue({
   name: 'new-examen',
   el: '#new-examen',
@@ -44,9 +49,9 @@ const new_examen_app = new Vue({
       video: false
     });
 
-    this.introduction.recorder = new MediaRecorder(this.stream);
+    this.introduction.recorder = new MediaRecorder(this.stream, mROptions);
     this.setupEvents(this.introduction);
-    this.closing.recorder = new MediaRecorder(this.stream);
+    this.closing.recorder = new MediaRecorder(this.stream, mROptions);
     this.setupEvents(this.closing);
   },
   methods: {
@@ -57,7 +62,7 @@ const new_examen_app = new Vue({
 
       target.recorder.onstop = () => {
         const audioBlob = new Blob(target.chunks, {
-          type: 'audio/webm;codecs=opus'
+          type: 'audio/ogg;codecs=opus'
         });
         const audioUrl = URL.createObjectURL(audioBlob);
         target.blob = audioBlob;
@@ -98,7 +103,7 @@ const new_examen_app = new Vue({
     addPrompt: function (event) {
       const prompt = {
         text: '',
-        recorder: new MediaRecorder(this.stream),
+        recorder: new MediaRecorder(this.stream, mROptions),
         recording: false,
         delay: 30,
         chunks: [],

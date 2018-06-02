@@ -1,5 +1,5 @@
 .examen-controls.is-hidden-mobile.is-pulled-right
-  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/mpeg")
+  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/ogg")
   button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
     i.fas.fa-volume-up &nbsp;
     |  {{ playing ? 'Stop' : 'Start' }}
@@ -13,7 +13,7 @@ h1.title= examen.title
 h2.subtitle.status-tag {{ statusText }}
 
 .examen-controls.is-visible-mobile
-  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/mpeg")
+  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/ogg")
   .has-text-centered
     button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
       i.fas.fa-volume-up &nbsp;

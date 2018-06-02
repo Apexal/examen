@@ -103,14 +103,14 @@ async function save_new_examen(ctx, next) {
   const introRecording = ctx.request.body.files.introRecording;
   ['introduction', 'closing'].forEach(t => {
     const f = ctx.request.body.files[t + 'Recording'];
-    if (f) save_audio(f, t + '.weba');
+    if (f) save_audio(f, t + '.ogg');
   });
 
   // When only one prompt is sent, its not sent as an array 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
 
   // Save each prompt recording
-  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.weba`));
+  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.ogg`));
 
   await new_examen.save();
   ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);

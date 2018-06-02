@@ -62,7 +62,8 @@ const schema = new Schema({
   duration: {
     type: Number,
     min: 0,
-    required: true,
+    default: 0,
+    //required: true,
   },
   dateAdded: {
     type: Date,
