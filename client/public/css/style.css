@@ -66,8 +66,8 @@ audio.examen-audio {
 }
 
 #new-examen audio {
-  vertical-align: bottom;
   width: 100%;
+  height: 54px;
 }
 
 #new-examen textarea,

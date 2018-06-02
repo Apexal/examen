@@ -5,7 +5,7 @@ const Ctrl = require('../controllers/examen');
 
 /* Allows only teachers to use theses routes */
 router.all(['/new', '/:id/remove'], async (ctx, next) => {
-  if (ctx.isAuthenticated() && ctx.state.user.isStudent) { // TODO: switch to staff
+  if (ctx.isAuthenticated() /*&& ctx.state.user.isStudent*/ ) { // TODO: switch to staff
     await next();
   } else {
     ctx.request.flash('danger', 'You must be logged in as a teacher to view that page.');

@@ -41,7 +41,7 @@ section.hero.is-regis.is-small
           li(class=helpers.isActive(path, '/examen/archive'))
             a(href="/examen/archive", title="View the list of all posted examens.") Examen Archive
           if loggedIn
-            // TODO: switch
-            if user.isStudent
-              li(class=helpers.isActive(path, '/examen/new'))
-                a(href="/examen/new", title="Write and record a new examen.") Post New Examen
+            li(class=helpers.isActive(path, '/examen/submissions'))
+              a(href="/examen/submissions") Pending Submissions
+            li(class=helpers.isActive(path, '/examen/new'))
+              a(href="/examen/new", title="Write and record a new examen.") #{user.isStudent ? 'Submit' : 'Post'} New Examen

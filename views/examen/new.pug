@@ -6,7 +6,10 @@ block content
 
   section#new-examen.section
     .container
-      h1.title New Examen
+      h1.title #{user.isStudent ? 'Submit' : 'Post'} New Examen
+      if user.isStudent
+        .notification.is-warning
+            p Once written, recorded, and submitted, an approved faculty member must review and approve your submission before it is posted.
       form.new-examen(@submit.prevent="handleSubmit", method="POST", enctype="multipart/form-data")
         .columns
           .field.column
@@ -75,4 +78,4 @@ block content
             .column
               audio(controls, id="closing-audio", :src="closing.src")
         hr
-        button.button.is-info.is-large.is-pulled-right Post Examen
+        button.button.is-info.is-large.is-pulled-right #{user.isStudent ? 'Submit' : 'Post'} Examen
