@@ -3,6 +3,8 @@ const path = require('path');
 const os = require('os');
 const moment = require('moment');
 
+const mp3Duration = require('mp3-duration');
+
 const exportExamen = require('../exportExamen');
 
 /* GET the latest examen posted today or redirect to archive if none */
@@ -112,14 +114,35 @@ async function save_new_examen(ctx, next) {
   // Save each prompt recording
   prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
 
-  await new_examen.save();
-  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
+  fs.readdir(examenDir, async (err, files) => {
+    if (err) return console.error(err);
 
-  //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
+    let totalDuration = 0;
+    for (let file of files.filter(f => f.includes('.mp3') && f !== 'backing_track.mp3')) {
+      let duration = 0;
+      try {
+        duration = await mp3Duration(`${examenDir}/${file}`);
+      } catch (e) {
+        console.error('Failed to find duration of file: ' + `${examenDir}/${file}`);
+        console.error(e);
+      }
+      console.log(file + ': ' + duration);
+      totalDuration += duration;
+    }
 
-  ctx.ok({
-    success: true,
-    id: new_examen.id
+    console.log('Total Duration: ' + totalDuration);
+
+    new_examen.duration = totalDuration;
+
+    await new_examen.save();
+    ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
+
+    //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
+
+    ctx.ok({
+      success: true,
+      id: new_examen.id
+    });
   });
 }
 

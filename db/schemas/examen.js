@@ -59,11 +59,11 @@ const schema = new Schema({
     ref: 'User',
     required: true
   },
-  /*audioDuration: {
+  duration: {
     type: Number,
     min: 0,
     required: true,
-  },*/
+  },
   dateAdded: {
     type: Date,
     required: true
