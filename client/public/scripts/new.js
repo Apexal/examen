@@ -57,7 +57,7 @@ const new_examen_app = new Vue({
 
       target.recorder.onstop = () => {
         const audioBlob = new Blob(target.chunks, {
-          type: 'audio/mp3'
+          type: 'audio/webm;codecs=opus'
         });
         const audioUrl = URL.createObjectURL(audioBlob);
         target.blob = audioBlob;

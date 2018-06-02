@@ -3,8 +3,6 @@ const path = require('path');
 const os = require('os');
 const moment = require('moment');
 
-const mp3Duration = require('mp3-duration');
-
 const exportExamen = require('../exportExamen');
 
 /* GET the latest examen posted today or redirect to archive if none */
@@ -105,44 +103,23 @@ async function save_new_examen(ctx, next) {
   const introRecording = ctx.request.body.files.introRecording;
   ['introduction', 'closing'].forEach(t => {
     const f = ctx.request.body.files[t + 'Recording'];
-    if (f) save_audio(f, t + '.mp3');
+    if (f) save_audio(f, t + '.weba');
   });
 
   // When only one prompt is sent, its not sent as an array 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
 
   // Save each prompt recording
-  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.mp3`));
+  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.weba`));
 
-  fs.readdir(examenDir, async (err, files) => {
-    if (err) return console.error(err);
+  await new_examen.save();
+  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
 
-    let totalDuration = 0;
-    for (let file of files.filter(f => f.includes('.mp3') && f !== 'backing_track.mp3')) {
-      let duration = 0;
-      try {
-        duration = await mp3Duration(`${examenDir}/${file}`);
-      } catch (e) {
-        console.error('Failed to find duration of file: ' + `${examenDir}/${file}`);
-        console.error(e);
-      }
-      console.log(file + ': ' + duration);
-      totalDuration += duration;
-    }
+  //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
 
-    console.log('Total Duration: ' + totalDuration);
-
-    new_examen.duration = totalDuration;
-
-    await new_examen.save();
-    ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
-
-    //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
-
-    ctx.ok({
-      success: true,
-      id: new_examen.id
-    });
+  ctx.ok({
+    success: true,
+    id: new_examen.id
   });
 }
 
