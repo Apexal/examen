@@ -6,10 +6,6 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  isStudent: {
-    type: Boolean,
-    required: true
-  },
   name: {
     first: {
       type: String,
@@ -19,6 +15,11 @@ const schema = new Schema({
       type: String,
       required: true
     }
+  },
+  isStudent: {
+    type: Boolean,
+    required: true,
+    default: true
   },
   email: {
     type: String,
@@ -30,6 +31,14 @@ const schema = new Schema({
     required: true
   }
 });
+
+/*
+schema.virtual('examens', {
+  ref: 'Examen',
+  localField: '_id',
+  foreignField: '_poster'
+});
+*/
 
 schema.virtual('title').get(function () {
   return this.isStudent ? 'Student' : 'Staff';

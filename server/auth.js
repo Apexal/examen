@@ -41,11 +41,11 @@ passport.use(new GoogleStrategy(config.get('auth.google'),
       // New user
       user = new User({
         _google_id: profile.id, // Users have an _id and a separate _google_id
-        isStudent: studentEmailRegex.test(email),
         name: {
           first: profile.name.givenName,
           last: profile.name.familyName
         },
+        isStudent: studentEmailRegex.test(this.email),
         email,
         dateJoined: new Date()
       });
