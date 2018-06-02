@@ -6,6 +6,11 @@ const schema = new Schema({
     type: String,
     required: true
   },
+  _school: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'School',
+    required: true
+  },
   name: {
     first: {
       type: String,

@@ -57,7 +57,7 @@ const schema = new Schema({
   _poster: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: true
   },
   /*audioDuration: {
     type: Number,
