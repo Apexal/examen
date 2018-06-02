@@ -28,6 +28,6 @@ block content
                     hr
                     
                   span.tag.is-dark.is-pulled-right #{ex.prompts.length} prompts
-                  span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} | #{moment(ex.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")}
+                  span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} by #[a(href="/users/")= ex._poster.title + ' ' + ex._poster.fullName]
         else
           p.has-text-centered.has-text-grey-light No examens have been posted yet...

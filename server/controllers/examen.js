@@ -147,7 +147,7 @@ async function view_examen(ctx) {
   let examen;
   try {
     // HOW COOL IS THIS
-    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster');
+    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent');
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }
@@ -173,6 +173,7 @@ async function view_archive(ctx) {
     sort: {
       dateAdded: -1
     },
+    populate: '_poster',
     limit: 4,
     page
   });
