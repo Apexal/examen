@@ -173,10 +173,39 @@ const new_examen_app = new Vue({
   }
 });
 
+const toolbar = [
+  ['bold', 'italic', 'underline'],
+  ['blockquote'],
+
+  [{
+    'list': 'ordered'
+  }, {
+    'list': 'bullet'
+  }],
+  [{
+    'header': [1, 2, 3, 4, false]
+  }],
+
+  [{
+    'color': []
+  }, {
+    'background': []
+  }],
+  [{
+    'align': []
+  }],
+  ['image'],
+  ['clean']
+];
+
+
 const options = {
   debug: 'info',
   placeholder: 'Compose an epic...',
-  theme: 'snow'
+  theme: 'snow',
+  modules: {
+    toolbar
+  }
 };
 
 function setupEditor(editor) {
