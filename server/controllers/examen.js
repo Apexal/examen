@@ -147,11 +147,13 @@ async function view_examen(ctx) {
   // Find examen
   let examen;
   try {
-    // HOW COOL IS THIS
     examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent');
   } catch (e) {
+    console.error('Examen not found.');
     return ctx.throw(404, 'Examen Not Found');
   }
+
+  if (ctx.state.user.isStudent && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
 
   ctx.state.autoplay = ctx.query.autoplay === '1';
 
