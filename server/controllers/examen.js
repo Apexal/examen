@@ -170,7 +170,9 @@ async function view_archive(ctx) {
   ctx.state.nextPage = page + 1;
 
   // Limit to only 4 per page
-  const data = ctx.state.data = await ctx.db.Examen.paginate({}, {
+  const data = ctx.state.data = await ctx.db.Examen.paginate({
+    approved: true
+  }, {
     sort: {
       dateAdded: -1
     },
