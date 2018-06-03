@@ -193,7 +193,28 @@ async function view_archive(ctx) {
 // "/examens/submissions"
 async function view_submissions(ctx) {
   ctx.state.title = 'Submissions';
-  await ctx.render('index');
+
+  // Prevent going to negative pages
+  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
+  ctx.state.prevPage = Math.max(1, page - 1);
+  ctx.state.nextPage = page + 1;
+
+  // Limit to only 4 per page
+  const data = ctx.state.data = await ctx.db.Examen.paginate({
+    approved: false
+  }, {
+    sort: {
+      dateAdded: -1
+    },
+    populate: '_poster',
+    limit: 4,
+    page
+  });
+
+  // If too high, go to last page
+  if (page > data.pages) return ctx.redirect('/examen/submissions?page=' + data.pages);
+
+  await ctx.render('examen/submissions');
 }
 
 module.exports = {
