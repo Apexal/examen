@@ -65,6 +65,7 @@ async function save_new_examen(ctx, next) {
       text: bdy.introduction,
       delay: bdy.introductionDelay
     },
+    approved: !user.isStudent,
     prompts,
     closing: {
       text: bdy.closing,

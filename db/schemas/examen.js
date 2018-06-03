@@ -12,6 +12,11 @@ const schema = new Schema({
     required: true,
     maxlength: 200
   },
+  approved: {
+    type: Boolean,
+    default: true,
+    required: true
+  },
   introduction: {
     text: {
       type: String,
