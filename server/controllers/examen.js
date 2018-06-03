@@ -189,11 +189,19 @@ async function view_archive(ctx) {
   await ctx.render('examen/archive');
 }
 
+/* GET a page of pending student examens */
+// "/examens/submissions"
+async function view_submissions(ctx) {
+  ctx.state.title = 'Submissions';
+  await ctx.render('index');
+}
+
 module.exports = {
   redirect_today,
   view_new_examen,
   save_new_examen,
   remove_examen,
   view_examen,
-  view_archive
+  view_archive,
+  view_submissions
 };

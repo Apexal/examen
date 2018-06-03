@@ -4,7 +4,7 @@ const router = new Router();
 const Ctrl = require('../controllers/examen');
 
 /* Allows only teachers to use theses routes */
-router.all(['/new', '/:id/remove'], async (ctx, next) => {
+router.all(['/new', '/:id/remove', '/submissions'], async (ctx, next) => {
   if (ctx.isAuthenticated() /*&& ctx.state.user.isStudent*/ ) { // TODO: switch to staff
     await next();
   } else {
@@ -19,6 +19,7 @@ router.get('/new', Ctrl.view_new_examen);
 router.post('/new', Ctrl.save_new_examen);
 
 router.get('archive', '/archive', Ctrl.view_archive);
+router.get('submissions', '/submissions', Ctrl.view_submissions);
 
 router.get('examen', '/:id', Ctrl.view_examen);
 router.post('/:id/remove', Ctrl.remove_examen);
