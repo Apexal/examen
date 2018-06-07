@@ -4,8 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const dbURL = process.env.DATABASE_URL;
-// const basename = path.basename(module.filename);
+const dbURL = process.env.MONGODB_URI;
 
 let models = {};
 
