@@ -67,9 +67,10 @@ const schema = new Schema({
       required: true
     }
   },
-  backingTrackExt: {
+  backingTrack: {
     type: String,
-    maxlength: 10
+    required: true,
+    maxlength: 300
   },
   _poster: {
     type: mongoose.Schema.Types.ObjectId,

@@ -19,7 +19,9 @@ block content
           .field.column
             label.label(for="backing-track") Backing Track
             .control
-              input#backing-track.input(type="file", name="recording", accept="audio/*")
+              select#backing-track.input(name="recording", v-model="backingTrack")
+                option(value="I Am The Bread Of Life.ogg") Bread of Life
+                option(value="Prayer of St. Francis Instrumental.mp3") Prayer of Saint Francis
 
         .column
           .field.is-pulled-right

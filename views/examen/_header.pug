@@ -2,7 +2,7 @@ if !examen.approved
   .notification.is-warning This examen has been submitted for approval. Please view it and choose to #[b accept] or #[b deny] it below.
 
 .examen-controls.is-hidden-mobile.is-pulled-right
-  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/ogg")
+  audio.examen-audio#backing-track(controls, loop, src="/audio/backingtracks/" + examen.backingTrack, volume="0.1", type="audio/ogg")
   button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
     i.fas.fa-volume-up &nbsp;
     |  {{ playing ? 'Stop' : 'Start' }}
@@ -19,7 +19,7 @@ h1.title
 h2.subtitle.status-tag {{ statusText }}
 
 .examen-controls.is-visible-mobile
-  audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/ogg")
+  audio.examen-audio#backing-track(controls, loop, src="/audio/backingtracks/" + examen.backingTrack, volume="0.1", type="audio/ogg")
   .has-text-centered
     button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
       i.fas.fa-volume-up &nbsp;

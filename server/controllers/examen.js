@@ -68,15 +68,6 @@ async function save_new_examen(ctx, next) {
     });
   }
 
-  /*
-  const examenDir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', new_examen.id);
-  try {
-    fs.mkdirSync(examenDir);
-  } catch (e) {
-    console.error(e);
-  }
-  */
-
   // Save the audio file locally with the given name
   const save_audio = (file, prompt) => {
     const reader = fs.createReadStream(file.path);
@@ -100,21 +91,6 @@ async function save_new_examen(ctx, next) {
     console.log('uploading %s -> gridfs at %s', file.path, audio_id);
   }
 
-  // Check for audio file
-  /*
-  const backingTrack = ctx.request.body.files.backingTrack;
-
-  if (backingTrack.size > 0) {
-    const ext = backingTrack.name.split('.')[backingTrack.name.split('.').length - 1]; // last part
-    const file_name = 'backing_track.' + ext;
-
-    // Allows any audio file to be uploaded
-    //new_examen.backingTrackExt = ext;
-
-    //save_audio(backingTrack, file_name);
-  }
-  */
-
   save_audio(ctx.request.body.files.introductionRecording, introduction);
   save_audio(ctx.request.body.files.closingRecording, closing);
 
@@ -126,6 +102,7 @@ async function save_new_examen(ctx, next) {
 
   const new_examen = new ctx.db.Examen({
     title: bdy.title,
+    backingTrack: bdy.backingTrack,
     introduction,
     approved: !ctx.state.user.isStudent,
     prompts,
@@ -290,8 +267,7 @@ async function get_audio(ctx) {
   });
   Recording = gridfs.model;
 
-  const data = await Recording.readById(audio_id)
-  console.log('found');
+  const data = await Recording.readById(audio_id);
   ctx.body = data;
 }
 
