@@ -30,6 +30,9 @@
 .examen-archive .links i {
   padding: 5px; }
 
+.tag.new-tag {
+  vertical-align: text-top; }
+
 .prompts {
   border-radius: 5px; }
   .prompts .padded {

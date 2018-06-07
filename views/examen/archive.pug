@@ -11,23 +11,28 @@ block content
           .columns.is-multiline
             for ex in data.docs
               .column.is-half
-                .box
+                .box.is-clearfix
                   .links
                     a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
-                      i.fab.fa-readme(title="Text available.")
+                      i.fab.fa-readme(title="Read through at your own pace.")
                     if ex.backingTrack || true
                       a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
-                        i.fas.fa-headphones(title="Audio recording available.")
+                        i.fas.fa-headphones(title="Listen to audio playthrough.")
                   h3.is-size-4= ex.title + ' '
-                    //span.tag.is-danger New
+                    if moment(ex.dateAdded) > moment().subtract(3, 'days')
+                      span.tag.is-danger.new-tag(title="This examen was very recently posted.") New
                   .content
                     if ex.introduction
                       .has-text-grey !{ex.introduction.text}
                     else
                       i.has-text-grey-light No introduction given...
-                    hr
-                    
-                  span.tag.is-dark.is-pulled-right #{ex.prompts.length} prompts
-                  span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} by #[a(href="/users/")= ex._poster.title + ' ' + ex._poster.fullName]
+
+                  hr
+                  span.tag.is-dark.is-pulled-right(title="This examen has " + ex.prompts.length + " prompts (excluding intro and closing).") #{ex.prompts.length} prompts
+                  span.tag.is-link.is-pulled-right --- duration
+
+                  span.is-size-7.has-text-grey-light(title=moment(ex.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(ex.dateAdded).fromNow()}
+                    if loggedIn
+                    |  by #[a(href="/users/")= ex._poster.title + ' ' + ex._poster.fullName]
         else
           p.has-text-centered.has-text-grey-light No examens have been approved yet...
