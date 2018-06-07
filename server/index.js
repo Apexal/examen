@@ -85,7 +85,10 @@ if (process.env.NODE_ENV === 'development') {
 
 /* Allows request body parsing */
 app.use(Body({
-  multipart: true
+  multipart: true,
+  formidable: {
+    maxFileSize: 5 * 1024 * 1024
+  }
 }));
 
 /* Adds helpful response methods */
