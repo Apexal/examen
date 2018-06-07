@@ -75,7 +75,6 @@ const new_examen_app = new Vue({
 
       // Check valid
       let invalid = false;
-      if (document.getElementById('backing-track').files.length === 0) return alert('Please select a backing track.');
 
       ['introduction', 'closing'].forEach(thing => {
         if (!this.checkComplete(this[thing])) {
