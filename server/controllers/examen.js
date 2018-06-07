@@ -208,7 +208,7 @@ async function view_submissions(ctx) {
       dateAdded: -1
     },
     populate: '_poster',
-    limit: 4,
+    limit: 20,
     page
   });
 
