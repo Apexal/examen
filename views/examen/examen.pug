@@ -11,14 +11,14 @@ block content
         progress.progress.delay-progress(:max="currentDelay", :value="timer", :title="timer + ' out of ' + currentDelay + ' seconds left'") {{ timer }}%
         .padded
           #introduction.content(v-show="status == 'introduction'")
-            audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/audio/examens/" + examen.id + "/introduction.ogg", type="audio/ogg")
+            audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.introduction.delay, data-prompt="introduction", id="introduction-audio", src="/examen/audio/" + examen.introduction.audio_id, type="audio/ogg")
             | !{examen.introduction.text}
           for p, index in examen.prompts
             .content.prompt-content(id="prompt-" + index, v-show="status === " + index)
-              audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/audio/examens/" + examen.id + "/prompt-" + index + ".ogg", type="audio/ogg")
+              audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=p.delay, data-prompt=index, id="prompt-" + index + "-audio", src="/examen/audio/" + p.audio_id, type="audio/ogg")
               | !{p.text}
           #closing.content(v-show="status == 'closing'")
-            audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/audio/examens/" + examen.id + "/closing.ogg", type="audio/ogg")
+            audio.examen-audio.prompt-recording.is-marginless(controls, preload="auto", data-delay=examen.closing.delay, data-prompt="closing", id="closing-audio", src="/examen/audio/" + examen.closing.audio_id, type="audio/ogg")
             | !{examen.closing.text}
           
           p.has-text-centered.has-text-grey.delay-p(v-if="autocontinue") Pause for {{ timer }} seconds...

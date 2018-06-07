@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 /* GET the latest examen posted today or redirect to archive if none */
 // "/examens/today"
@@ -48,6 +49,16 @@ async function save_new_examen(ctx, next) {
   const prompt_delays = JSON.parse(bdy.delays);
   let prompt_recordings = ctx.request.body.files.recordings;
 
+  let introduction = {
+    text: bdy.introduction,
+    delay: bdy.introductionDelay
+  };
+
+  let closing = {
+    text: bdy.closing,
+    delay: bdy.closingDelay
+  };
+
   // Reconstruct prompt array by matching up text and delays
   const prompts = [];
   for (let i = 0; i < prompt_texts.length; i++) {
@@ -57,38 +68,40 @@ async function save_new_examen(ctx, next) {
     });
   }
 
-  const new_examen = new ctx.db.Examen({
-    title: bdy.title,
-    introduction: {
-      text: bdy.introduction,
-      delay: bdy.introductionDelay
-    },
-    approved: !ctx.state.user.isStudent,
-    prompts,
-    closing: {
-      text: bdy.closing,
-      delay: bdy.closingDelay
-    },
-    _poster: ctx.state.user._id,
-    dateAdded: new Date()
-  });
-
+  /*
   const examenDir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', new_examen.id);
   try {
     fs.mkdirSync(examenDir);
   } catch (e) {
     console.error(e);
   }
+  */
 
   // Save the audio file locally with the given name
-  const save_audio = (file, name) => {
+  const save_audio = (file, prompt) => {
     const reader = fs.createReadStream(file.path);
-    const stream = fs.createWriteStream(path.join(examenDir, name));
-    reader.pipe(stream);
-    console.log('uploading %s -> %s', file.name, stream.path);
+    //const stream = fs.createWriteStream(path.join(examenDir, name));
+    const audio_id = mongoose.Types.ObjectId();
+
+    const gridfs = require('mongoose-gridfs')({
+      collection: 'recordings',
+      model: 'Recording',
+      mongooseConnection: mongoose.connection
+    });
+    Recording = gridfs.model;
+
+    Recording.write({
+      _id: audio_id,
+      filename: audio_id + '.ogg',
+      content_type: 'audio/ogg'
+    }, reader);
+
+    prompt.audio_id = audio_id;
+    console.log('uploading %s -> gridfs at %s', file.path, audio_id);
   }
 
   // Check for audio file
+  /*
   const backingTrack = ctx.request.body.files.backingTrack;
 
   if (backingTrack.size > 0) {
@@ -96,21 +109,30 @@ async function save_new_examen(ctx, next) {
     const file_name = 'backing_track.' + ext;
 
     // Allows any audio file to be uploaded
-    new_examen.backingTrackExt = ext;
+    //new_examen.backingTrackExt = ext;
 
-    save_audio(backingTrack, file_name);
+    //save_audio(backingTrack, file_name);
   }
+  */
 
-  ['introduction', 'closing'].forEach(t => {
-    const f = ctx.request.body.files[t + 'Recording'];
-    if (f) save_audio(f, t + '.ogg');
-  });
+  save_audio(ctx.request.body.files.introductionRecording, introduction);
+  save_audio(ctx.request.body.files.closingRecording, closing);
 
   // When only one prompt is sent, its not sent as an array 
   if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
 
   // Save each prompt recording
-  prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.ogg`));
+  prompt_recordings.forEach((file, i) => save_audio(file, prompts[i]));
+
+  const new_examen = new ctx.db.Examen({
+    title: bdy.title,
+    introduction,
+    approved: !ctx.state.user.isStudent,
+    prompts,
+    closing,
+    _poster: ctx.state.user._id,
+    dateAdded: new Date()
+  });
 
   await new_examen.save();
 
@@ -119,8 +141,6 @@ async function save_new_examen(ctx, next) {
   } else {
     ctx.request.flash('success', `Successfully posted examen '${new_examen.title}'.`);
   }
-
-  //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
 
   ctx.created({
     success: true,
@@ -261,6 +281,20 @@ async function view_submissions(ctx) {
   await ctx.render('examen/submissions');
 }
 
+async function get_audio(ctx) {
+  const audio_id = ctx.params.audio_id;
+  const gridfs = require('mongoose-gridfs')({
+    collection: 'recordings',
+    model: 'Recording',
+    mongooseConnection: mongoose.connection
+  });
+  Recording = gridfs.model;
+
+  const data = await Recording.readById(audio_id)
+  console.log('found');
+  ctx.body = data;
+}
+
 module.exports = {
   redirect_today,
   view_new_examen,
@@ -270,5 +304,6 @@ module.exports = {
   deny_examen,
   view_examen,
   view_archive,
-  view_submissions
+  view_submissions,
+  get_audio
 };

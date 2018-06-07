@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(Body({
   multipart: true,
   formidable: {
-    maxFileSize: 5 * 1024 * 1024
+    maxFileSize: 10 * 1024 * 1024
   }
 }));
 
