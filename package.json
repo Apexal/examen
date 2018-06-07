@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "foreman": "3.0.0",
+    "gridfs-stream": "^1.1.1",
     "koa": "^2.5.0",
     "koa-better-serve": "^2.0.7",
     "koa-body": "^2.6.0",
@@ -26,6 +27,7 @@
     "kompression": "^1.0.0",
     "moment": "^2.22.2",
     "mongoose": "^5.1.4",
+    "mongoose-gridfs": "^0.4.1",
     "mongoose-paginate": "^5.0.3",
     "passport-google-auth": "^1.0.2",
     "pug": "^2.0.3",

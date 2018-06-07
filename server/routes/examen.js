@@ -22,6 +22,8 @@ const requireStaff = async (ctx, next) => {
   }
 };
 
+router.get('/audio/:audio_id', Ctrl.get_audio);
+
 router.get('/today', Ctrl.redirect_today);
 
 router.get('/new', requireLogin, Ctrl.view_new_examen);

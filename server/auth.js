@@ -3,7 +3,7 @@ const passport = require('koa-passport');
 const {
   School,
   User
-} = require('../db');
+} = require('../db').models;
 
 // This regex matches emails in the student format
 // username + 2 digit graduation year + '@regis.org'

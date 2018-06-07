@@ -28,6 +28,10 @@ const schema = new Schema({
       min: 0,
       max: 600,
       required: true
+    },
+    audio_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
     }
   },
   prompts: [{
@@ -39,6 +43,10 @@ const schema = new Schema({
       type: Number,
       min: 0,
       max: 600,
+      required: true
+    },
+    audio_id: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true
     }
   }],
@@ -53,11 +61,16 @@ const schema = new Schema({
       min: 0,
       max: 600,
       required: true
+    },
+    audio_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
     }
   },
-  backingTrackExt: {
+  backingTrack: {
     type: String,
-    maxlength: 10
+    required: true,
+    maxlength: 300
   },
   _poster: {
     type: mongoose.Schema.Types.ObjectId,

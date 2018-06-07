@@ -8,7 +8,7 @@ const respond = require('koa-respond');
 const compress = require('kompression');
 const views = require('koa-views');
 const session = require('koa-session');
-const db = require('../db');
+const db = require('../db').models;
 const static = require('koa-static');
 const passport = require('./auth');
 const path = require('path');
@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(Body({
   multipart: true,
   formidable: {
-    maxFileSize: 5 * 1024 * 1024
+    maxFileSize: 10 * 1024 * 1024
   }
 }));
 
