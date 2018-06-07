@@ -1,5 +1,4 @@
 const passport = require('koa-passport');
-require('dotenv').config()
 
 const {
   School,

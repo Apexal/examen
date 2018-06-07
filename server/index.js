@@ -16,8 +16,6 @@ const path = require('path');
 const app = new Koa();
 const router = new Router();
 
-require('dotenv').config()
-
 app.keys = [process.env.KEYS];
 
 app.use(
