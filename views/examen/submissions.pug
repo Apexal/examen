@@ -5,6 +5,29 @@ block content
     .container
       h1.title.has-text-centered-mobile Pending Submissions
         small.has-text-grey-light.subtitle  0 total
-      //include _pagination
+      include _pagination
       .examen-submissions
-        p.has-text-centered.has-text-grey-light No examens have been submitted for approval yet...
+        if data.docs.length > 0
+          .columns.is-multiline
+            for ex in data.docs
+              .column.is-half
+                .box
+                  .links
+                    a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
+                      i.fab.fa-readme(title="Text available.")
+                    if ex.backingTrack || true
+                      a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
+                        i.fas.fa-headphones(title="Audio recording available.")
+                  h3.is-size-4= ex.title + ' '
+                    //span.tag.is-danger New
+                  .content
+                    if ex.introduction
+                      .has-text-grey !{ex.introduction.text}
+                    else
+                      i.has-text-grey-light No introduction given...
+                    hr
+                    
+                  span.tag.is-dark.is-pulled-right #{ex.prompts.length} prompts
+                  span.is-size-7.has-text-grey-light Posted #{moment(ex.dateAdded).fromNow()} by #[a(href="/users/")= ex._poster.title + ' ' + ex._poster.fullName]
+        else
+          p.has-text-centered.has-text-grey-light No examens have been posted yet...
