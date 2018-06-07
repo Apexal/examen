@@ -93,9 +93,29 @@ schema.plugin(paginate);
 
 /* When an examen is deleted, its recording folder should also be deleted. */
 schema.pre('remove', function (next) {
-  const dir = path.join(__dirname, '..', '..', '/client/public/audio/examens/', this.id);
-  console.log(`Removing examen and dir: ${dir}`);
-  rimraf(dir, next);
+  const gridfs = require('mongoose-gridfs')({
+    collection: 'recordings',
+    model: 'Recording',
+    mongooseConnection: mongoose.connection
+  });
+  Recording = gridfs.model;
+
+  try {
+    Recording.unlinkById(this.introduction.audio_id, () => {});
+  } catch (e) {
+
+  }
+  try {
+    Recording.unlinkById(this.closing.audio_id, () => {});
+  } catch (e) {
+
+  }
+  try {
+    this.prompts.map(p => Recording.unlinkById(p.audio_id, () => {}));
+  } catch (e) {
+
+  }
+  return next();
 });
 
 module.exports = {
