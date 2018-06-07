@@ -1,4 +1,5 @@
 const sendgrid = require('@sendgrid/mail');
+const path = require('path');
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 const pug = require('pug');

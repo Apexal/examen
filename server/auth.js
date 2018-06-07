@@ -71,6 +71,11 @@ passport.use(new GoogleStrategy({
 
       try {
         await user.save();
+        require('./email').sendEmail(email, `Welcome to the Examen!`, 'firstLogin', {
+          name: user.name,
+          school,
+          websiteUrl: 'https://regis-examen.herokuapp.com/'
+        });
       } catch (e) {
         return done(e);
       }
