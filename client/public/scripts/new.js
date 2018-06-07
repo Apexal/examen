@@ -5,7 +5,7 @@ In the name of the Father, and of the Son, and of the Holy Spirit.
 
 const default_closing = `<p>Please join in closing with the <b>Glory Be</b>.</p>
 <p>Glory be to the Father, and to the Son, and to the Holy Spirit,
-As it was in the begininning, is now, and ever shall be,
+As it was in the beginning, is now, and ever shall be,
 World without end, Amen.</p>
 <p>Saint Ignatius and Saint John Francis Regis,
 Pray for us.</p>
