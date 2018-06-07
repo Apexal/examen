@@ -119,7 +119,7 @@ async function save_new_examen(ctx, next) {
 
   //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
 
-  return ctx.created({
+  ctx.created({
     success: true,
     id: new_examen.id
   });

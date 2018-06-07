@@ -1,3 +1,6 @@
+if !examen.approved
+  .notification.is-warning This examen has been submitted for approval. Please view it and choose to #[b accept] or #[b deny] it below.
+
 .examen-controls.is-hidden-mobile.is-pulled-right
   audio.examen-audio#backing-track(controls, loop, src="/audio/examens/" + examen.id + "/backing_track." + examen.backingTrackExt, volume="0.1", type="audio/ogg")
   button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
@@ -8,8 +11,11 @@
   button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")
     i.fas.fa-arrow-right
 
-
-h1.title= examen.title
+h1.title
+  if !examen.approved
+    span.icon(title="This examen has not been approved yet.")
+      i.fas.fa-lock
+  |  #{examen.title}
 h2.subtitle.status-tag {{ statusText }}
 
 .examen-controls.is-visible-mobile
@@ -18,9 +24,6 @@ h2.subtitle.status-tag {{ statusText }}
     button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
       i.fas.fa-volume-up &nbsp;
       |  {{ playing ? 'Stop' : 'Start' }}
-    //button.button.is-link(v-if="!autocontinue", :data-prompt="status", @click="hearPrompt(status)")
-    //  i.fas.fa-volume-up &nbsp;
-    //  | Listen
     button.button(@click="autocontinue = false; prevPrompt();", :disabled="!hasPrevPrompt")
       i.fas.fa-arrow-left
     button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")
