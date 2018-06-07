@@ -70,6 +70,8 @@ passport.use(new GoogleStrategy(config.get('auth.google'),
         return done(e);
       }
       console.log('Created new user.');
+    } else if (user.accountLocked) {
+      return done(new Error('Account locked.'));
     }
 
     console.log('Found user.');

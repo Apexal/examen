@@ -81,6 +81,8 @@ async function save_new_examen(ctx, next) {
   } catch (e) {
     console.error(e);
   }
+
+  // Save the audio file locally with the given name
   const save_audio = (file, name) => {
     const reader = fs.createReadStream(file.path);
     const stream = fs.createWriteStream(path.join(examenDir, name));
@@ -101,7 +103,6 @@ async function save_new_examen(ctx, next) {
     save_audio(backingTrack, file_name);
   }
 
-  const introRecording = ctx.request.body.files.introRecording;
   ['introduction', 'closing'].forEach(t => {
     const f = ctx.request.body.files[t + 'Recording'];
     if (f) save_audio(f, t + '.ogg');

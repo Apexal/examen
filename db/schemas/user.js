@@ -31,6 +31,10 @@ const schema = new Schema({
     required: true,
     unique: true
   },
+  accountLocked: {
+    type: Boolean,
+    default: false
+  },
   dateJoined: {
     type: Date,
     required: true
