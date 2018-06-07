@@ -1,36 +1,4 @@
-.hero.is-regis {
-  background-color: #d31145;
-  color: whitesmoke;
-}
-
-.hero.is-regis * {
-  color: whitesmoke;
-}
-
-.hero.is-regis nav a {
-  color: whitesmoke;
-}
-
-.hero.is-regis .hero-head a.navbar-item:hover {
-  color: #BB0B3A;
-}
-
-.hero.is-regis .hero-foot {
-  background-color: #BB0B3A;
-}
-
-.hero.is-regis .hero-foot .tabs .container ul li.is-active {
-  background-color: #d31145;
-}
-
-.hero.is-regis .hero-foot .tabs .container ul li:hover {
-  background-color: #d31145;
-}
-
-.hero.is-regis .navbar-menu {
-  background-color: #d31145;
-}
-
+@import 'header';
 .examen-archive .links i {
   padding: 5px;
 }

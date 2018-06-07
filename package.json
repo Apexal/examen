@@ -37,9 +37,11 @@
     "webpack-cli": "^2.1.3"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run sass; node index.js",
     "dev": "NODE_ENV=development npm start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass ./client/sass/styles.scss client/public/css/styles.css",
+    "sass-watch": "sass --watch client/sass/:client/public/css/"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,109 @@
+.hero.is-regis {
+  background-color: #d31145;
+  color: whitesmoke; }
+  .hero.is-regis * {
+    color: whitesmoke; }
+  .hero.is-regis nav a {
+    color: whitesmoke; }
+  .hero.is-regis .hero-head a.navbar-item:hover {
+    color: #BB0B3A; }
+  .hero.is-regis .hero-foot {
+    background-color: #BB0B3A; }
+    .hero.is-regis .hero-foot .tabs .container ul li.is-active {
+      background-color: #d31145; }
+    .hero.is-regis .hero-foot .tabs .container ul li:hover {
+      background-color: #d31145; }
+    .hero.is-regis .hero-foot .navbar-menu {
+      background-color: #d31145; }
+
+.examen-archive .links i {
+  padding: 5px; }
+
+.loyola {
+  width: 30%;
+  border: 5px solid #222;
+  min-width: 200px;
+  max-width: 400px;
+  margin-right: 20px;
+  margin-bottom: 20px; }
+
+audio.examen-audio {
+  width: 100%; }
+
+.date {
+  font-weight: normal; }
+
+.is-fullwidth {
+  width: 100%; }
+
+.delay-input {
+  width: 60px !important;
+  margin-left: 10px; }
+
+.examen-audio:first-child {
+  display: none; }
+
+#new-examen audio {
+  width: 100%;
+  height: 54px; }
+
+#new-examen textarea,
+#new-examen #introduction,
+#new-examen #closing {
+  display: none; }
+
+.navbar .regis-image {
+  padding-top: 10px;
+  padding-left: 10px; }
+
+.export-audio,
+.delete-examen {
+  float: right; }
+
+.is-visible-mobile {
+  display: none; }
+
+@media only screen and (max-width: 768px) {
+  .regis-image {
+    width: 90%; }
+
+  .is-marginless-mobile {
+    margin: 0; }
+
+  .examen-controls .column {
+    padding: 0; }
+
+  .examen-controls {
+    margin-bottom: 10px; }
+
+  .export-audio,
+  .delete-examen {
+    float: none; }
+
+  .is-visible-mobile {
+    display: initial; } }
+.prompts {
+  border-radius: 5px; }
+
+.prompts .padded {
+  padding: 30px; }
+
+.delay-progress {
+  border-radius: 0;
+  margin-bottom: 0 !important; }
+
+#introduction.content,
+.content.prompt-content {
+  margin-bottom: 0; }
+
+section.section {
+  padding-top: 1.7rem; }
+
+.amdg-image {
+  margin-top: 10px;
+  max-height: 20px; }
+
+.delay-p {
+  margin-top: 20px; }
+
+/*# sourceMappingURL=styles.css.map */

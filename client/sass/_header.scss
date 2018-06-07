@@ -1,0 +1,27 @@
+.hero.is-regis {
+  background-color: #d31145;
+  color: whitesmoke;
+  * {
+    color: whitesmoke;
+  }
+  nav a {
+    color: whitesmoke;
+  }
+  .hero-head a.navbar-item:hover {
+    color: #BB0B3A;
+  }
+  .hero-foot {
+    background-color: #BB0B3A;
+    .tabs .container ul {
+      li.is-active {
+        background-color: #d31145;
+      }
+      li:hover {
+        background-color: #d31145;
+      }
+    }
+    .navbar-menu {
+      background-color: #d31145;
+    }
+  }
+}
