@@ -38,14 +38,22 @@ section.hero.is-regis.is-small
       .container
         ul
           li(class=helpers.isActive(path, '/'))
-            a(href="/", title="Homepage") Home
+            a(href="/", title="Homepage")
+              i.fas.fa-home
+              | &nbsp;Home
           li
-            a(href="/examen/today", title="View the latest examen posted today.") Today's Examen
+            a(href="/examen/today", title="View the latest examen posted today.")
+              i.fas.fa-thumbtack
+              | &nbsp;Active Examen
           li(class=helpers.isActive(path, '/examen/archive'))
-            a(href="/examen/archive", title="View the list of all posted examens.") Examen Archive
+            a(href="/examen/archive", title="View the list of all posted examens.")
+              i.fas.fa-archive
+              | &nbsp;Examen Archive
           if loggedIn
             if !user.isStudent
               li(class=helpers.isActive(path, '/examen/submissions'))
                 a(href="/examen/submissions") Pending Submissions
             li(class=helpers.isActive(path, '/examen/new'))
-              a(href="/examen/new", title="Write and record a new examen.") #{user.isStudent ? 'Submit' : 'Post'} New Examen
+              a(href="/examen/new", title="Write and record a new examen.")
+                i.fas.fa-pencil-alt
+                | &nbsp;#{user.isStudent ? 'Submit' : 'Post'} New Examen
