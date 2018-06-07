@@ -159,7 +159,7 @@ async function view_examen(ctx) {
     return ctx.throw(404, 'Examen Not Found');
   }
 
-  if (ctx.state.user.isStudent && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
+  if (ctx.isAuthenticated() && ctx.state.user.isStudent && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
 
   ctx.state.autoplay = ctx.query.autoplay === '1';
 

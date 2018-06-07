@@ -34,4 +34,6 @@ block content
             button.button.is-success Approve
           form.deny-examen(method="POST", action="/examen/" + examen.id + "/deny")
             button.button.is-danger Deny
-      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
+
+      if loggedIn
+        span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
