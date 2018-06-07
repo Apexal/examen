@@ -9,7 +9,7 @@ const dbURL = process.env.DATABASE_URL;
 
 let models = {};
 
-mongoose.connect(dbURL);
+const connection = mongoose.connect(dbURL);
 
 fs.readdirSync(__dirname + '/schemas').forEach(file => {
   console.log(file);
@@ -18,4 +18,7 @@ fs.readdirSync(__dirname + '/schemas').forEach(file => {
 });
 console.log('Loaded schemas...');
 
-module.exports = models;
+module.exports = {
+  connection,
+  models
+};
