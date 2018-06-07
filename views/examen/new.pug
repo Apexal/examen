@@ -9,7 +9,7 @@ block content
       h1.title #{user.isStudent ? 'Submit' : 'Post'} New Examen
       if user.isStudent
         .notification.is-warning
-            p Once written, recorded, and submitted, an approved faculty member must review and approve your submission before it is posted.
+            p Once written, recorded, and submitted, your examen must be #[b review and approved] by a faculty member before it is posted publicly.
       form.new-examen(@submit.prevent="handleSubmit", method="POST", enctype="multipart/form-data")
         .columns
           .field.column
@@ -24,7 +24,7 @@ block content
         .column
           .field.is-pulled-right
             .control
-              label.label.is-inline Pause
+              label.label.is-inline.delay-label Pause
               input.is-inline.input.delay-input(type="number", v-model.number="introduction.delay", min=0, max=600, required)
           h1.subtitle Introduction
           .field
@@ -45,14 +45,14 @@ block content
           .box(v-for="(text, index) in prompts")
             .field.is-pulled-right
               .control
-                label.label.is-inline Pause
+                label.label.is-inline.delay-label Pause
                 input.is-inline.input.delay-input(type="number", v-model.number="prompts[index].delay", min=0, max=600, required)
             h1.subtitle Prompt {{ index + 1}}
             .field
               .control
                 textarea.prompt(type="text", :id="'prompt-' + index", :data-prompt="index", name="prompt", v-model="prompts[index].text", required)
                 .editor.prompt-editor(:id="'prompt-' + index + '-editor'", :data-editing="'prompt-' + index", :data-prompt="index")
-            
+
             hr
             .columns
               .column.is-narrow
@@ -65,7 +65,7 @@ block content
 
           .field.is-pulled-right
             .control
-              label.label.is-inline Pause
+              label.label.is-inline.delay-label Pause
               input.is-inline.input.delay-input(type="number", v-model.number="closing.delay", min=0, max=600, required)
           .field
             h1.subtitle Closing

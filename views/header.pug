@@ -3,7 +3,7 @@ section.hero.is-regis.is-small
     nav.navbar
       .container
         .navbar-brand
-          img.regis-image(src="/images/wordmark.png")
+          img.regis-image(title="For God and country.", src="/images/wordmark.png")
           #navbar-burger.burger.navbar-burger(data-target="navbarMenu")
             span
             span
@@ -11,7 +11,10 @@ section.hero.is-regis.is-small
         #navbarMenu.navbar-menu
           .navbar-end
             if loggedIn
-              span.navbar-item Logged in as #{user.title} &nbsp;
+              span.navbar-item Logged in as&nbsp;
+                if user.isStudent
+                  span.icon
+                    i.fas.fa-graduation-cap
                 b= user.name.first + " " + user.name.last
               a.navbar-item(href="/logout")
                 b Logout

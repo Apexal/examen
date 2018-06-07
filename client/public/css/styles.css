@@ -60,6 +60,8 @@
 #new-examen .delay-input {
   width: 60px !important;
   margin-left: 10px; }
+#new-examen .delay-label {
+  vertical-align: sub; }
 
 .amdg-image {
   margin-top: 10px;
