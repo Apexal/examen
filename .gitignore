@@ -59,8 +59,10 @@ typings/
 
 .DS_STORE
 
-client/public/audio
-
-config/*.json
-!config/default.json
 .sass-cache
+
+client/public/audio/examens/*/*.mp3
+client/public/audio/examens/*/*.wav
+client/public/audio/examens/*/*.ogg
+client/public/audio/examens/*/*.weba
+!client/public/audio/examens/.gitkeep
