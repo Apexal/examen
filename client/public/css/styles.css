@@ -50,6 +50,10 @@
 .delete-examen {
   float: right; }
 
+.approve-examen,
+.deny-examen {
+  display: inline-block; }
+
 #new-examen audio {
   width: 100%;
   height: 54px; }

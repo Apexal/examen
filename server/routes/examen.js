@@ -30,6 +30,9 @@ router.post('/new', requireLogin, Ctrl.save_new_examen);
 router.get('archive', '/archive', Ctrl.view_archive);
 router.get('submissions', '/submissions', requireStaff, Ctrl.view_submissions);
 
+router.post('/:id/approve', requireStaff, Ctrl.approve_examen);
+router.post('/:id/deny', requireStaff, Ctrl.deny_examen);
+
 router.get('examen', '/:id', Ctrl.view_examen);
 router.post('/:id/remove', requireStaff, Ctrl.remove_examen);
 

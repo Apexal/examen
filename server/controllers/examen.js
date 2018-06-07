@@ -147,6 +147,46 @@ async function remove_examen(ctx) {
   ctx.redirect(ctx.router.url('archive'));
 }
 
+/* POST approve examen */
+// "/examens/:id/approve"
+async function approve_examen(ctx) {
+  const id = ctx.params.id;
+  let examen;
+  try {
+    examen = await ctx.db.Examen.findById(id);
+  } catch (e) {
+    return ctx.throw(404, 'Examen Not Found');
+  }
+
+  // Don't allow re-approving
+  if (examen.approved) return ctx.throw(400, 'Examen is already approved.');
+
+  examen.approved = true;
+
+  await examen.save();
+  ctx.request.flash('success', `Successfully approved examen '${examen.title}'.`);
+  ctx.redirect(ctx.router.url('submissions'));
+}
+
+/* POST deny (and delete) examen */
+// "/examens/:id/deny"
+async function deny_examen(ctx) {
+  const id = ctx.params.id;
+  let examen;
+  try {
+    examen = await ctx.db.Examen.findById(id);
+  } catch (e) {
+    return ctx.throw(404, 'Examen Not Found');
+  }
+
+  // Don't allow denial of already approved examen
+  if (examen.approved) return ctx.throw(400, 'Cannot deny already approved examen.');
+
+  await examen.remove();
+  ctx.request.flash('success', `Successfully denied (and deleted) examen '${examen.title}'.`);
+  ctx.redirect(ctx.router.url('submissions'));
+}
+
 /* GET one particular examen by ID */
 // "/examens/:id"
 async function view_examen(ctx) {
@@ -228,6 +268,8 @@ module.exports = {
   view_new_examen,
   save_new_examen,
   remove_examen,
+  approve_examen,
+  deny_examen,
   view_examen,
   view_archive,
   view_submissions
