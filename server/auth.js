@@ -1,5 +1,5 @@
-const config = require('config-heroku');
 const passport = require('koa-passport');
+require('dotenv').config()
 
 const {
   School,
@@ -21,7 +21,11 @@ passport.deserializeUser((id, done) => {
 });
 
 const GoogleStrategy = require('passport-google-auth').Strategy;
-passport.use(new GoogleStrategy(config.get('auth.google'),
+passport.use(new GoogleStrategy({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
+  },
   async (token, tokenSecret, profile, done) => {
     // First email
     const email = profile.emails[0].value;

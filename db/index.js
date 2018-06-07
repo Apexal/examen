@@ -1,18 +1,18 @@
 const fs = require('fs');
-const config = require('config-heroku');
 const path = require('path');
+require('dotenv').config()
+
+console.log(process.env)
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const dbURL = `mongodb://${config.get('database.user')}:${config.get('database.pass')}@${config.get('database.host')}:${config.get(
-  'database.port'
-)}/${config.get('database.name')}`;
+const dbURL = process.env.DATABASE_URL;
 // const basename = path.basename(module.filename);
 
 let models = {};
 
-mongoose.connect(dbURL, config.get('database'));
+mongoose.connect(dbURL);
 
 fs.readdirSync(__dirname + '/schemas').forEach(file => {
   console.log(file);

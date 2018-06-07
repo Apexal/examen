@@ -13,12 +13,12 @@ const static = require('koa-static');
 const passport = require('./auth');
 const path = require('path');
 
-const config = require('config-heroku');
-
 const app = new Koa();
 const router = new Router();
 
-app.keys = config.get('keys');
+require('dotenv').config()
+
+app.keys = process.env.KEYS;
 
 app.use(
   compress({
