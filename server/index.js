@@ -13,7 +13,7 @@ const static = require('koa-static');
 const passport = require('./auth');
 const path = require('path');
 
-const config = require('config-heroku');
+const config = require('config');
 
 const app = new Koa();
 const router = new Router();
