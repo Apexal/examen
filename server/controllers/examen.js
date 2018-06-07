@@ -3,8 +3,6 @@ const path = require('path');
 const os = require('os');
 const moment = require('moment');
 
-const exportExamen = require('../exportExamen');
-
 /* GET the latest examen posted today or redirect to archive if none */
 // "/examens/today"
 async function redirect_today(ctx) {
