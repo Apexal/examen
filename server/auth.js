@@ -1,4 +1,4 @@
-const config = require('config');
+const config = require('config-heroku');
 const passport = require('koa-passport');
 
 const {
