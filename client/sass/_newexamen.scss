@@ -1,0 +1,15 @@
+#new-examen {
+  audio {
+    width: 100%;
+    height: 54px;
+  }
+  textarea,
+  #introduction,
+  #closing {
+    display: none;
+  }
+  .delay-input {
+    width: 60px !important;
+    margin-left: 10px;
+  }
+}

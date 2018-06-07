@@ -1,0 +1,22 @@
+.prompts {
+  border-radius: 5px;
+  .padded {
+    padding: 30px;
+  }
+  #introduction.content,
+  .content.prompt-content {
+    margin-bottom: 0;
+  }
+  .delay-progress {
+    border-radius: 0;
+    margin-bottom: 0 !important;
+  }
+  .delay-p {
+    margin-top: 20px;
+  }
+}
+
+.export-audio,
+.delete-examen {
+  float: right;
+}

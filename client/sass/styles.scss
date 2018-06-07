@@ -1,15 +1,11 @@
 @import 'header';
-.examen-archive .links i {
-  padding: 5px;
-}
-
-.loyola {
-  width: 30%;
-  border: 5px solid #222;
-  min-width: 200px;
-  max-width: 400px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+@import 'homepage';
+@import 'archive';
+@import 'examen';
+@import 'newexamen';
+@import 'footer';
+section.section {
+  padding-top: 1.7rem;
 }
 
 audio.examen-audio {
@@ -24,34 +20,8 @@ audio.examen-audio {
   width: 100%;
 }
 
-.delay-input {
-  width: 60px !important;
-  margin-left: 10px;
-}
-
 .examen-audio:first-child {
   display: none;
-}
-
-#new-examen audio {
-  width: 100%;
-  height: 54px;
-}
-
-#new-examen textarea,
-#new-examen #introduction,
-#new-examen #closing {
-  display: none;
-}
-
-.navbar .regis-image {
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
-.export-audio,
-.delete-examen {
-  float: right;
 }
 
 .is-visible-mobile {
@@ -78,35 +48,4 @@ audio.examen-audio {
   .is-visible-mobile {
     display: initial;
   }
-}
-
-.prompts {
-  border-radius: 5px;
-}
-
-.prompts .padded {
-  padding: 30px;
-}
-
-.delay-progress {
-  border-radius: 0;
-  margin-bottom: 0 !important;
-}
-
-#introduction.content,
-.content.prompt-content {
-  margin-bottom: 0;
-}
-
-section.section {
-  padding-top: 1.7rem;
-}
-
-.amdg-image {
-  margin-top: 10px;
-  max-height: 20px;
-}
-
-.delay-p {
-  margin-top: 20px;
 }
