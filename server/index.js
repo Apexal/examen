@@ -18,7 +18,7 @@ const router = new Router();
 
 require('dotenv').config()
 
-app.keys = process.env.KEYS;
+app.keys = [process.env.KEYS];
 
 app.use(
   compress({
