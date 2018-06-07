@@ -115,7 +115,12 @@ async function save_new_examen(ctx, next) {
   prompt_recordings.forEach((file, i) => save_audio(file, `prompt-${i}.ogg`));
 
   await new_examen.save();
-  ctx.request.flash('success', `Successfully created examen '${new_examen.title}'.`);
+
+  if (ctx.state.user.isStudent) {
+    ctx.request.flash('success', `Successfully submitted examen '${new_examen.title}' for approval.`);
+  } else {
+    ctx.request.flash('success', `Successfully posted examen '${new_examen.title}'.`);
+  }
 
   //exportExamen(examenDir, bdy.introductionDelay, prompt_delays)
 
