@@ -5,7 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const dbURL = `mongodb://${config.get('database.host')}:${config.get(
+const dbURL = `mongodb://${config.get('database.user')}:${config.get('database.pass')}@${config.get('database.host')}:${config.get(
   'database.port'
 )}/${config.get('database.name')}`;
 // const basename = path.basename(module.filename);
