@@ -15,7 +15,7 @@ section.hero.is-regis.is-small
                 if user.isStudent
                   span.icon
                     i.fas.fa-graduation-cap
-                b= user.name.first + " " + user.name.last
+                b(title="Welcome!")= user.name.first + " " + user.name.last
               a.navbar-item(href="/logout")
                 b Logout
             else
@@ -42,7 +42,7 @@ section.hero.is-regis.is-small
               i.fas.fa-home
               | &nbsp;Home
           li
-            a(href="/examen/today", title="View the latest examen posted today.")
+            a(href="#", title="View the latest examen posted today.")
               i.fas.fa-thumbtack
               | &nbsp;Active Examen
           li(class=helpers.isActive(path, '/examen/archive'))

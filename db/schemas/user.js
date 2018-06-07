@@ -35,6 +35,10 @@ const schema = new Schema({
     type: Boolean,
     default: false
   },
+  lastLogin: {
+    type: Date,
+    required: true
+  },
   dateJoined: {
     type: Date,
     required: true

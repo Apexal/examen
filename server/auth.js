@@ -64,6 +64,8 @@ passport.use(new GoogleStrategy(config.get('auth.google'),
         dateJoined: new Date()
       });
 
+      user.lastLogin = new Date();
+
       try {
         await user.save();
       } catch (e) {
