@@ -18,7 +18,12 @@ block content
                     if ex.backingTrack || true
                       a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id + "?autoplay=1")
                         i.fas.fa-headphones(title="Listen to audio playthrough.")
-                  h3.is-size-4= ex.title + ' '
+                  h3.is-size-4
+                    if ex.visibility === 'school'
+                      i.fas.fa-graduation-cap
+                    else if ex.visibility === 'private'
+                      f.fas.fa-lock
+                    |  #{ex.title} 
                     if moment(ex.dateAdded) > moment().subtract(3, 'days')
                       span.tag.is-danger.new-tag(title="This examen was very recently posted.") New
                   .content
