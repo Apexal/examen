@@ -4,6 +4,10 @@ const os = require('os');
 const moment = require('moment');
 const mongoose = require('mongoose');
 
+const {
+  sendEmail
+} = require('../email');
+
 /* GET the latest examen posted today or redirect to archive if none */
 // "/examens/today"
 async function redirect_today(ctx) {
@@ -160,7 +164,7 @@ async function approve_examen(ctx) {
 
   examen.approved = true;
 
-  require('../email').sendEmail(ctx.state.user.email, 'Examen Approved', 'examenApproved', {
+  sendEmail(ctx.state.user.email, 'Examen Approved', 'examenApproved', {
     name: ctx.state.user.name,
     examen,
     directLink: 'https://regis-examen.herokuapp.com/examen/' + examen.id,
@@ -185,6 +189,11 @@ async function deny_examen(ctx) {
 
   // Don't allow denial of already approved examen
   if (examen.approved) return ctx.throw(400, 'Cannot deny already approved examen.');
+
+  sendEmail(ctx.state.user.email, 'Examen Denied', 'examenDenied', {
+    name: ctx.state.user.name,
+    examen
+  });
 
   await examen.remove();
   ctx.request.flash('success', `Successfully denied (and deleted) examen '${examen.title}'.`);
