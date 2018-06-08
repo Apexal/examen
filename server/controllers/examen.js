@@ -222,9 +222,26 @@ async function view_archive(ctx) {
   ctx.state.nextPage = page + 1;
 
   // Limit to only 4 per page
-  const data = ctx.state.data = await ctx.db.Examen.paginate({
+  const query = {
     approved: true
-  }, {
+  };
+  if (ctx.isAuthenticated()) {
+    query['$or'] = [{
+        visibility: 'public'
+      }, {
+        visibility: 'school',
+        _school: ctx.state.user._school._id
+      },
+      {
+        visibility: 'private',
+        _poster: ctx.state.user._id
+      }
+    ];
+  } else {
+    query.visibility = 'public';
+  }
+
+  const data = ctx.state.data = await ctx.db.Examen.paginate(query, {
     sort: {
       dateAdded: -1
     },
