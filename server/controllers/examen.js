@@ -268,7 +268,8 @@ async function view_submissions(ctx) {
 
   // Limit to only 4 per page
   const data = ctx.state.data = await ctx.db.Examen.paginate({
-    approved: false
+    approved: false,
+    _school: ctx.state.user._school._id
   }, {
     sort: {
       dateAdded: -1
