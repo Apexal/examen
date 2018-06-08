@@ -36,5 +36,8 @@ block content
             button.button.is-danger Deny
           hr
 
-      if loggedIn
-        span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
+      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by
+        if loggedIn
+          |  #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
+        else
+          |  a #[b= examen._school.name ] member  

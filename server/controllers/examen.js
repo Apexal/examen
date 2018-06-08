@@ -101,6 +101,7 @@ async function save_new_examen(ctx, next) {
   prompt_recordings.forEach((file, i) => save_audio(file, prompts[i]));
 
   const new_examen = new ctx.db.Examen({
+    _school: ctx.state.user._school,
     title: bdy.title,
     backingTrack: bdy.backingTrack,
     introduction,
@@ -189,7 +190,7 @@ async function view_examen(ctx) {
   // Find examen
   let examen;
   try {
-    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent');
+    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent').populate('_school');
   } catch (e) {
     console.error('Examen not found.');
     return ctx.throw(404, 'Examen Not Found');
@@ -220,7 +221,7 @@ async function view_archive(ctx) {
     sort: {
       dateAdded: -1
     },
-    populate: '_poster',
+    populate: ['_poster', '_school'],
     limit: 4,
     page
   });

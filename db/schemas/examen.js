@@ -7,6 +7,11 @@ const Schema = mongoose.Schema;
 const paginate = require('mongoose-paginate');
 
 const schema = new Schema({
+  _school: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'School',
+    required: true
+  },
   title: {
     type: String,
     required: true,
