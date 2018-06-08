@@ -1,0 +1,11 @@
+h2 #[i examen.title] Has Been Approved
+
+p #[b= name.first], your submitted examen has been view and approved and posted!
+
+if examen.visibility === 'public'
+  p It has been publicly posted and can be viewed by #[i anyone] from the archive.
+else if examen.visibility === 'school'
+  p It has been posted for #[b only #{school.name} members] to view from the archive.
+
+hr
+a(href=directLink) View Examen

@@ -160,6 +160,13 @@ async function approve_examen(ctx) {
 
   examen.approved = true;
 
+  require('../email').sendEmail(ctx.state.user.email, 'Examen Approved', 'examenApproved', {
+    name: ctx.state.user.name,
+    examen,
+    directLink: 'https://regis-examen.herokuapp.com/examen/' + examen.id,
+    school: ctx.state.user._school
+  });
+
   await examen.save();
   ctx.request.flash('success', `Successfully approved examen '${examen.title}'.`);
   ctx.redirect(ctx.router.url('submissions'));
