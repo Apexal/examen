@@ -198,6 +198,13 @@ async function view_examen(ctx) {
 
   if (ctx.isAuthenticated() && ctx.state.user.isStudent && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
 
+  // Respect visibility
+  if ((examen.visibility === 'school' && !ctx.isAuthenticated()) || (examen.visibility === 'school' && !examen._school._id.equals(ctx.state.user._school._id)))
+    ctx.throw(403, 'This examen is only viewable to the poster\'s school members.');
+
+  if ((examen.visibility === 'private' && !ctx.isAuthenticated()) || (examen.visibility === 'private' && !examen._poster._id.equals(ctx.state.user._id)))
+    ctx.throw(403, 'This examen is only viewable by it\'s poster.');
+
   ctx.state.autoplay = ctx.query.autoplay === '1';
 
   ctx.state.title = examen.title;
