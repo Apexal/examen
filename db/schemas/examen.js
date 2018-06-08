@@ -83,6 +83,12 @@ const schema = new Schema({
     default: 0,
     //required: true,
   },
+  allowedAccess: {
+    type: String,
+    enum: ['private', 'school', 'public'],
+    default: 'public',
+    required: true
+  },
   dateAdded: {
     type: Date,
     required: true
