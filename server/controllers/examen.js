@@ -109,7 +109,7 @@ async function save_new_examen(ctx, next) {
     prompts,
     closing,
     _poster: ctx.state.user._id,
-    accessAllowed: 'public',
+    visibility: bdy.visibility,
     dateAdded: new Date()
   });
 

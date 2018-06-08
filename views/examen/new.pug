@@ -24,6 +24,18 @@ block content
                 option(value="Prayer of St. Francis Instrumental.mp3") Prayer of Saint Francis
                 option(value="Sweet Hour Of Prayer.m4a") Sweet Hour of Prayer
                 option(value="Deep Within.m4a") Deep Within
+          .field.column.is-narrow
+            label.label(for="visibilty") Who Can View
+            .control
+              label.radio
+                input(type="radio", name="visibility", value="public", v-model="visibility", checked)
+                |  Anyone
+              label.radio
+                input(type="radio", name="visibility", v-model="visibility", value="school")
+                |  #{user._school.name} only
+              label.radio
+                input(type="radio", name="visibility", v-model="visibility", value="private")
+                |  You only
 
         .column
           .field.is-pulled-right

@@ -88,7 +88,7 @@ const schema = new Schema({
     default: 0,
     //required: true,
   },
-  allowedAccess: {
+  visibility: {
     type: String,
     enum: ['private', 'school', 'public'],
     default: 'public',

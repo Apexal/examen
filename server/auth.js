@@ -16,7 +16,7 @@ passport.serializeUser((user, done) => {
 
 /* Gets the user from the saved id serialized above */
 passport.deserializeUser((id, done) => {
-  User.findById(id, done);
+  User.findById(id, done).populate('_school');
 });
 
 const GoogleStrategy = require('passport-google-auth').Strategy;
@@ -35,7 +35,7 @@ passport.use(new GoogleStrategy({
     try {
       user = await User.findOne({
         _google_id: profile.id
-      });
+      }).populate('_school');
     } catch (e) {
       return done(e);
     }

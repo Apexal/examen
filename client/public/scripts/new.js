@@ -24,6 +24,7 @@ const new_examen_app = new Vue({
     stream: null,
     title: '',
     backingTrack: 'I Am The Bread Of Life.ogg',
+    visibility: 'public',
     introduction: {
       text: default_introduction,
       recorder: null,
@@ -162,6 +163,7 @@ const new_examen_app = new Vue({
       fd.append('introductionRecording', this.introduction.blob);
       fd.append('introductionDelay', this.introduction.delay);
 
+      fd.append('visibility', this.visibility);
       fd.append('backingTrack', this.backingTrack);
       fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
       fd.append('delays', JSON.stringify(this.prompts.map(p => p.delay)));
