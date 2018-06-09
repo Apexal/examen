@@ -8,32 +8,33 @@ const {
   sendEmail
 } = require('../email');
 
-/* GET the latest examen posted today or redirect to archive if none */
-// "/examens/today"
-async function redirect_today(ctx) {
-  const start = moment().startOf('day').toDate();
-  const end = moment().endOf('day').toDate();
-
-  let today;
+/* GET the active examen for your school or redirect to archive if none */
+// "/examens/active"
+async function redirect_active(ctx) {
+  const now = Date.now();
+  let active;
   try {
-    today = await ctx.db.Examen.findOne({
-      // Check if datetime of examen posting is between start and end of day
-      dateAdded: {
-        "$gte": start,
-        "$lt": end
+    active = await ctx.db.Examen.findOne({
+      _school: ctx.state.user._school._id,
+      startActive: {
+        $lte: now
+      },
+      endActive: {
+        $gte: now
       }
     }).sort({
       dateAdded: -1
     });
 
-    if (today === null) {
-      ctx.request.flash('warning', 'No examen was posted today.');
-      throw new Error('No today\'s examen.');
+    if (active === null) {
+      ctx.request.flash('warning', `There's currently no active examen for ${ctx.state.user._school.name}.`);
+      throw new Error(`There's currently no active examen for ${ctx.state.user._school.name}.`);
     }
   } catch (e) {
+    console.error(e);
     return await ctx.redirect('/examen/archive');
   }
-  ctx.redirect(ctx.router.url('examen', today.id));
+  ctx.redirect(ctx.router.url('examen', active.id));
 }
 
 /* GET the form to post a new examen */
@@ -315,7 +316,7 @@ async function get_audio(ctx) {
 }
 
 module.exports = {
-  redirect_today,
+  redirect_active,
   view_new_examen,
   save_new_examen,
   remove_examen,

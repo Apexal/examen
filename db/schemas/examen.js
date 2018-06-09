@@ -22,6 +22,8 @@ const schema = new Schema({
     default: true,
     required: true
   },
+  startActive: Date,
+  endActive: Date,
   introduction: {
     text: {
       type: String,
