@@ -29,6 +29,8 @@ router.get('/active', requireLogin, Ctrl.redirect_active);
 router.get('/new', requireLogin, Ctrl.view_new_examen);
 router.post('/new', requireLogin, Ctrl.save_new_examen);
 
+router.post('/:id/schedule', requireStaff, Ctrl.schedule_examen);
+
 router.get('archive', '/archive', Ctrl.view_archive);
 router.get('submissions', '/submissions', requireStaff, Ctrl.view_submissions);
 

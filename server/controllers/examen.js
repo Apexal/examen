@@ -132,6 +132,33 @@ async function save_new_examen(ctx, next) {
   });
 }
 
+/* POST set start and end dates for an examen to be "active" */
+// "/examen/:id/schedule"
+async function schedule_examen(ctx) {
+  const id = ctx.params.id;
+
+  const startDate = moment(ctx.request.body['start-date'], 'YYYY-MM-DD');
+  const endDate = moment(ctx.request.body['end-date'], 'YYYY-MM-DD');
+
+  // Validate dates
+  if (startDate.isAfter(endDate) || startDate.equals(endDate)) return ctx.throw(400, 'Dates out of order.');
+
+  let examen;
+  try {
+    examen = await ctx.db.Examen.findById(id);
+  } catch (e) {
+    return ctx.throw(404, 'Examen Not Found');
+  }
+
+  examen.startActive = startDate;
+  examen.endActive = endDate;
+
+  await examen.save();
+
+  ctx.request.flash('success', `Successfully scheduled examen '${examen.title}'.`);
+  ctx.redirect('back');
+}
+
 /* POST remove examen */
 // "/examens/:id/remove"
 async function remove_examen(ctx) {
@@ -319,6 +346,7 @@ module.exports = {
   redirect_active,
   view_new_examen,
   save_new_examen,
+  schedule_examen,
   remove_examen,
   approve_examen,
   deny_examen,
