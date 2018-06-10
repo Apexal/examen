@@ -1,23 +1,27 @@
-.hero.is-regis {
-  background-color: #d31145;
-  color: whitesmoke; }
-  .hero.is-regis * {
-    color: whitesmoke; }
-  .hero.is-regis nav a {
-    color: whitesmoke; }
-  .hero.is-regis .hero-head a.navbar-item:hover {
-    color: #BB0B3A; }
-  .hero.is-regis .hero-foot {
-    background-color: #BB0B3A; }
-    .hero.is-regis .hero-foot .tabs .container ul li.is-active {
-      background-color: #d31145; }
-    .hero.is-regis .hero-foot .tabs .container ul li:hover {
-      background-color: #d31145; }
-    .hero.is-regis .hero-foot .navbar-menu {
-      background-color: #d31145; }
-  .hero.is-regis .navbar .regis-image {
+.hero.is-school {
+  background-color: var(--school-primary-color);
+  color: var(--school-text-color); }
+  .hero.is-school * {
+    color: var(--school-text-color); }
+  .hero.is-school nav a {
+    color: var(--school-text-color); }
+  .hero.is-school .hero-head a.navbar-item:hover {
+    color: var(--school-secondary-color); }
+  .hero.is-school .hero-foot {
+    background-color: var(--school-secondary-color); }
+    .hero.is-school .hero-foot .tabs .container ul li.is-active {
+      background-color: var(--school-primary-color); }
+    .hero.is-school .hero-foot .tabs .container ul li:hover {
+      background-color: var(--school-primary-color); }
+    .hero.is-school .hero-foot .navbar-menu {
+      background-color: var(--school-primary-color); }
+  .hero.is-school .navbar .school-image {
     padding-top: 10px;
     padding-left: 10px; }
+  .hero.is-school .login-button {
+    color: var(--school-primary-color); }
+  .hero.is-school .logout-button:hover {
+    color: var(--school-secondary-color); }
 
 .loyola {
   width: 30%;
@@ -90,7 +94,7 @@ audio.examen-audio {
   display: none; }
 
 @media only screen and (max-width: 768px) {
-  .regis-image {
+  .school-image {
     width: 90%; }
 
   .is-marginless-mobile {

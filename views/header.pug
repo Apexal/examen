@@ -1,9 +1,10 @@
-section.hero.is-regis.is-small
+section.hero.is-school.is-small
   .hero-head
     nav.navbar
       .container
         .navbar-brand
-          img.regis-image(title="For God and country.", src="/images/wordmark.png")
+          if loggedIn
+            img.school-image(title="For God and country.", src="/images/wordmark.png")
           #navbar-burger.burger.navbar-burger(data-target="navbarMenu")
             span
             span
@@ -16,11 +17,11 @@ section.hero.is-regis.is-small
                   span.icon
                     i.fas.fa-graduation-cap
                 b(title="Welcome!")= user.name.first + " " + user.name.last
-              a.navbar-item(href="/logout")
+              a.navbar-item.logout-button(href="/logout")
                 b Logout
             else
               span.navbar-item
-                a.button.is-danger.is-inverted(href="/auth/google") Login with School Account
+                a.button.login-button.is-inverted(href="/auth/google") Login with School Account
         script.
           const burger = document.getElementById('navbar-burger'); 
           const target = document.getElementById(burger.dataset.target); 

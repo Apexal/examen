@@ -16,6 +16,10 @@ const schema = new Schema({
     type: String,
     required: true
   },
+  theme: {
+    primary: String,
+    secondary: String,
+  },
   dateAdded: {
     type: Date,
     required: true

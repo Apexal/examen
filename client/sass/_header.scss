@@ -1,31 +1,37 @@
-.hero.is-regis {
-  background-color: #d31145;
-  color: whitesmoke;
+.hero.is-school {
+  background-color: var(--school-primary-color);
+  color: var(--school-text-color);
   * {
-    color: whitesmoke;
+    color: var(--school-text-color);
   }
   nav a {
-    color: whitesmoke;
+    color: var(--school-text-color);
   }
   .hero-head a.navbar-item:hover {
-    color: #BB0B3A;
+    color: var(--school-secondary-color);
   }
   .hero-foot {
-    background-color: #BB0B3A;
+    background-color: var(--school-secondary-color);
     .tabs .container ul {
       li.is-active {
-        background-color: #d31145;
+        background-color: var(--school-primary-color);
       }
       li:hover {
-        background-color: #d31145;
+        background-color: var(--school-primary-color);
       }
     }
     .navbar-menu {
-      background-color: #d31145;
+      background-color: var(--school-primary-color);
     }
   }
-  .navbar .regis-image {
+  .navbar .school-image {
     padding-top: 10px;
     padding-left: 10px;
+  }
+  .login-button {
+    color: var(--school-primary-color);
+  }
+  .logout-button:hover {
+    color: var(--school-secondary-color);
   }
 }

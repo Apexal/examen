@@ -1,0 +1,14 @@
+if loggedIn
+  style.
+    :root {
+      --school-primary-color: #{user._school.theme.primary};
+      --school-secondary-color: #{user._school.theme.secondary};
+      --school-text-color: whitesmoke;
+    }
+else
+  style.
+    :root {
+      --school-primary-color:#353535;;
+      --school-secondary-color: #292929;
+      --school-text-color: white;
+    }
