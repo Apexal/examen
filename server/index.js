@@ -67,6 +67,7 @@ app.use(async (ctx, next) => {
   ctx.state.helpers = ctx.helpers;
   ctx.state.loggedIn = ctx.isAuthenticated();
   ctx.state.moment = require('moment');
+  ctx.state.env = process.env.NODE_ENV || 'production';
 
   await next();
 

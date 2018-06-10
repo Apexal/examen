@@ -1,7 +1,10 @@
 extends /template
 
 block content
-  script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
+  if env == 'development'
+    script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
+  else
+    script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js")
   script(src="/scripts/new.js", defer)
 
   section#new-examen.section
