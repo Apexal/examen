@@ -20,6 +20,7 @@ const schema = new Schema({
     primary: String,
     secondary: String,
   },
+  administrators: [String],
   dateAdded: {
     type: Date,
     required: true

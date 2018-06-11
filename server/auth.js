@@ -62,7 +62,7 @@ passport.use(new GoogleStrategy({
           first: profile.name.givenName,
           last: profile.name.familyName
         },
-        admin: false,
+        admin: school.administrators.includes(email), // If user's email is in the school's 'administrators' list
         email,
         dateJoined: new Date()
       });
