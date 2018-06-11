@@ -115,7 +115,7 @@ async function save_new_examen(ctx, next) {
     title: bdy.title,
     backingTrack: bdy.backingTrack,
     introduction,
-    approved: !ctx.state.user.isStudent,
+    approved: ctx.state.user.admin,
     prompts,
     closing,
     _poster: ctx.state.user._id,
@@ -125,10 +125,10 @@ async function save_new_examen(ctx, next) {
 
   await new_examen.save();
 
-  if (ctx.state.user.isStudent) {
-    ctx.request.flash('success', `Successfully submitted examen '${new_examen.title}' for approval.`);
-  } else {
+  if (ctx.state.user.admin) {
     ctx.request.flash('success', `Successfully posted examen '${new_examen.title}'.`);
+  } else {
+    ctx.request.flash('success', `Successfully submitted examen '${new_examen.title}' for approval.`);
   }
 
   ctx.created({
@@ -244,14 +244,14 @@ async function view_examen(ctx) {
   // Find examen
   let examen;
   try {
-    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent').populate('_school');
+    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email admin').populate('_school');
     if (!examen) throw new Error('Examen not found');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
-  if (ctx.isAuthenticated() && ctx.state.user.isStudent && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
+  if (ctx.isAuthenticated() && !ctx.state.user.admin && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
 
   // Respect visibility
   if ((examen.visibility === 'school' && !ctx.isAuthenticated()) || (examen.visibility === 'school' && !examen._school._id.equals(ctx.state.user._school._id)))

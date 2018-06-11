@@ -13,9 +13,6 @@ section.hero.is-school.is-small
           .navbar-end
             if loggedIn
               span.navbar-item Logged in as&nbsp;
-                if user.isStudent
-                  span.icon
-                    i.fas.fa-graduation-cap
                 b(title="Welcome!")= user.name.first + " " + user.name.last
               a.navbar-item.logout-button(href="/logout")
                 b Logout
@@ -53,10 +50,10 @@ section.hero.is-school.is-small
               i.fas.fa-archive
               | &nbsp;Examen Archive
           if loggedIn
-            if !user.isStudent
+            if user.admin
               li(class=helpers.isActive(path, '/examen/submissions'))
                 a(href="/examen/submissions") Pending Submissions
             li(class=helpers.isActive(path, '/examen/new'))
               a(href="/examen/new", title="Write and record a new examen.")
                 i.fas.fa-pencil-alt
-                | &nbsp;#{user.isStudent ? 'Submit' : 'Post'} New Examen
+                | &nbsp;#{user.admin ? 'Post' : 'Submit'} New Examen

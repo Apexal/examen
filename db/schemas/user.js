@@ -21,10 +21,10 @@ const schema = new Schema({
       required: true
     }
   },
-  isStudent: {
+  admin: {
     type: Boolean,
-    required: true,
-    default: true
+    default: false,
+    required: true
   },
   email: {
     type: String,
@@ -54,7 +54,7 @@ schema.virtual('examens', {
 */
 
 schema.virtual('title').get(function () {
-  return this.isStudent ? 'Student' : 'Staff';
+  return this.admin ? 'Admin' : '';
 });
 
 schema.virtual('fullName').get(function () {

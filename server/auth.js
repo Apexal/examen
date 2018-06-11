@@ -62,7 +62,7 @@ passport.use(new GoogleStrategy({
           first: profile.name.givenName,
           last: profile.name.familyName
         },
-        isStudent: studentEmailRegex.test(email),
+        admin: false,
         email,
         dateJoined: new Date()
       });
