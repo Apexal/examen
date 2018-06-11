@@ -1,5 +1,4 @@
-const path = require('path');
-const rimraf = require('rimraf');
+const moment = require('moment');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -129,6 +128,12 @@ schema.pre('remove', function (next) {
 
   }
   return next();
+});
+
+schema.virtual('isActive').get(function () {
+  const today = moment().startOf('day');
+  if (!this.startActive || !this.endActive) return false;
+  return today.isBetween(this.startActive, this.endActive);
 });
 
 module.exports = {

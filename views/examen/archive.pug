@@ -11,7 +11,7 @@ block content
           .columns.is-multiline
             for ex in data.docs
               .column.is-half
-                .box.is-clearfix
+                .box.is-clearfix(class=ex.isActive ? 'is-active' : '')
                   .links
                     a.is-pulled-right.is-size-4.has-text-grey-dark(href="/examen/" + ex.id)
                       i.fab.fa-readme(title="Read through at your own pace.")
@@ -22,7 +22,7 @@ block content
                     if ex.visibility === 'school'
                       i.fas.fa-graduation-cap
                     else if ex.visibility === 'private'
-                      f.fas.fa-lock
+                      f.fas.fa-lock 
                     |  #{ex.title} 
                     if moment(ex.dateAdded) > moment().subtract(3, 'days')
                       span.tag.is-danger.new-tag(title="This examen was very recently posted.") New
