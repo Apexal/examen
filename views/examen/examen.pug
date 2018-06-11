@@ -31,7 +31,7 @@ block content
       if loggedIn
         include _controls
 
-      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(examen.dateAdded).fromNow()} by
+      span.is-size-6.has-text-grey-light.date(title=moment(examen.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) #{examen.approved ? 'Posted' : 'Submitted'} #{moment(examen.dateAdded).fromNow()} by
         if loggedIn
           |  #[a(href="/users/")= examen._poster.title + ' ' + examen._poster.fullName]
         else
