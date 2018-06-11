@@ -378,11 +378,19 @@ async function get_feed(ctx) {
     link: `https://ignatian-examen.herokuapp.com/examen/${ex._id}`,
     description: ex.totalDuration + ' seconds long',
     date: ex.dateAdded
-  }))
+  }));
 
   if (ctx.params.format === 'rss') {
     ctx.type = 'application/rss+xml';
     ctx.body = feed.rss2();
+  } else if (ctx.params.format === 'atom') {
+    ctx.type = 'application/atom+xml';
+    ctx.body = feed.atom1();
+  } else if (ctx.params.format === 'json') {
+    ctx.type = 'application/json';
+    ctx.body = feed.json1();
+  } else {
+    ctx.badRequest('Invalid feed format.');
   }
 }
 
