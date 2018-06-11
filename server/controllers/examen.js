@@ -137,11 +137,12 @@ async function save_new_examen(ctx, next) {
 async function schedule_examen(ctx) {
   const id = ctx.params.id;
 
+  // Parse dates using MomentJS
   const startDate = moment(ctx.request.body['start-date'], 'YYYY-MM-DD');
   const endDate = moment(ctx.request.body['end-date'], 'YYYY-MM-DD');
 
   // Validate dates
-  if (startDate.isAfter(endDate) || startDate.equals(endDate)) return ctx.throw(400, 'Dates out of order.');
+  if (startDate.isAfter(endDate) || startDate.isSame(endDate)) return ctx.throw(400, 'Dates out of order.');
 
   let examen;
   try {
@@ -149,6 +150,10 @@ async function schedule_examen(ctx) {
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }
+
+  // Validate dates make sense
+  if (examen.visibility !== 'school') return ctx.throw(400, 'Can only schedule school examens.');
+  if (startDate.isBefore(moment())) return ctx.throw(400, 'Cannot schedule examens to the past.');
 
   examen.startActive = startDate;
   examen.endActive = endDate;
