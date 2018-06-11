@@ -52,16 +52,19 @@ async function save_new_examen(ctx, next) {
   // Parse JSON
   const prompt_texts = JSON.parse(bdy.prompts);
   const prompt_delays = JSON.parse(bdy.delays);
+  const prompt_durations = JSON.parse(bdy.durations);
   let prompt_recordings = ctx.request.body.files.recordings;
 
   let introduction = {
     text: bdy.introduction,
-    delay: bdy.introductionDelay
+    delay: bdy.introductionDelay,
+    duration: bdy.introductionDuration
   };
 
   let closing = {
     text: bdy.closing,
-    delay: bdy.closingDelay
+    delay: bdy.closingDelay,
+    duration: bdy.closingDuration
   };
 
   // Reconstruct prompt array by matching up text and delays
@@ -69,7 +72,8 @@ async function save_new_examen(ctx, next) {
   for (let i = 0; i < prompt_texts.length; i++) {
     prompts.push({
       text: prompt_texts[i],
-      delay: prompt_delays[i]
+      delay: prompt_delays[i],
+      duration: prompt_durations[i]
     });
   }
 

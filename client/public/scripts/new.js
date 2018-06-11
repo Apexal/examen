@@ -172,16 +172,19 @@ const new_examen_app = new Vue({
       fd.append('introduction', this.introduction.text);
       fd.append('introductionRecording', this.introduction.blob);
       fd.append('introductionDelay', this.introduction.delay);
+      fd.append('introductionDuration', this.introduction.duration);
 
       fd.append('visibility', this.visibility);
       fd.append('backingTrack', this.backingTrack);
       fd.append('prompts', JSON.stringify(this.prompts.map(p => p.text)));
       fd.append('delays', JSON.stringify(this.prompts.map(p => p.delay)));
+      fd.append('durations', JSON.stringify(this.prompts.map(p => p.duration)));
       this.prompts.forEach(p => fd.append('recordings', p.blob));
 
       fd.append('closing', this.closing.text);
       fd.append('closingRecording', this.closing.blob);
       fd.append('closingDelay', this.closing.delay);
+      fd.append('closingDuration', this.closing.duration);
 
       // TODO: this does not work...
       fd.append('totalDuration', Array.from(document.querySelectorAll('audio')).reduce((acc, a) => {

@@ -38,6 +38,12 @@ const schema = new Schema({
     audio_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
+    },
+    duration: {
+      type: Number,
+      min: 0,
+      default: 0,
+      required: true,
     }
   },
   prompts: [{
@@ -54,6 +60,12 @@ const schema = new Schema({
     audio_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
+    },
+    duration: {
+      type: Number,
+      min: 0,
+      default: 0,
+      required: true,
     }
   }],
   closing: {
@@ -71,6 +83,12 @@ const schema = new Schema({
     audio_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
+    },
+    duration: {
+      type: Number,
+      min: 0,
+      default: 0,
+      required: true,
     }
   },
   backingTrack: {
@@ -82,12 +100,6 @@ const schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  duration: {
-    type: Number,
-    min: 0,
-    default: 0,
-    //required: true,
   },
   visibility: {
     type: String,
