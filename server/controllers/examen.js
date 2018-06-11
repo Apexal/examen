@@ -3,6 +3,7 @@ const path = require('path');
 const os = require('os');
 const moment = require('moment');
 const mongoose = require('mongoose');
+const Feed = require('feed');
 
 const {
   sendEmail
@@ -352,6 +353,39 @@ async function get_audio(ctx) {
   ctx.body = data;
 }
 
+async function get_feed(ctx) {
+  const feed = new Feed({
+    title: 'Ignatian Examen',
+    description: 'Student and teacher generated examens.',
+    id: 'https://ignatian-examen.herokuapp.com/',
+    link: 'https://ignatian-examen.herokuapp.com/',
+    //image: '',
+    //favicon: '',
+    author: {
+      name: 'Frank Matranga',
+      email: 'thefrankmatranga@gmail.com',
+      link: 'http://frankmatranga.me'
+    }
+  });
+
+  const examens = await ctx.db.Examen.find({
+    visibility: 'public'
+  }).limit(10);
+
+  examens.forEach(ex => feed.addItem({
+    title: ex.title,
+    id: ex._id,
+    link: `https://ignatian-examen.herokuapp.com/examen/${ex._id}`,
+    description: ex.totalDuration + ' seconds long',
+    date: ex.dateAdded
+  }))
+
+  if (ctx.params.format === 'rss') {
+    ctx.type = 'application/rss+xml';
+    ctx.body = feed.rss2();
+  }
+}
+
 module.exports = {
   redirect_active,
   view_new_examen,
@@ -363,5 +397,6 @@ module.exports = {
   view_examen,
   view_archive,
   view_submissions,
-  get_audio
+  get_audio,
+  get_feed
 };

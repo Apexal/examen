@@ -22,6 +22,8 @@ const requireStaff = async (ctx, next) => {
   }
 };
 
+router.get('/feed/:format', Ctrl.get_feed);
+
 router.get('/audio/:audio_id', Ctrl.get_audio);
 
 router.get('/active', requireLogin, Ctrl.redirect_active);
@@ -39,5 +41,6 @@ router.post('/:id/deny', requireStaff, Ctrl.deny_examen);
 
 router.get('examen', '/:id', Ctrl.view_examen);
 router.post('/:id/remove', requireStaff, Ctrl.remove_examen);
+
 
 module.exports = router.routes();
