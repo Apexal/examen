@@ -15,7 +15,10 @@ if examen.approved && !user.isStudent
           .control
             input.input#end-date(name="end-date", type="date", min=moment().format("YYYY-MM-DD"), value=examen.endActive ? moment(examen.endActive).format('YYYY-MM-DD') : moment().add(7, 'days').format("YYYY-MM-DD"))
         .column.is-narrow
-          button.button.is-primary Schedule
+          if examen.startActive
+            button.button.is-warning Reschedule
+          else
+            button.button.is-primary Schedule
     hr
 else if !examen.approved
   form.approve-examen(method="POST", action="/examen/" + examen.id + "/approve", onsubmit="return confirm('Confirm approve?')")

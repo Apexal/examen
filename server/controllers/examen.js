@@ -142,7 +142,7 @@ async function schedule_examen(ctx) {
   const endDate = moment(ctx.request.body['end-date'], 'YYYY-MM-DD');
 
   // Validate dates
-  if (startDate.isAfter(endDate) || startDate.isSame(endDate)) return ctx.throw(400, 'Dates out of order.');
+  if (startDate.isAfter(endDate) || startDate.isSame(endDate, 'day')) return ctx.throw(400, 'Dates out of order.');
 
   let examen;
   try {
