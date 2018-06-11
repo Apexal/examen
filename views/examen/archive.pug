@@ -5,7 +5,9 @@ block content
     .container
       h1.title.has-text-centered-mobile Examen Archive
         small.has-text-grey-light.subtitle  #{data.total} total
+      hr
       include _pagination
+      hr
       .examen-archive
         if data.docs.length > 0
           .columns.is-multiline
