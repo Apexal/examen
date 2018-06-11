@@ -1,4 +1,4 @@
-const default_introduction = `<p>Let us continue together the practice of the Examen. Please sit comfortably. Put everything out of your hands. Try to be silent and still. Close your eyes if you wish. If you are in hallway find place to pause and relax.</p>
+const default_introduction = `<p>Let us continue together the practice of the Examen. Please sit comfortably. Put everything out of your hands. Try to be silent and still. Close your eyes if you wish. If you are in a hallway find a place to pause and relax.</p>
 <p>There will be moments of silence, stay with it.</p>
 In the name of the Father, and of the Son, and of the Holy Spirit.
 <h4>Amen</h4>`;

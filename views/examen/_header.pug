@@ -3,12 +3,12 @@ if !examen.approved
 
 .examen-controls.is-hidden-mobile.is-pulled-right
   audio.examen-audio#backing-track(controls, loop, src="/audio/backingtracks/" + examen.backingTrack, volume="0.1", type="audio/ogg")
-  button.button.is-primary(@click="playFromStart", :class="playing ? 'is-outlined' : ''")
+  button.button.is-primary(@click="playFromStart", :class="autocontinue ? 'is-outlined' : ''")
     i.fas.fa-volume-up &nbsp;
-    |  {{ playing ? 'Stop' : 'Start' }}
-  button.button(@click="autocontinue = false; prevPrompt();", :disabled="!hasPrevPrompt")
+    |  {{ autocontinue ? 'Stop' : 'Start' }}
+  button.button(@click="autocontinue = false; prevPrompt();", :disabled="autocontinue || !hasPrevPrompt")
     i.fas.fa-arrow-left
-  button.button(@click="autocontinue = false; nextPrompt()", :disabled="!hasNextPrompt")
+  button.button(@click="autocontinue = false; nextPrompt()", :disabled="autocontinue || !hasNextPrompt")
     i.fas.fa-arrow-right
 
 h1.title

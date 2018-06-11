@@ -1,9 +1,3 @@
-document.querySelectorAll('a.play-prompt').forEach(link => {
-  const target = document.getElementById('prompt-' + link.dataset.prompt + '-audio');
-
-  link.onclick = () => target.play();
-});
-
 const backingTrack = document.getElementById('backing-track');
 const recordings = document.querySelectorAll('audio.examen-audio');
 
@@ -27,8 +21,10 @@ const examen_app = new Vue({
   },
   methods: {
     playFromStart: function () {
-      if (this.playing) {
+      if (this.autocontinue) {
         backingTrack.load();
+        this.autocontinue = false;
+        this.timer = this.currentDelay;
         return this.stopPlaying();
       }
 
@@ -39,7 +35,7 @@ const examen_app = new Vue({
       backingTrack.play();
 
       this.autocontinue = true;
-      this.playPrompt('introduction');
+      this.setPrompt('introduction');
     },
     stopPlaying: function () {
       document.querySelectorAll('audio.prompt-recording').forEach(a => a.load());
@@ -48,11 +44,11 @@ const examen_app = new Vue({
     },
     prevPrompt: function () {
       if (!this.hasPrevPrompt) return;
-      this.playPrompt(this.getPrevPrompt);
+      this.setPrompt(this.getPrevPrompt);
     },
     nextPrompt: function () {
       if (!this.hasNextPrompt) return;
-      this.playPrompt(this.getNextPrompt);
+      this.setPrompt(this.getNextPrompt);
     },
     resetTimer: function () {
       this.timer = 0;
@@ -98,7 +94,7 @@ const examen_app = new Vue({
         }
       }
     },
-    playPrompt: function (index) {
+    setPrompt: function (index) {
       this.status = index;
 
       this.stopPlaying();
