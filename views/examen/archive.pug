@@ -36,7 +36,8 @@ block content
 
                   hr
                   span.tag.is-dark.is-pulled-right(title="This examen has " + ex.prompts.length + " prompts (excluding intro and closing).") #{ex.prompts.length} prompts
-                  span.tag.is-link.is-pulled-right --- duration
+                  -var duration = helpers.secondsToSandM(ex.totalDuration)
+                  span.tag.is-link.is-pulled-right #{duration.minutes}m #{duration.seconds}s
 
                   span.is-size-7.has-text-grey-light(title=moment(ex.dateAdded).format("dddd, MMMM Do YYYY, h:mm a")) Posted #{moment(ex.dateAdded).fromNow()} by
                     if loggedIn

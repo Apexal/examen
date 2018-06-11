@@ -148,6 +148,10 @@ schema.virtual('isActive').get(function () {
   return today.isBetween(this.startActive, this.endActive);
 });
 
+schema.virtual('totalDuration').get(function () {
+  return this.introduction.duration + this.prompts.reduce((acc, p) => acc + p.duration, 0) + this.closing.duration;
+});
+
 module.exports = {
   name: 'Examen',
   schema
