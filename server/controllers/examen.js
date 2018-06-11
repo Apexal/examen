@@ -157,7 +157,10 @@ async function schedule_examen(ctx) {
   let examen;
   try {
     examen = await ctx.db.Examen.findById(id);
+
+    if (!examen) throw new Error('Examen not found.');
   } catch (e) {
+    console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
@@ -168,8 +171,12 @@ async function schedule_examen(ctx) {
   examen.startActive = startDate;
   examen.endActive = endDate;
 
-  await examen.save();
-
+  try {
+    await examen.save();
+  } catch (e) {
+    console.error(e);
+    return ctx.throw(500, 'Failed to save examen. Please try again later.');
+  }
   ctx.request.flash('success', `Successfully scheduled examen '${examen.title}'.`);
   ctx.redirect('back');
 }
@@ -181,12 +188,19 @@ async function remove_examen(ctx) {
   let examen;
   try {
     examen = await ctx.db.Examen.findById(id);
+
+    if (!examen) throw new Error('Examen not found.');
   } catch (e) {
+    console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
   // This also deletes the audio folder
-  await examen.remove();
+  try {
+    await examen.remove();
+  } catch (e) {
+    return ctx.throw(500, 'Failed to remove examen.');
+  }
   ctx.request.flash('success', `Successfully removed examen '${examen.title}'.`);
   ctx.redirect(ctx.router.url('archive'));
 }
@@ -226,7 +240,10 @@ async function deny_examen(ctx) {
   let examen;
   try {
     examen = await ctx.db.Examen.findById(id);
+
+    if (!examen) throw new Error('Examen not found.');
   } catch (e) {
+    console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
@@ -238,7 +255,12 @@ async function deny_examen(ctx) {
     examen
   });
 
-  await examen.remove();
+  try {
+    await examen.remove();
+  } catch (e) {
+    console.error(e);
+    return ctx.throw(500, 'Failed to deny examen. Please try again later.');
+  }
   ctx.request.flash('success', `Successfully denied (and deleted) examen '${examen.title}'.`);
   ctx.redirect(ctx.router.url('submissions'));
 }
