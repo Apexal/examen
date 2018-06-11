@@ -123,8 +123,13 @@ async function save_new_examen(ctx, next) {
     dateAdded: new Date()
   });
 
-  await new_examen.save();
-
+  try {
+    await new_examen.save();
+  } catch (e) {
+    console.error(e);
+    ctx.request.flash('danger', 'Failed to save examen. The administrators have been notified. Please try again later.');
+    return ctx.internalServerError('Failed to save examen.');
+  }
   if (ctx.state.user.admin) {
     ctx.request.flash('success', `Successfully posted examen '${new_examen.title}'.`);
   } else {
