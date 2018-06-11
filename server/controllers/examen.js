@@ -200,7 +200,7 @@ async function approve_examen(ctx) {
   sendEmail(ctx.state.user.email, 'Examen Approved', 'examenApproved', {
     name: ctx.state.user.name,
     examen,
-    directLink: 'https://regis-examen.herokuapp.com/examen/' + examen.id,
+    directLink: 'https://ignatian-examen.herokuapp.com/examen/' + examen.id,
     school: ctx.state.user._school
   });
 
