@@ -17,6 +17,10 @@ const mROptions = {
   mimeType: 'audio/webm;codecs=opus'
 };
 
+const recordingTimes = {
+
+};
+
 const new_examen_app = new Vue({
   name: 'new-examen',
   el: '#new-examen',
@@ -32,7 +36,8 @@ const new_examen_app = new Vue({
       delay: 5,
       chunks: [],
       src: null,
-      blob: null
+      blob: null,
+      duration: 0
     },
     closing: {
       text: default_closing,
@@ -41,7 +46,8 @@ const new_examen_app = new Vue({
       delay: 5,
       chunks: [],
       src: null,
-      blob: null
+      blob: null,
+      duration: 0
     },
     prompts: []
   },
@@ -109,7 +115,8 @@ const new_examen_app = new Vue({
         delay: 30,
         chunks: [],
         src: null,
-        blob: null
+        blob: null,
+        duration: 0
       };
 
       this.setupEvents(prompt);
@@ -143,6 +150,7 @@ const new_examen_app = new Vue({
     },
     startRecording: function (index) {
       this.stopAllRecordings();
+      recordingTimes[index] = new Date();
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
       target.recording = true;
       target.chunks = [];
@@ -153,6 +161,8 @@ const new_examen_app = new Vue({
       const target = typeof index === 'number' ? this.prompts[index] : this[index];
       target.recording = false;
       target.recorder.stop();
+      target.duration = Math.round((new Date() - recordingTimes[index]) / 1000);
+      delete recordingTimes[index];
     },
     getFormData: function () {
 
