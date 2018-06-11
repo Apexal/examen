@@ -244,8 +244,9 @@ async function view_examen(ctx) {
   let examen;
   try {
     examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email isStudent').populate('_school');
+    if (!examen) throw new Error('Examen not found');
   } catch (e) {
-    console.error('Examen not found.');
+    console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
