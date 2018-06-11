@@ -399,6 +399,7 @@ async function get_feed(ctx) {
     visibility: 'public'
   }).limit(10);
 
+  // TODO: add more fields
   examens.forEach(ex => feed.addItem({
     title: ex.title,
     id: ex._id,
