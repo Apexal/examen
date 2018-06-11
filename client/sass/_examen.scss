@@ -1,3 +1,14 @@
+.volume-field {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: bottom;
+  label {
+    vertical-align: super;
+    display: inline-flex;
+    padding-right: 5px;
+  }
+}
+
 .prompts {
   border-radius: 5px;
   .padded {
