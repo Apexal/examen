@@ -15,10 +15,13 @@ const examen_app = new Vue({
     promptCount: 0
   },
   mounted() {
+    if (localStorage.getItem('volumePercent')) this.volumePercent = parseFloat(localStorage.getItem('volumePercent'));
+
     this.promptCount = document.querySelectorAll('.prompt-content').length;
     if (window.location.href.includes("autoplay=1")) this.playFromStart();
 
     this.currentDelay = this.timer = this.currentAudio.dataset.delay;
+
   },
   methods: {
     playFromStart: function () {
@@ -62,6 +65,8 @@ const examen_app = new Vue({
       } else {
         backingTrack.volume = 1 * this.volumePercent;
       }
+
+      localStorage.setItem('volumePercent', this.volumePercent);
     },
     hearPrompt: function (index) {
       this.stopPlaying();
