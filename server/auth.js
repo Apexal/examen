@@ -67,10 +67,7 @@ passport.use(new GoogleStrategy({
         dateJoined: new Date()
       });
 
-      user.lastLogin = new Date();
-
       try {
-        await user.save();
         require('./email').sendEmail(email, `Welcome to the Examen!`, 'firstLogin', {
           name: user.name,
           school,
@@ -82,6 +79,13 @@ passport.use(new GoogleStrategy({
       console.log('Created new user.');
     } else if (user.accountLocked) {
       return done(new Error('Account locked.'));
+    }
+
+    user.lastLogin = new Date();
+    try {
+      await user.save();
+    } catch (e) {
+      return done(e);
     }
 
     console.log('Found user.');
