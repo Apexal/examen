@@ -7,5 +7,6 @@ module.exports = {
       minutes,
       seconds
     }
-  }
+  },
+  userJurisdiction: (userSchool, examenSchool) => userSchool._id.equals(examenSchool._id)
 };

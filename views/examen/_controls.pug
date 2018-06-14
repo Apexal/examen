@@ -1,4 +1,4 @@
-if examen.approved && user.admin
+if examen.approved && user.admin && helpers.userJurisdiction(user._school, examen._school)
   form.delete-examen.has-text-centered-mobile(action="/examen/" + examen.id + "/remove", method="POST", onsubmit="return confirm('Are you sure you want to remove " + examen.title + "?')")
     button.button.is-danger Delete Examen
     a.button.is-link.export-audio(href="/examen/" + examen.id + "/export", onclick="alert('Coming soon...'", disabled) Export Audio
@@ -20,7 +20,7 @@ if examen.approved && user.admin
           else
             button.button.is-primary Schedule
     hr
-else if !examen.approved
+else if !examen.approved && helpers.userJurisdiction(user._school, examen._school)
   form.approve-examen(method="POST", action="/examen/" + examen.id + "/approve", onsubmit="return confirm('Confirm approve?')")
     button.button.is-success Approve
   form.deny-examen(method="POST", action="/examen/" + examen.id + "/deny", onsubmit="return confirm('Confirm deny?')")
