@@ -159,6 +159,7 @@ async function schedule_examen(ctx) {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
+    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
@@ -190,6 +191,7 @@ async function remove_examen(ctx) {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
+    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
@@ -212,6 +214,8 @@ async function approve_examen(ctx) {
   let examen;
   try {
     examen = await ctx.db.Examen.findById(id);
+    if (!examen) throw new Error('Examen not found.');
+    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }
@@ -242,6 +246,7 @@ async function deny_examen(ctx) {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
+    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
@@ -272,7 +277,9 @@ async function view_examen(ctx) {
   let examen;
   try {
     examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email admin').populate('_school');
+
     if (!examen) throw new Error('Examen not found');
+    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
