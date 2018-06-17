@@ -5,9 +5,7 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 const Feed = require('feed');
 
-const {
-  sendEmail
-} = require('../email');
+const { sendEmail } = require('../email');
 
 /* GET the active examen for your school or redirect to archive if none */
 // "/examens/active"
@@ -28,8 +26,13 @@ async function redirect_active(ctx) {
     });
 
     if (active === null) {
-      ctx.request.flash('warning', `There's currently no active examen for ${ctx.state.user._school.name}.`);
-      throw new Error(`There's currently no active examen for ${ctx.state.user._school.name}.`);
+      ctx.request.flash(
+        'warning',
+        `There's currently no active examen for ${ctx.state.user._school.name}.`
+      );
+      throw new Error(
+        `There's currently no active examen for ${ctx.state.user._school.name}.`
+      );
     }
   } catch (e) {
     console.error(e);
@@ -91,21 +94,25 @@ async function save_new_examen(ctx, next) {
     });
     Recording = gridfs.model;
 
-    Recording.write({
-      _id: audio_id,
-      filename: audio_id + '.ogg',
-      content_type: 'audio/ogg'
-    }, reader);
+    Recording.write(
+      {
+        _id: audio_id,
+        filename: audio_id + '.ogg',
+        content_type: 'audio/ogg'
+      },
+      reader
+    );
 
     prompt.audio_id = audio_id;
     console.log('uploading %s -> gridfs at %s', file.path, audio_id);
-  }
+  };
 
   save_audio(ctx.request.body.files.introductionRecording, introduction);
   save_audio(ctx.request.body.files.closingRecording, closing);
 
-  // When only one prompt is sent, its not sent as an array 
-  if (prompt_recordings.constructor !== Array) prompt_recordings = [prompt_recordings];
+  // When only one prompt is sent, its not sent as an array
+  if (prompt_recordings.constructor !== Array)
+    prompt_recordings = [prompt_recordings];
 
   // Save each prompt recording
   prompt_recordings.forEach((file, i) => save_audio(file, prompts[i]));
@@ -127,13 +134,22 @@ async function save_new_examen(ctx, next) {
     await new_examen.save();
   } catch (e) {
     console.error(e);
-    ctx.request.flash('danger', 'Failed to save examen. The administrators have been notified. Please try again later.');
+    ctx.request.flash(
+      'danger',
+      'Failed to save examen. The administrators have been notified. Please try again later.'
+    );
     return ctx.internalServerError('Failed to save examen.');
   }
   if (ctx.state.user.admin) {
-    ctx.request.flash('success', `Successfully posted examen '${new_examen.title}'.`);
+    ctx.request.flash(
+      'success',
+      `Successfully posted examen '${new_examen.title}'.`
+    );
   } else {
-    ctx.request.flash('success', `Successfully submitted examen '${new_examen.title}' for approval.`);
+    ctx.request.flash(
+      'success',
+      `Successfully submitted examen '${new_examen.title}' for approval.`
+    );
   }
 
   ctx.created({
@@ -152,22 +168,26 @@ async function schedule_examen(ctx) {
   const endDate = moment(ctx.request.body['end-date'], 'YYYY-MM-DD');
 
   // Validate dates
-  if (startDate.isAfter(endDate) || startDate.isSame(endDate, 'day')) return ctx.throw(400, 'Dates out of order.');
+  if (startDate.isAfter(endDate) || startDate.isSame(endDate, 'day'))
+    return ctx.throw(400, 'Dates out of order.');
 
   let examen;
   try {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
-    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
+    if (!examen._school.equals(ctx.state.user._school._id))
+      throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
   // Validate dates make sense
-  if (examen.visibility !== 'school') return ctx.throw(400, 'Can only schedule school examens.');
-  if (startDate.isBefore(moment())) return ctx.throw(400, 'Cannot schedule examens to the past.');
+  if (examen.visibility !== 'school')
+    return ctx.throw(400, 'Can only schedule school examens.');
+  if (startDate.isBefore(moment()))
+    return ctx.throw(400, 'Cannot schedule examens to the past.');
 
   examen.startActive = startDate;
   examen.endActive = endDate;
@@ -178,7 +198,10 @@ async function schedule_examen(ctx) {
     console.error(e);
     return ctx.throw(500, 'Failed to save examen. Please try again later.');
   }
-  ctx.request.flash('success', `Successfully scheduled examen '${examen.title}'.`);
+  ctx.request.flash(
+    'success',
+    `Successfully scheduled examen '${examen.title}'.`
+  );
   ctx.redirect('back');
 }
 
@@ -191,7 +214,8 @@ async function remove_examen(ctx) {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
-    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
+    if (!examen._school.equals(ctx.state.user._school._id))
+      throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
@@ -203,7 +227,10 @@ async function remove_examen(ctx) {
   } catch (e) {
     return ctx.throw(500, 'Failed to remove examen.');
   }
-  ctx.request.flash('success', `Successfully removed examen '${examen.title}'.`);
+  ctx.request.flash(
+    'success',
+    `Successfully removed examen '${examen.title}'.`
+  );
   ctx.redirect(ctx.router.url('archive'));
 }
 
@@ -215,7 +242,8 @@ async function approve_examen(ctx) {
   try {
     examen = await ctx.db.Examen.findById(id);
     if (!examen) throw new Error('Examen not found.');
-    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
+    if (!examen._school.equals(ctx.state.user._school._id))
+      throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     return ctx.throw(404, 'Examen Not Found');
   }
@@ -233,7 +261,10 @@ async function approve_examen(ctx) {
   });
 
   await examen.save();
-  ctx.request.flash('success', `Successfully approved examen '${examen.title}'.`);
+  ctx.request.flash(
+    'success',
+    `Successfully approved examen '${examen.title}'.`
+  );
   ctx.redirect(ctx.router.url('submissions'));
 }
 
@@ -246,14 +277,16 @@ async function deny_examen(ctx) {
     examen = await ctx.db.Examen.findById(id);
 
     if (!examen) throw new Error('Examen not found.');
-    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
+    if (!examen._school.equals(ctx.state.user._school._id))
+      throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
   // Don't allow denial of already approved examen
-  if (examen.approved) return ctx.throw(400, 'Cannot deny already approved examen.');
+  if (examen.approved)
+    return ctx.throw(400, 'Cannot deny already approved examen.');
 
   sendEmail(ctx.state.user.email, 'Examen Denied', 'examenDenied', {
     name: ctx.state.user.name,
@@ -266,7 +299,10 @@ async function deny_examen(ctx) {
     console.error(e);
     return ctx.throw(500, 'Failed to deny examen. Please try again later.');
   }
-  ctx.request.flash('success', `Successfully denied (and deleted) examen '${examen.title}'.`);
+  ctx.request.flash(
+    'success',
+    `Successfully denied (and deleted) examen '${examen.title}'.`
+  );
   ctx.redirect(ctx.router.url('submissions'));
 }
 
@@ -276,23 +312,36 @@ async function view_examen(ctx) {
   // Find examen
   let examen;
   try {
-    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id).populate('_poster', '_id name email admin').populate('_school');
+    examen = ctx.state.examen = await ctx.db.Examen.findById(ctx.params.id)
+      .populate('_poster', '_id name email admin')
+      .populate('_school');
 
     if (!examen) throw new Error('Examen not found');
-    if (!examen._school.equals(ctx.state.user._school._id)) throw new Error('Examen under your school jurisdiction.');
   } catch (e) {
     console.error(e);
     return ctx.throw(404, 'Examen Not Found');
   }
 
-  if (ctx.isAuthenticated() && !ctx.state.user.admin && !examen.approved) return ctx.throw(403, 'This examen has not been approved yet.');
+  if (ctx.isAuthenticated() && !ctx.state.user.admin && !examen.approved)
+    return ctx.throw(403, 'This examen has not been approved yet.');
 
   // Respect visibility
-  if ((examen.visibility === 'school' && !ctx.isAuthenticated()) || (examen.visibility === 'school' && !examen._school._id.equals(ctx.state.user._school._id)))
-    ctx.throw(403, 'This examen is only viewable to the poster\'s school members.');
+  if (
+    (examen.visibility === 'school' && !ctx.isAuthenticated()) ||
+    (examen.visibility === 'school' &&
+      !examen._school._id.equals(ctx.state.user._school._id))
+  )
+    ctx.throw(
+      403,
+      "This examen is only viewable to the poster's school members."
+    );
 
-  if ((examen.visibility === 'private' && !ctx.isAuthenticated()) || (examen.visibility === 'private' && !examen._poster._id.equals(ctx.state.user._id)))
-    ctx.throw(403, 'This examen is only viewable by it\'s poster.');
+  if (
+    (examen.visibility === 'private' && !ctx.isAuthenticated()) ||
+    (examen.visibility === 'private' &&
+      !examen._poster._id.equals(ctx.state.user._id))
+  )
+    ctx.throw(403, "This examen is only viewable by it's poster.");
 
   ctx.state.autoplay = ctx.query.autoplay === '1';
 
@@ -306,7 +355,7 @@ async function view_archive(ctx) {
   ctx.state.title = 'Archive';
 
   // Prevent going to negative pages
-  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
+  let page = (ctx.state.page = Math.max(1, ctx.query.page || 1));
   ctx.state.prevPage = Math.max(1, page - 1);
   ctx.state.nextPage = page + 1;
 
@@ -315,9 +364,11 @@ async function view_archive(ctx) {
     approved: true
   };
   if (ctx.isAuthenticated()) {
-    query['$or'] = [{
+    query['$or'] = [
+      {
         visibility: 'public'
-      }, {
+      },
+      {
         visibility: 'school',
         _school: ctx.state.user._school._id
       },
@@ -330,17 +381,18 @@ async function view_archive(ctx) {
     query.visibility = 'public';
   }
 
-  const data = ctx.state.data = await ctx.db.Examen.paginate(query, {
+  const data = (ctx.state.data = await ctx.db.Examen.paginate(query, {
     sort: {
       dateAdded: -1
     },
     populate: ['_poster', '_school'],
     limit: 4,
     page
-  });
+  }));
 
   // If too high, go to last page
-  if (page > data.pages) return ctx.redirect('/examen/archive?page=' + data.pages);
+  if (page > data.pages)
+    return ctx.redirect('/examen/archive?page=' + data.pages);
 
   await ctx.render('examen/archive');
 }
@@ -351,25 +403,29 @@ async function view_submissions(ctx) {
   ctx.state.title = 'Submissions';
 
   // Prevent going to negative pages
-  let page = ctx.state.page = Math.max(1, ctx.query.page || 1);
+  let page = (ctx.state.page = Math.max(1, ctx.query.page || 1));
   ctx.state.prevPage = Math.max(1, page - 1);
   ctx.state.nextPage = page + 1;
 
   // Limit to only 4 per page
-  const data = ctx.state.data = await ctx.db.Examen.paginate({
-    approved: false,
-    _school: ctx.state.user._school._id
-  }, {
-    sort: {
-      dateAdded: -1
+  const data = (ctx.state.data = await ctx.db.Examen.paginate(
+    {
+      approved: false,
+      _school: ctx.state.user._school._id
     },
-    populate: '_poster',
-    limit: 20,
-    page
-  });
+    {
+      sort: {
+        dateAdded: -1
+      },
+      populate: '_poster',
+      limit: 20,
+      page
+    }
+  ));
 
   // If too high, go to last page
-  if (page > data.pages) return ctx.redirect('/examen/submissions?page=' + data.pages);
+  if (page > data.pages)
+    return ctx.redirect('/examen/submissions?page=' + data.pages);
 
   await ctx.render('examen/submissions');
 }
@@ -407,13 +463,15 @@ async function get_feed(ctx) {
   }).limit(10);
 
   // TODO: add more fields
-  examens.forEach(ex => feed.addItem({
-    title: ex.title,
-    id: ex._id,
-    link: `https://ignatian-examen.herokuapp.com/examen/${ex._id}`,
-    description: ex.totalDuration + ' seconds long',
-    date: ex.dateAdded
-  }));
+  examens.forEach(ex =>
+    feed.addItem({
+      title: ex.title,
+      id: ex._id,
+      link: `https://ignatian-examen.herokuapp.com/examen/${ex._id}`,
+      description: ex.totalDuration + ' seconds long',
+      date: ex.dateAdded
+    })
+  );
 
   if (ctx.params.format === 'rss') {
     ctx.type = 'application/rss+xml';
