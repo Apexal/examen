@@ -10,7 +10,7 @@
   "dependencies": {
     "@sendgrid/mail": "^6.2.1",
     "feed": "^1.1.1",
-    "foreman": "3.0.0",
+    "foreman": "3.0.1",
     "gridfs-stream": "^1.1.1",
     "koa": "^2.5.0",
     "koa-better-serve": "^2.0.7",
